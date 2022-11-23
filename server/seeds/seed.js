@@ -1,5 +1,5 @@
 const connection = require("../config/connection");
-const { User, Transaction, Wildcard } = require("../models");
+const { User, Transaction, Party } = require("../models");
 
 
 connection.on("error", (err) => err);
@@ -14,53 +14,59 @@ connection.once("open", async () => {
   await Transaction.deleteMany({});
 
   // Drop existing transaction
-  await Wildcard.deleteMany({});
+  await Party.deleteMany({});
 
   // Insert users
 
   const user1 = await User.create({
+    "_id": "637e5c0785ae7bff97f75fb3",
     "username": "Tarek",
     "email": "test@gmail.com",
     "password": "test123",
+    "balance": 1000
   });
 
   const user2 = await User.create({
+    "_id": "637e5c38797f0bd7a8674538",
     "username": "Jon",
     "email": "test2@gmail.com",
     "password": "test123",
+    "balance": 1000
   });
+
+  // Pay button has been clicked
+  const party1 = await Party.create({
+    "_id": "637e5c67376d07d732253472",
+    "sendingUser": "637e5c38797f0bd7a8674538",
+    "recievingUser": "637e5c0785ae7bff97f75fb3"
+  })
 
   // Insert transaction
   const transaction1 = await Transaction.create({
-    "transactionText": "Hello these are my transaction",
-    "username": user1,
-  });
-
-  const transaction2 = await Transaction.create({
-    "transactionText": "This is the second transaction",
-    "username": user2,
+    "transactionText": "Beer",
+    "start": "2022-11-23",
+    "amount": 50,
+    "groupId": "credit",
+    "party": "637e5c67376d07d732253472"
   });
 
   await User.findOneAndUpdate(
     { _id: user1._id },
-    { $push: { transaction: transaction1._id }, },
+    {
+      $push: { transaction: transaction1._id },
+      $inc: { balance: transaction1.amount }
+    },
     { new: true }
   )
 
-
-
-
-  const wildcard1 = await Wildcard.create({
-    "textBody": "This is my reaction",
-    "transactionId": user2,
-  });
-
-  await Transaction.findOneAndUpdate(
-    { _id: transaction1._id },
-    { $push: { wildcard: wildcard1._id }, },
+  await User.findOneAndUpdate(
+    { _id: user2._id },
+    {
+      $push: { transaction: transaction1._id },
+      $inc: { balance: -1 * transaction1.amount }
+    },
     { new: true }
   )
-
 
   // Log out the seed data to indicate what should appear in the database
   console.table(User);
