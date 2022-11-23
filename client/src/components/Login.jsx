@@ -4,6 +4,7 @@ import { Alert, Button, Container, Form } from "react-bootstrap";
 import { useAppContext } from "../utils/AppContext";
 import { useEffect } from "react";
 
+
 const Login = () => {
   const { appState, setAppState } = useAppContext();
 
@@ -54,10 +55,10 @@ const Login = () => {
           <div className="d-flex justify-content-center">
             <img
               className="mb-4 center"
-              src="logo192.png"
-              alt=""
-              width="210"
-              height="140"
+              src="logo-no-background.png"
+              alt="company logo"
+              width="auto"
+              height="auto"
             />
           </div>
           <Form.Group className="mb-3" controlId="email">
@@ -92,7 +93,7 @@ const Login = () => {
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="outline-success" type="submit">
             Submit
           </Button>
         </Form>
