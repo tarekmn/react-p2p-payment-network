@@ -19,7 +19,8 @@ const transactionSchema = new Schema(
       type: Types.ObjectId,
       ref: 'Party',
       required: true
-    }
+    },
+    pending: { type: Boolean, required: true }
   },
   {
     toJSON: {
