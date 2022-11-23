@@ -1,5 +1,5 @@
 const { Schema, model, Types } = require("mongoose");
-
+const partySchema = require('./Party')
 
 //creating transactionSchema
 const transactionSchema = new Schema(
@@ -9,16 +9,17 @@ const transactionSchema = new Schema(
       required: true,
       max_length: 280,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now(),
+    start: {
+      type: String,
+      default: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`,
     },
-    username: {
+    amount: { type: Number, required: true },
+    groupId: { type: String, required: true },
+    party: {
       type: Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-
+      ref: 'Party',
+      required: true
+    }
   },
   {
     toJSON: {
