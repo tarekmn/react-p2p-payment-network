@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/p2pDB" || "mongodb://localhost/p2pDB", {
+mongoose.connect("mongodb+srv://glitch0320:JNUdRPNtIpYuysix@p2pdb.p6gztcz.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
