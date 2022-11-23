@@ -4,7 +4,7 @@ import { useEffect } from "react";
 const Navigation = (props) => {
   return (
     <>
-      <Nav id="navBar" className="justify-content-end">
+      <Nav id="navBar" className="justify-content-center">
         <Nav.Item>
           <Nav.Link
             onClick={() => props.setCurrSection("home")}
