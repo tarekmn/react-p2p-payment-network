@@ -27,12 +27,6 @@ const userSchema = new Schema(
         ref: "Transaction",
       },
     ],
-    pending: [
-      {
-        type: Types.ObjectId,
-        ref: "Transaction",
-      },
-    ],
     balance: { type: Number, required: true }
   },
   {
