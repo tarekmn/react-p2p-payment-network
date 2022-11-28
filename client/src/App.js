@@ -14,24 +14,6 @@ function App() {
 
   const [trans, setTrans] = useState()
 
-
-
-  const getTransactions = async () => {
-    const query = await fetch('/api/transaction', {
-      method: 'GET'
-    })
-    const response = await query.json()
-    setTrans(response)
-  }
-
-
-  useEffect(() => {
-    getTransactions()
-    console.log(trans)
-  }, [])
-
-
-
   return (
     <div >
 
@@ -40,7 +22,7 @@ function App() {
 
         <BrowserRouter >
           <Routes>
-            <Route path="/" element={<Home trans={trans} setTrans={setTrans} />} />
+            <Route path="/" element={<Home  />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppContext } from "../utils/AppContext";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -10,11 +10,9 @@ const Home = (props) => {
     if (!appState || !appState.user) {
       window.location.href = "/login";
     }
-  }, [appState]);
+  }, [appState])
 
-  console.log(props.trans);
 
-  // console.log(newUsers);
 
   const [currentUser, setCurrentUser] = useState();
 
@@ -26,6 +24,7 @@ const Home = (props) => {
     });
     console.log(currentUser);
   }, [appState]);
+
 
   return (
     <>
