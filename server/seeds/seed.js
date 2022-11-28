@@ -31,6 +31,14 @@ connection.once("open", async () => {
     "balance": 1000
   })
 
+  const user3 = await User.create({
+    "_id": "6385142f3941552c03082aef",
+    "username": "Emma",
+    "email": "test3@gmail.com",
+    "password": "test123",
+    "balance": 1000
+  })
+
   // Insert transaction
   const transaction1 = await Transaction.create({
     "transactionText": "Beer",
@@ -41,11 +49,20 @@ connection.once("open", async () => {
     "pending": false
   });
 
+  const transaction2 = await Transaction.create({
+    "transactionText": "Rent",
+    "amount": 600,
+    "type": "credit",
+    "sendingUser": "6385142f3941552c03082aef",
+    "recievingUser": '637e5c38797f0bd7a8674538',
+    "pending": false
+  });
+
   await User.findOneAndUpdate(
     { _id: user1._id },
     {
       $push: { transaction: transaction1._id },
-      $inc: { balance: transaction1.amount }
+      $inc: { balance: + transaction1.amount }
     },
     { new: true }
   )
@@ -54,10 +71,33 @@ connection.once("open", async () => {
     { _id: user2._id },
     {
       $push: { transaction: transaction1._id },
-      $inc: { balance: -1 * transaction1.amount }
+      $inc: { balance: - transaction1.amount }
+    },
+    { new: true }
+
+  )
+
+  await User.findOneAndUpdate(
+    { _id: user2._id },
+    {
+      $push: { transaction: transaction2._id },
+      $inc: { balance: + transaction2.amount }
     },
     { new: true }
   )
+
+  await User.findOneAndUpdate(
+    { _id: user3._id },
+    {
+      $push: { transaction: transaction2._id },
+      $inc: { balance: - transaction2.amount }
+    },
+    { new: true }
+  )
+
+
+
+
 
   // Log out the seed data to indicate what should appear in the database
   console.table(User)
