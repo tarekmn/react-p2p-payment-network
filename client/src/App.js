@@ -14,6 +14,10 @@ function App() {
 
   const [trans, setTrans] = useState()
 
+
+
+
+
   return (
     <div >
 
@@ -22,7 +26,7 @@ function App() {
 
         <BrowserRouter >
           <Routes>
-            <Route path="/" element={<Home  />} />
+            <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

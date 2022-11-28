@@ -20,8 +20,26 @@ const Home = (props) => {
       username: appState.user.username,
       balance: appState.user.balance,
     });
-    console.log(currentUser);
+    // console.log(currentUser);
   }, [appState]);
+
+  const [trans, setTrans] = useState();
+
+  const getUserTrans = async () => {
+    const query = await fetch(`/api/transaction/${appState.user._id}`, {
+      method: "GET",
+    });
+    const response = await query.json();
+    setTrans(response);
+  };
+
+  useEffect(() => {
+    getUserTrans();
+  }, []);
+
+  useEffect(() => {
+    console.log(trans);
+  }, [trans]);
 
   return (
     <>
@@ -41,36 +59,25 @@ const Home = (props) => {
         <div className="my-3 p-3 bg-body bg-light rounded shadow-sm">
           <h6 className="purple-color border-bottom pb-2 mb-0">Transactions</h6>
 
-          <div className="d-flex text-muted pt-3">
-            <img className="postimg" src="" width="32" height="32" alt='' />
-            {/* NEEDS ALT */}
-            <p className="pb-3 mb-0 small lh-sm border-bottom">
-              <strong className="d-block text-gray-dark">
-                <a className="purple-color" href="/users/{{post.User.id}}">
-                  Tarek{" "}
-                </a>
-              </strong>
-              Transaction
-            </p>
-          </div>
 
-          {/* <div className="d-flex text-muted pt-3">
-            <p className="pb-3 mb-0 small lh-sm border-bottom">
-              <strong className="d-block text-gray-dark">
-                And then
-                <a className="purple-color" href="/users/{{comment.User.id}}">
-                  commentor
-                </a>
-                said...
-              </strong>
-              content
-            </p>
-          </div> */}
+          {trans &&
+            trans.map((item, i) => (
+              <div className="d-flex text-muted pt-3">
+                <img className="postimg" src="" width="32" height="32" />
+                <p className="pb-3 mb-0 small lh-sm border-bottom">
+                  <strong className="d-block text-gray-dark">
+                    <a className="purple-color" href="/users/{{post.User.id}}">
+                      Amount $ {item.amount}{" "}
+                    </a>
+                  </strong>
+                  {item.transactionText}
+                </p>
+              </div>
+            ))}
 
-          <div id="commentArea-{{@index}}"></div>
         </div>
       </main>
-      <Footer currentUser={currentUser} />
+      <Footer />
     </>
   );
 };
