@@ -7,49 +7,29 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Signup from './components/Signup.jsx';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import './App.css'
 
 
 function App() {
 
-  const [userData, setUserData] = useState()
-
-
-
-  const getUsers = async () => {
-    const query = await fetch('/api/users', {
-      method: 'GET'
-    })
-    const response = await query.json()
-    setUserData(response)
-  }
-
-
-  useEffect(() => {
-    getUsers()
-    console.log(userData)
-  }, [])
-
-
+  const [trans, setTrans] = useState()
 
   return (
     <div >
 
       <AppProvider value={{}}>
         <Navigation />
-        <Header />
+
         <BrowserRouter >
           <Routes>
-            <Route path="/" element={<Home userData={userData} setUserData={setUserData} />} />
+            <Route path="/" element={<Home  />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
 
           </Routes>
         </BrowserRouter>
-        <Footer />
+
       </AppProvider>
 
     </div>

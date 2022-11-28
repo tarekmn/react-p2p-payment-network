@@ -1,5 +1,4 @@
-const User = require("./User");
-const Transaction = require("./Transaction");
-const Party = require("./Party");
+const User = require("./User")
+const Transaction = require("./Transaction")
 
-module.exports = { User, Transaction, Party };
+module.exports = { User, Transaction }
