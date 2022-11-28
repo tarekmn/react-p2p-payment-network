@@ -10,7 +10,7 @@ import Signup from './components/Signup.jsx';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './App.css'
-import { ChakraProvider } from '@chakra-ui/react'
+
 
 function App() {
 

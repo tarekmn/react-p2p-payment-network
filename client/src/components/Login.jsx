@@ -96,6 +96,10 @@ const Login = () => {
           <Button variant="outline-success" type="submit">
             Submit
           </Button>
+
+          <Button variant="outline-success" type="submit" a href="/signup">
+            Sign up
+          </Button>
         </Form>
 
         {formMessage.msg.length > 0 && (
