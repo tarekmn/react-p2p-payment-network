@@ -1,6 +1,6 @@
 // ObjectId() method for converting transactionID string into an ObjectId for querying database
 const { ObjectId } = require("mongoose").Types;
-const { User, Transaction, Wildcard } = require("../models");
+const { User, Transaction, Party } = require("../models");
 
 require("dotenv").config()
 
@@ -76,48 +76,48 @@ module.exports = {
   },
 
 
-  async createWildcard(req, res) {
-    try {
-      const data = await Wildcard.create(req.body)
+  // async createWildcard(req, res) {
+  //   try {
+  //     const data = await Wildcard.create(req.body)
 
-      // update user with new transaction
-      const updatetransaction = await Transaction.findByIdAndUpdate(
-        { _id: req.params.transactionID },
-        { $push: { wildcard: data } },
-        { new: true }
-      )
+  //     // update user with new transaction
+  //     const updatetransaction = await Transaction.findByIdAndUpdate(
+  //       { _id: req.params.transactionID },
+  //       { $push: { wildcard: data } },
+  //       { new: true }
+  //     )
 
-      res.status(200).json(data)
-    } catch (error) {
-      console.log(error.message)
-      res.status(500).json(error)
-    }
+  //     res.status(200).json(data)
+  //   } catch (error) {
+  //     console.log(error.message)
+  //     res.status(500).json(error)
+  //   }
 
-  },
+  // },
 
-  async deleteWildcard(req, res) {
-    try {
-      const data = await Wildcard.findOneAndRemove(
-        { _id: req.params.wildcardId })
+  // async deleteWildcard(req, res) {
+  //   try {
+  //     const data = await Party.findOneAndRemove(
+  //       { _id: req.params.wildcardId })
 
-      const updatetransaction = await Transaction.findByIdAndUpdate(
-        { _id: req.params.transactionID },
-        { $pull: { wildcard: req.params.wildcardId } },
-        { new: true }
-      )
+  //     const updatetransaction = await Transaction.findByIdAndUpdate(
+  //       { _id: req.params.transactionID },
+  //       { $pull: { wildcard: req.params.wildcardId } },
+  //       { new: true }
+  //     )
 
-      if (!data) {
-        return res.status(404).json({ message: 'No such transaction exists' })
-      }
+  //     if (!data) {
+  //       return res.status(404).json({ message: 'No such transaction exists' })
+  //     }
 
 
 
-      res.status(200).json(data)
-    } catch (error) {
-      console.log(error.message)
-      res.status(500).json(error)
-    }
-  },
+  //     res.status(200).json(data)
+  //   } catch (error) {
+  //     console.log(error.message)
+  //     res.status(500).json(error)
+  //   }
+  // },
 
 
 
