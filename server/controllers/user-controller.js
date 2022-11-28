@@ -1,56 +1,12 @@
 const { ObjectId } = require("mongoose").Types;
-const { User, Transaction, Party } = require("../models");
+const { User, Transaction } = require("../models");
 const jwt = require("jsonwebtoken")
 const cookie = require("cookie")
 const bcrypt = require("bcrypt")
 const connection = require("../config/connection")
-
-require("dotenv").config()
-
-
+require('dotenv').config()
 
 module.exports = {
-
-  // Get all users
-  async getUsers(req, res) {
-    try {
-      const users = await User.find({}).populate({
-        path: "transaction",
-        // populate: {
-        //   path: "party",
-        //   model: "party"
-        // }
-      })
-      if (!users) {
-        return res.status(404).json({ message: 'No users in db.' })
-      }
-      res.status(200).json(users)
-    } catch (error) {
-      console.log(error.message)
-      res.status(500).json(error)
-    }
-  },
-
-
-  async getSingleUser(req, res) {
-    try {
-      const user = await User.findOne({ _id: req.params.userId }).populate({
-        path: "transaction",
-        // populate: {
-        //   path: "party",
-        //   model: "party"
-        // }
-      })
-      console.log(user)
-      if (!user) {
-        return res.status(404).json({ message: 'No users in db with that ID' })
-      }
-      res.status(200).json(user)
-    } catch (error) {
-      console.log(error.message)
-      res.status(500).json(error)
-    }
-  },
 
   async createUser(req, res) {
     try {
@@ -74,7 +30,6 @@ module.exports = {
       res.status(500).json(error)
     }
   },
-
 
   async deleteUser(req, res) {
     try {
@@ -124,12 +79,5 @@ module.exports = {
     if (!user) return res.status(401).json({ msg: "un-authorized" })
 
     return res.status(200).json({ result: "success", payload: user })
-  },
-
-
-
-
-
-
-
-};
+  }
+}

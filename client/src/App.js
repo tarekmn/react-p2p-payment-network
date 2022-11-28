@@ -14,24 +14,6 @@ function App() {
 
   const [userData, setUserData] = useState()
 
-
-
-  const getUsers = async () => {
-    const query = await fetch('/api/users', {
-      method: 'GET'
-    })
-    const response = await query.json()
-    setUserData(response)
-  }
-
-
-  useEffect(() => {
-    getUsers()
-    console.log(userData)
-  }, [])
-
-
-
   return (
     <div >
 

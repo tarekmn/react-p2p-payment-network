@@ -1,39 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppContext } from "../utils/AppContext";
 
 const Home = (props) => {
-  const { appState, lookupUser } = useAppContext();
+  const { appState } = useAppContext();
 
   useEffect(() => {
-    console.log(appState);
     if (!appState || !appState.user) {
       window.location.href = "/login";
     }
-  }, [appState]);
+  }, [appState])
 
-  const [newUsers, setNewUsers] = useState([]);
-  console.log(props.userData);
-
-  const condenseUsers = () => {
-    return props.userData.map((user) => {
-      return {
-        username: user.username,
-        transaction: user.transaction,
-      };
-    });
-  };
-
-  useEffect(() => {
-    if (newUsers.length) console.log(newUsers);
-  }, [newUsers]);
-
-  useEffect(() => {
-    if (props.userData && props.userData.length && !newUsers.length) {
-      setNewUsers(condenseUsers());
-    }
-  }, [props.userData]);
-
-  // console.log(newUsers);
+  console.log(appState.user)
 
   return (
     <>

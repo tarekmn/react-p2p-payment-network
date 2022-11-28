@@ -1,5 +1,5 @@
 const connection = require("../config/connection");
-const { User, Transaction, Party } = require("../models");
+const { User, Transaction } = require("../models");
 
 
 connection.on("error", (err) => err);
@@ -12,9 +12,6 @@ connection.once("open", async () => {
 
   // Drop existing transaction
   await Transaction.deleteMany({});
-
-  // Drop existing transaction
-  await Party.deleteMany({});
 
   // Insert users
 
@@ -32,22 +29,15 @@ connection.once("open", async () => {
     "email": "test2@gmail.com",
     "password": "test123",
     "balance": 1000
-  });
-
-  // Pay button has been clicked
-  const party1 = await Party.create({
-    "_id": "637e5c67376d07d732253472",
-    "sendingUser": "637e5c38797f0bd7a8674538",
-    "recievingUser": "637e5c0785ae7bff97f75fb3"
   })
 
   // Insert transaction
   const transaction1 = await Transaction.create({
     "transactionText": "Beer",
-    "start": "2022-11-23",
     "amount": 50,
-    "groupId": "credit",
-    "party": "637e5c67376d07d732253472",
+    "type": "credit",
+    "sendingUser": "637e5c38797f0bd7a8674538",
+    "recievingUser": '637e5c0785ae7bff97f75fb3',
     "pending": false
   });
 
@@ -70,6 +60,7 @@ connection.once("open", async () => {
   )
 
   // Log out the seed data to indicate what should appear in the database
-  console.table(User);
-  console.info("Seeding complete!");
-});
+  console.table(User)
+  console.info("Seeding complete!")
+  process.exit()
+})
