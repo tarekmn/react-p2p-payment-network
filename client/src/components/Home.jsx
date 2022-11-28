@@ -42,7 +42,8 @@ const Home = (props) => {
           </form>
 
           <div className="d-flex text-muted pt-3">
-            <img className="postimg" src="" width="32" height="32" />
+            <img className="postimg" src="" width="32" height="32" alt='' />
+            {/* NEEDS ALT */}
             <p className="pb-3 mb-0 small lh-sm border-bottom">
               <strong className="d-block text-gray-dark">
                 <a className="purple-color" href="/users/{{post.User.id}}">
