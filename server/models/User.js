@@ -26,7 +26,8 @@ const userSchema = new Schema(
         type: Types.ObjectId,
         ref: "Transaction",
       },
-    ]
+    ],
+    balance: { type: Number, required: true }
   },
   {
     toJSON: {

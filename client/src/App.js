@@ -8,6 +8,7 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 import Signup from './components/Signup.jsx';
 import './App.css'
+import { ChakraProvider } from '@chakra-ui/react'
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <div >
+
       <AppProvider value={{}}>
         <Navigation />
         <BrowserRouter >
