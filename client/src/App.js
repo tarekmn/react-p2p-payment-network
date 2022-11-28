@@ -34,6 +34,7 @@ function App() {
 
   return (
     <div >
+
         <AppProvider value={{}}>
           <Navigation />
           <BrowserRouter >
@@ -46,6 +47,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </AppProvider>  
+
     </div>
   );
 }

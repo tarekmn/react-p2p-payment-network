@@ -1,5 +1,5 @@
 const User = require("./User");
 const Transaction = require("./Transaction");
-const Wildcard = require("./Wildcard");
+const Party = require("./Party");
 
-module.exports = { User, Transaction, Wildcard };
+module.exports = { User, Transaction, Party };
