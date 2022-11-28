@@ -1,3 +1,5 @@
+import { Button } from "react-bootstrap"
+
 const Signup = () => {
   return (
     <>
@@ -8,8 +10,8 @@ const Signup = () => {
               className="mb-4 center"
               src="logo-no-background.png"
               alt=""
-              width="210"
-              height="140"
+              width="auto"
+              height="auto"
             />
           </div>
           <h1 className="h3 mb-3 fw-normal">Create an account </h1>
@@ -50,13 +52,11 @@ const Signup = () => {
             />
             <label htmlFor="floatingPassword">Password</label>
           </div>
-          <button
-            id="login-btn"
-            className="w-100 btn btn-md btn-primary"
+          <Button variant="outline-success"
             type="submit"
           >
             Create account
-          </button>
+          </Button>
         </form>
       </div>
     </>

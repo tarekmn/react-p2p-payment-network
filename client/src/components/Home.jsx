@@ -42,10 +42,10 @@ const Home = (props) => {
           <div className="d-flex justify-content-center">
             <img
               className="m-3"
-              src="logo192.png"
+              src="./logo-no-background.png"
               alt=""
-              width="210"
-              height="140"
+              width="25%"
+              height="25%"
             />
           </div>
         </div>

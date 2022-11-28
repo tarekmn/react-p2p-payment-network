@@ -8,7 +8,7 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 import Signup from './components/Signup.jsx';
 import './App.css'
-import { ChakraProvider } from '@chakra-ui/react'
+
 
 function App() {
 
@@ -34,7 +34,6 @@ function App() {
 
   return (
     <div >
-      <ChakraProvider>
         <AppProvider value={{}}>
           <Navigation />
           <BrowserRouter >
@@ -42,12 +41,11 @@ function App() {
               <Route path="/" element={<Home userData={userData} setUserData={setUserData} />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
-              {/* <Route path="/signup" element={<Signup />} /> */}
+              <Route path="/signup" element={<Signup />} />
 
             </Routes>
           </BrowserRouter>
-        </AppProvider>
-      </ChakraProvider>    
+        </AppProvider>  
     </div>
   );
 }
