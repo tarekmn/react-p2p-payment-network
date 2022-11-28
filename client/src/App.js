@@ -34,20 +34,20 @@ function App() {
 
   return (
     <div >
-      <ChakraProvider>
-        <AppProvider value={{}}>
-          <Navigation />
-          <BrowserRouter >
-            <Routes>
-              <Route path="/" element={<Home userData={userData} setUserData={setUserData} />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/login" element={<Login />} />
-              {/* <Route path="/signup" element={<Signup />} /> */}
 
-            </Routes>
-          </BrowserRouter>
-        </AppProvider>
-      </ChakraProvider>    
+      <AppProvider value={{}}>
+        <Navigation />
+        <BrowserRouter >
+          <Routes>
+            <Route path="/" element={<Home userData={userData} setUserData={setUserData} />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="/signup" element={<Signup />} /> */}
+
+          </Routes>
+        </BrowserRouter>
+      </AppProvider>
+
     </div>
   );
 }
