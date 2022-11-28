@@ -66,7 +66,7 @@ const Home = (props) => {
             </p>
           </div> */}
 
-          <button className="btn-comment btn-secondary">X button</button>
+          <button className="btn-comment btn-secondary" >X button</button>
           <div id="commentArea-{{@index}}"></div>
         </div>
       </main>
