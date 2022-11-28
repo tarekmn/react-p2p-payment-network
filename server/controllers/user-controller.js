@@ -8,6 +8,16 @@ require('dotenv').config()
 
 module.exports = {
 
+  async getAllUsers(req, res) {
+    try {
+      const data = await User.find({})
+      res.status(200).json(data.map(d => d.username))
+    } catch (error) {
+      console.log(error.message)
+      res.status(500).json(error)
+    }
+  },
+
   async createUser(req, res) {
     try {
       const data = User.create(req.body)
