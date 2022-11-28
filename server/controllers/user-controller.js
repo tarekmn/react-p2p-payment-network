@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongoose").Types;
-const { User, Transaction, Wildcard } = require("../models");
+const { User, Transaction, Party } = require("../models");
 const jwt = require("jsonwebtoken")
 const cookie = require("cookie")
 const bcrypt = require("bcrypt")
@@ -15,12 +15,12 @@ module.exports = {
   async getUsers(req, res) {
     try {
       const users = await User.find({}).populate({
-        path: "Transaction",
-        populate: {
-          path: "wildcard",
-          model: "Wildcard"
-        }
-      }).populate('friends')
+        path: "transaction",
+        // populate: {
+        //   path: "party",
+        //   model: "party"
+        // }
+      })
       if (!users) {
         return res.status(404).json({ message: 'No users in db.' })
       }
@@ -35,12 +35,12 @@ module.exports = {
   async getSingleUser(req, res) {
     try {
       const user = await User.findOne({ _id: req.params.userId }).populate({
-        path: "Transaction",
-        populate: {
-          path: "wildcard",
-          model: "Wildcard"
-        }
-      }).populate('friends')
+        path: "transaction",
+        // populate: {
+        //   path: "party",
+        //   model: "party"
+        // }
+      })
       console.log(user)
       if (!user) {
         return res.status(404).json({ message: 'No users in db with that ID' })

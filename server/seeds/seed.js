@@ -47,7 +47,8 @@ connection.once("open", async () => {
     "start": "2022-11-23",
     "amount": 50,
     "groupId": "credit",
-    "party": "637e5c67376d07d732253472"
+    "party": "637e5c67376d07d732253472",
+    "pending": false
   });
 
   await User.findOneAndUpdate(
