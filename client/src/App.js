@@ -38,8 +38,8 @@ function App() {
     <div >
 
       <AppProvider value={{}}>
-        <Header />
         <Navigation />
+        <Header />
         <BrowserRouter >
           <Routes>
             <Route path="/" element={<Home userData={userData} setUserData={setUserData} />} />
