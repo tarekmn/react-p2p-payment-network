@@ -1,4 +1,19 @@
+import { useAppContext } from "../utils/AppContext";
+import { useState, useEffect } from "react";
+
 const Profile = () => {
+  const { appState, lookupUser } = useAppContext();
+  const [currentUser, setCurrentUser] = useState();
+
+  useEffect(() => {
+    setCurrentUser({
+      id: appState.user._id,
+      username: appState.user.username,
+      balance: appState.user.balance,
+    });
+    console.log(currentUser);
+  }, [appState]);
+
   return (
     <>
       <div className="padding">
