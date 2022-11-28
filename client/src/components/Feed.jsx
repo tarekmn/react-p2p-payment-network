@@ -1,28 +1,73 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import { useState, useEffect,  } from 'react'
 
 const Feed = () => {
 
+    // const [tran, setTran] = useState
 
+    // const getTran = async () => {
+    //     const query = await fetch(`/api/transaction/`, {
+    //         method: 'GET'
+    //     })
+    //         const response = await query.json()
+    //         setTran(response)
+    //     }
+    
+    
+    // useEffect(() => {
+    //     getTran()
+        
+    // }, [])
+
+    const dummy = [
+        {
+          id:'1',
+          title:'Terek paid joe 30$',
+        },
+        {
+          id:'2',
+          title:'terek paid ivan 50$'
+        },
+        {
+          id:'3',
+          title:'yooooooooooooooooooooooo'
+        },
+        {
+          id:'4',
+          title:'yo4'
+        },
+        {
+          id:'5',
+          title:'yo4'
+        },
+        {
+          id:'6',
+          title:'yo4'
+        },
+        {
+          id:'7',
+          title:'yo4'
+        },
+    ]
 
     return(
     <>
-        <InfiniteScroll
-            dataLength={posts.length}
-            next={getMorePost}
-            hasMore={hasMore}
-            loader={<h3> Loading...</h3>}
-            endMessage={<h4>Nothing more to show</h4>}
-        >
-        {posts.map(item => (
+        <div id="scrollableDiv" style={{ height: 100, overflow: "auto"}}>
+            <InfiniteScroll
+                dataLength={dummy.length}
+                next={dummy}
+                scrollableTarget="scrollableDiv"
+                
+            >
+        {dummy.map(item => (
             <div key={item.id}>
-                <div className="back">
-                <strong> {item.id}</strong> {item.title}
-            </div>
-                {item.completed}
+                <div style={{outline:'1px solid black'}}>
+                    {item.title}
+                </div>
             </div>
         ))}
         </InfiniteScroll>
+    </div>
     </>
     )
 }
