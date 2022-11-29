@@ -17,11 +17,37 @@ const Modal = ({ mode, setMode, currentUser }) => {
         recievingUser: '',
         amount: '',
         transactionText: '',
-        type: '',
-        pending: ''
+        type: ''
     })
 
-    // const [contact, setContact] = useState('')
+    const handleSend = async e => {
+        e.preventDefault()
+        setTransaction({ ...transaction, type: 'sending-credit' })
+        const r = await fetch('/ap/transaction/', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(transaction)
+        })
+        console.log(r)
+        if (r.ok) {
+            // update balances
+            // reload homepage
+        }
+    }
+
+    const handleRequest = async e => {
+        e.preventDefault()
+        setTransaction({ ...transaction, type: 'sending-debit' })
+        const r = await fetch('/ap/transaction/', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(transaction)
+        })
+        console.log(r)
+        if (r.ok) {
+            // reload homepage
+        }
+    }
 
 
     return (
@@ -39,7 +65,7 @@ const Modal = ({ mode, setMode, currentUser }) => {
                 padding: '1rem'
             }}>
             {type === 'pay' &&
-                <form className="container">
+                <form className="container" >
                     <button
                         style={{
                             position: "absolute",
@@ -72,8 +98,8 @@ const Modal = ({ mode, setMode, currentUser }) => {
                     <label className="form-label" htmlFor='amount'>How Much? {`(Balance: ${currentUser.balance})`}</label>
                     <input className='form-control' id='amount' value={transaction.amount} max={currentUser.balance} min='0' onChange={e => setTransaction({ ...transaction, amount: e.target.value })} />
 
-                    <button className="form-control mt-2 bg-success" type='submit' >Send $</button>
-                    <button className="form-control mt-2 bg-danger" type='submit' >Request $</button>
+                    <button className="form-control mt-2 bg-success" onClick={handleSend} >Send $</button>
+                    <button className="form-control mt-2 bg-danger" onClick={handleRequest} >Request $</button>
 
                 </form>}
             {type === 'contact' &&
