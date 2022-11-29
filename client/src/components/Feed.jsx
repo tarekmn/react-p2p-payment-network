@@ -40,22 +40,25 @@ const Feed = (props) => {
           dataLength={dummy.length}
           next={dummy}
           scrollableTarget="scrollableDiv"
+          style={{
+            margin: 5,
+            border: "black solid 2px"
+          }}
         >
-          {/* {dummy.map(item => (
-                <div key={item.id}>
-                    <div style={{outline:'1px solid black'}}>
-                        {item.title}
-                    </div>
-                </div>
-            ))} */}
-
+         
           {props.trans &&
             props.trans.map((item, i) => (
               <div key={i} className={`d-flex text-muted pt-3 ${item.type}`}>
                 <img className="postimg" src="" width="32" height="32" />
                 <p
                   className="pb-3 mb-0 small lh-sm border-bottom"
-                  style={{ flex: 1, color: "black", margin: 20 }}
+                  style={{ 
+                    border:"black 1px solid", 
+                    flex: 1, 
+                    color: "black", 
+                    margin: 10,
+                    
+                  }}
                 >
                   <strong className="d-block text-gray-dark">
                     <a

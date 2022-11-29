@@ -51,7 +51,7 @@ const Home = (props) => {
         <div className="my-3 p-3 bg-body bg-light rounded shadow-sm">
           <h6 className="purple-color border-bottom pb-2 mb-0">Transactions</h6>
           <div
-            className="d-flex text-muted pt-3"
+            className="d-flex text-muted pt-3 "
             style={{ border: "black 1px solid", padding: "4%" }}
           >
             <Feed trans={trans} />
