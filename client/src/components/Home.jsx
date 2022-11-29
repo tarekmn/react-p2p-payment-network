@@ -7,7 +7,6 @@ import Footer from "./Footer";
 const Home = (props) => {
   const { appState } = useAppContext();
 
-
   useEffect(() => {
     if (!appState || !appState.user) {
       window.location.href = "/login";
@@ -45,13 +44,13 @@ const Home = (props) => {
 
   return (
     <>
-
-      <main style={{display:'flex', justifyContent:'center'}}>
-        <div className="my-3 p-3 bg-body bg-light rounded shadow-sm" >
+      <Header currentUser={currentUser} />
+      <main style={{ display: "flex", justifyContent: "center" }}>
+        <div className="my-3 p-3 bg-body bg-light rounded shadow-sm">
           <h6 className="purple-color border-bottom pb-2 mb-0">Transactions</h6>
-            <div className="d-flex text-muted pt-3" >
-              <Feed />
-            </div>
+          <div className="d-flex text-muted pt-3">
+            <Feed trans={trans} />
+          </div>
         </div>
       </main>
       <Footer />

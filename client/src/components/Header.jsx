@@ -17,19 +17,34 @@ const Header = (props) => {
         style={{
           margin: "10px auto",
           borderRadius: "50%",
-          width: "150px",
+          width: "200px",
+          height: "100px",
           background: "#59C738",
-          border: "5px outset orange",
+          border: "1px outset black",
+          textAlign: "center",
+          textAlignmentsVertical: "bottom",
         }}
       >
-        {props.currentUser && <p style={{}}>{props.currentUser.balance}</p>}
+        {props.currentUser && (
+          <p
+            style={{
+              color: "white",
+              fontWeight: "800",
+              textAlignmentsVertical: "center",
+            }}
+          >
+            {`$` + props.currentUser.balance}
+          </p>
+        )}
       </div>
       <div
         style={{
           margin: "10px auto",
-          width: "150px",
+          borderRadius: "5%",
+          width: "200px",
+          height: "100px",
           background: "#59C738",
-          border: "5px outset orange",
+          border: "1px outset black",
         }}
       >
         {props.currentUser && <p>{props.currentUser.username}</p>}
