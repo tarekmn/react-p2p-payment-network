@@ -8,7 +8,6 @@ const transactionSchema = new Schema(
       max_length: 280,
     },
     amount: { type: Number, required: true },
-    type: { type: String, required: true },
     sendingUser: {
       type: Types.ObjectId,
       ref: "User",
@@ -16,8 +15,7 @@ const transactionSchema = new Schema(
     recievingUser: {
       type: Types.ObjectId,
       ref: "User",
-    },
-    pending: { type: Boolean, required: true },
+    }
 
   },
   {

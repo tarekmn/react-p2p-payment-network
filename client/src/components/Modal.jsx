@@ -13,16 +13,19 @@ const Modal = ({ mode, setMode, currentUser }) => {
     ]
 
     const [transaction, setTransaction] = useState({
-        sendingUser: currentUser.id,
+        sendingUser: '',
         recievingUser: '',
         amount: '',
-        transactionText: '',
-        type: ''
+        transactionText: ''
     })
 
     const handleSend = async e => {
         e.preventDefault()
-        setTransaction({ ...transaction, type: 'sending-credit' })
+        setTransaction({ 
+            ...transaction, 
+            sendingUser: transaction.recievingUser,
+            recievingUser: currentUser.id
+        })
         const r = await fetch('/ap/transaction/', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -37,7 +40,7 @@ const Modal = ({ mode, setMode, currentUser }) => {
 
     const handleRequest = async e => {
         e.preventDefault()
-        setTransaction({ ...transaction, type: 'sending-debit' })
+        setTransaction({ ...transaction, sendingUser: '' })
         const r = await fetch('/ap/transaction/', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },

@@ -2,7 +2,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect } from "react";
 
 const Feed = (props) => {
-  // console.log(props.trans);
+  console.log(props.trans);
   const dummy = [
     {
       id: "1",
@@ -40,27 +40,15 @@ const Feed = (props) => {
           dataLength={dummy.length}
           next={dummy}
           scrollableTarget="scrollableDiv"
-<<<<<<< HEAD
-        >
-          {/* {dummy.map(item => (
-                <div key={item.id}>
-                    <div style={{outline:'1px solid black'}}>
-                        {item.title}
-                    </div>
-                </div>
-            ))} */}
-
-=======
           style={{
             margin: 5,
             border: "black solid 2px",
           }}
         >
->>>>>>> 4b83000c5e37274ab5e79f1cee33a3d19499c78b
           {props.trans &&
             props.trans.map((item, i) => (
               <div key={i} className={`d-flex text-muted pt-3 ${item.type}`}>
-                <img className="postimg" src="" width="32" height="32" />
+                {/* <img className="postimg" src="" width="32" height="32" /> */}
                 <p
                   className="pb-3 mb-0 small lh-sm border-bottom"
                   style={{
