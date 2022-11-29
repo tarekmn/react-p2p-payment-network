@@ -20,6 +20,7 @@ connection.once("open", async () => {
     "username": "Tarek",
     "email": "test@gmail.com",
     "password": "test123",
+    "image": "stock4",
     "balance": 1000
   });
 
@@ -28,6 +29,7 @@ connection.once("open", async () => {
     "username": "Jon",
     "email": "test2@gmail.com",
     "password": "test123",
+    "image": "stock6",
     "balance": 1000
   })
 
@@ -36,6 +38,7 @@ connection.once("open", async () => {
     "username": "Emma",
     "email": "test3@gmail.com",
     "password": "test123",
+    "image": "stock5",
     "balance": 1000
   })
 

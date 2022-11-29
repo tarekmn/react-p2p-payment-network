@@ -61,7 +61,7 @@ const Home = (props) => {
             className="d-flex text-muted pt-3"
             style={{ border: "black 1px solid", padding: "4%" }}
           >
-            <Feed trans={trans} />
+            <Feed trans={trans} currentUser={currentUser} />
           </div>
         </div>
       </main>
