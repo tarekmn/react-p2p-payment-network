@@ -38,6 +38,7 @@ const Profile = () => {
     setCurrentUser({...currentUser,[e.target.name]:e.target.value})
   }
   
+  const [isShown, setIsShown] = useState(false);
   
   
   return (
@@ -45,10 +46,10 @@ const Profile = () => {
     {currentUser && (
 
     
-      <section className="" style={{backgroundColor: "#eee"}}>
+      <section className="" style={{backgroundColor: ""}}>
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-md-12 col-xl-4">
+            <div className=" col-md-10 col-xl-4">
               <div className="card" style={{borderRadius: "15px"}}>
                 <div className="card-body text-center">
                   <div className="mt-3 mb-4">
@@ -62,33 +63,37 @@ const Profile = () => {
                       <p className="mb-2 h5">{currentUser.balance}</p>
                       <p className="text-muted mb-0">Wallet Balance</p>
                     </div>
-                    <button onClick type="button" class="btn btn-primary btn-rounded btn-lg">
-                      Update Info
-                    </button>
+                    
                     <div>
                       <p className="mb-2 h5">{currentUser.transcations.length}</p>
                       <p className="text-muted mb-0">Total Transactions</p>
                     </div>
                     
                   </div>
+                  <button onClick={() => setIsShown(current => !current)}type="button" className="btn btn-primary btn-rounded btn-lg">
+                      Update Info
+                    </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <Form onSubmit={handleFormSubmit}>
-          <Form.Group style={{ width: "50%" }}>
-            <Form.Label>Username</Form.Label>
-            <Form.Control type="text" name='username'placeholder="John" value={currentUser.username} onChange={handleInputChange}/>
-          </Form.Group>
-          <Form.Group style={{ width: "50%" }}>
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="text" name='email' placeholder="jdoe@gmail.com" value={currentUser.email} onChange={handleInputChange}/>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Button type="submit" variant="primary" size="md">Submit</Button>
-          </Form.Group>
-        </Form>
+        {isShown && (
+          <Form style={{ }}onSubmit={handleFormSubmit}>
+              <Form.Group style={{ width: "50%",margin:'0 auto' }}>
+                <Form.Label>Username</Form.Label>
+                <Form.Control type="text" name='username'placeholder="John" value={currentUser.username} onChange={handleInputChange}/>
+              </Form.Group>
+              <Form.Group style={{ width: "50%", margin:'0 auto' }}>
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="text" name='email' placeholder="jdoe@gmail.com" value={currentUser.email} onChange={handleInputChange}/>
+              </Form.Group>
+              <Form.Group className="mb-6"style={{ width: "50%", margin:'0 auto', padding:'5px' }}>
+                <Button type="submit" variant="primary" size="md">Submit</Button>
+              </Form.Group>
+          </Form>
+        )}
+        
       </section>
     )}
     </>
