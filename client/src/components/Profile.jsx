@@ -1,5 +1,8 @@
 import { useAppContext } from "../utils/AppContext";
 import { useState, useEffect } from "react";
+import Footer from "./Footer";
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 const Profile = () => {
   const { appState, lookupUser } = useAppContext();
@@ -9,76 +12,85 @@ const Profile = () => {
     setCurrentUser({
       id: appState.user._id,
       username: appState.user.username,
+      email: appState.user.email,
+      transcations: [appState.user.transcation],
       balance: appState.user.balance,
     });
     console.log(currentUser);
   }, [appState]);
 
+  console.log(currentUser)
+
+  const handleFormSubmit = async(e) => {
+    e.preventDefault()
+    const query = await fetch(`/api/users/${currentUser.id}`,{
+      method:"PUT",
+      body: JSON.stringify(currentUser),
+      headers:{
+        "Content-type":"application/json"
+      },
+    })
+    const response = await query.json()
+    
+  }
+
+  const handleInputChange = (e) => {
+    setCurrentUser({...currentUser,[e.target.name]:e.target.value})
+  }
+  
+  
+  
   return (
     <>
-      <div className="padding">
-        <div className="profile-header">
-          <div className="d-flex justify-content-center">
-            <img
-              className="mb-4 mt-4 profile-pic"
-              src="tarek.jpg"
-              alt="user"
-              width="20%"
-            />
-          </div>
-          <div className="container">
-            <div className="d-flex justify-content-center">
-              <h3 className="m-b-0">Tarek Menesi</h3>
-            </div>
+    {currentUser && (
 
-            <div className="d-flex justify-content-center">
-              <a
-                href=""
-                className="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded"
-                data-id="whatever"
-                id="follow"
-              >
-                X button
-              </a>
+    
+      <section className="" style={{backgroundColor: "#eee"}}>
+        <div className="container py-5 h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-md-12 col-xl-4">
+              <div className="card" style={{borderRadius: "15px"}}>
+                <div className="card-body text-center">
+                  <div className="mt-3 mb-4">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
+                      className="rounded-circle img-fluid" style={{width: "100px"}} />
+                  </div>
+                  <h4 className="mb-2">{currentUser.username}</h4>
+                  <p className="text-muted mb-4">{currentUser.email}</p>
+                  <div className="d-flex justify-content-between text-center mt-5 mb-2">
+                    <div>
+                      <p className="mb-2 h5">{currentUser.balance}</p>
+                      <p className="text-muted mb-0">Wallet Balance</p>
+                    </div>
+                    <button onClick type="button" class="btn btn-primary btn-rounded btn-lg">
+                      Update Info
+                    </button>
+                    <div>
+                      <p className="mb-2 h5">{currentUser.transcations.length}</p>
+                      <p className="text-muted mb-0">Total Transactions</p>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="d-flex justify-content-center">
-        <h6 className="border-bottom pb-2 mt-5" id="post-title">
-          Transactions
-        </h6>
-      </div>
-      <div className="mb-3 rounded shadow-sm d-flex justify-content-center">
-        <div className="col-sm-12 col-md-6 rounded bg-light shadow-sm">
-          <div className="d-flex text-muted pt-3">
-            <img
-              className="postimg"
-              src="/images/arrow.jpg"
-              width="32"
-              height="32"
-            />
-
-            <p className="pb-3 mb-0 small lh-sm border-bottom">
-              <strong className="d-block text-gray-dark"></strong>
-              Content
-            </p>
-          </div>
-
-          <div className="d-flex text-muted pt-3">
-            <p className="pb-3 mb-0 small lh-sm border-bottom">
-              <strong className="d-block text-gray-dark">
-                <a className="purple-color" href="/users/">
-                  Wildcard person
-                </a>
-                said...
-              </strong>
-              wildcard content
-            </p>
-          </div>
-        </div>
-      </div>
+        <Form onSubmit={handleFormSubmit}>
+          <Form.Group style={{ width: "50%" }}>
+            <Form.Label>Username</Form.Label>
+            <Form.Control type="text" name='username'placeholder="John" value={currentUser.username} onChange={handleInputChange}/>
+          </Form.Group>
+          <Form.Group style={{ width: "50%" }}>
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="text" name='email' placeholder="jdoe@gmail.com" value={currentUser.email} onChange={handleInputChange}/>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Button type="submit" variant="primary" size="md">Submit</Button>
+          </Form.Group>
+        </Form>
+      </section>
+    )}
     </>
   );
 };
