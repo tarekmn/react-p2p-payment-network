@@ -2,8 +2,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect } from "react";
 
 const Feed = (props) => {
-  console.log(props.trans);
-  console.log(props.currentUser.id);
+  // console.log(props.trans);
+  // // console.log(props.currentUser.id);
 
   return (
     <>
