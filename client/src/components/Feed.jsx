@@ -2,33 +2,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect } from "react";
 
 const Feed = (props) => {
-  console.log(props.trans);
-  const dummy = [
-    {
-      id: "1",
-      title: "Terek paid joe 30$",
-    },
-    {
-      id: "2",
-      title: "terek paid ivan 50$",
-    },
-    {
-      id: "3",
-      title: "yooooooooooooooooooooooo",
-    },
-    {
-      id: "4",
-      title: "yo4",
-    },
-    {
-      id: "5",
-      title: "yo4",
-    },
-    {
-      id: "6",
-      title: "yo4",
-    },
-  ];
+  // console.log(props.trans);
+  // // console.log(props.currentUser.id);
 
   return (
     <>
@@ -37,25 +12,41 @@ const Feed = (props) => {
         style={{ height: 250, width: 300, overflow: "auto" }}
       >
         <InfiniteScroll
-          dataLength={dummy.length}
-          next={dummy}
+          dataLength={props.trans.length}
+          next={props.trans}
           scrollableTarget="scrollableDiv"
+          style={{
+            margin: 5,
+            border: "black solid 2px",
+          }}
         >
-          {/* {dummy.map(item => (
-                <div key={item.id}>
-                    <div style={{outline:'1px solid black'}}>
-                        {item.title}
-                    </div>
-                </div>
-            ))} */}
-
           {props.trans &&
             props.trans.map((item, i) => (
-              <div key={i} className={`d-flex text-muted pt-3 ${item.type}`}>
-                <img className="postimg" src="" width="32" height="32" />
+              <div
+                key={i}
+                className={`d-flex text-muted pt-3 ${
+                  props.currentUser.id === item.sendingUser._id
+                    ? `debit`
+                    : `credit`
+                }`}
+              >
+                <img
+                  className="postimg"
+                  src={`/stock/${item.sendingUser.image}.png`}
+                  width="40"
+                  height="40"
+                  style={{
+                    borderRadius: "50%",
+                  }}
+                />
                 <p
                   className="pb-3 mb-0 small lh-sm border-bottom"
-                  style={{ flex: 1, color: "black", margin: 20 }}
+                  style={{
+                    border: "black 1px solid",
+                    flex: 1,
+                    color: "black",
+                    margin: 10,
+                  }}
                 >
                   <strong className="d-block text-gray-dark">
                     <a
@@ -63,11 +54,18 @@ const Feed = (props) => {
                       href="/users/{{post.User.id}}"
                       style={{ flex: 1, color: "black", margin: 20 }}
                     >
-                      Amount $ {item.type === "credit" ? `+` : `-`}
+                      Amount ${" "}
+                      {props.currentUser.id === item.sendingUser._id
+                        ? `-`
+                        : `+`}
                       {item.amount}
                     </a>
                   </strong>
-                  {item.transactionText}
+                  {item.sendingUser.username +
+                    `  sent $${item.amount} to ` +
+                    item.recievingUser.username +
+                    ` for ` +
+                    item.transactionText}
                 </p>
               </div>
             ))}

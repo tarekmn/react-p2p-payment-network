@@ -26,6 +26,7 @@ const AppProvider = (props) => {
   }
 
   useEffect(() => {
+
     if (!appState.user) lookupUser()
   }, [appState.user])
 

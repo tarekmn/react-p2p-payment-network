@@ -9,7 +9,8 @@ module.exports = {
 
   async getAllTransactions(req, res) {
     try {
-      const data = await Transaction.find({})
+      const data = await Transaction.find({}).populate("sendingUser").populate("recievingUser")
+
       res.status(200).json(data)
     } catch (error) {
       console.log(error.message)
@@ -19,8 +20,8 @@ module.exports = {
 
   async getTransactions(req, res) {
     try {
-      const sent = await Transaction.find({ sendingUser: req.params.userId })
-      const recieved = await Transaction.find({ recievingUser: req.params.userId })
+      const sent = await Transaction.find({ sendingUser: req.params.userId }).populate("sendingUser").populate("recievingUser")
+      const recieved = await Transaction.find({ recievingUser: req.params.userId }).populate("sendingUser").populate("recievingUser")
       const data = sent.concat(recieved)
       res.status(200).json(data)
     } catch (error) {

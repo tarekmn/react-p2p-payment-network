@@ -1,3 +1,4 @@
+
 const Header = (props) => {
   const fetchUser = async () => {
     const query = await fetch("");
@@ -5,7 +6,7 @@ const Header = (props) => {
     console.log(data);
   };
 
-  // console.log(props.currentUser);
+  console.log(props.currentUser);
 
   // useEffect(()=>{
   //     fetchUser()
@@ -22,21 +23,35 @@ const Header = (props) => {
           background: "#59C738",
           border: "1px outset black",
           textAlign: "center",
-          paddingTop: "5%",
+          alignItems: "center"
+          
+          
+         
         }}
       >
         {props.currentUser && (
-          <p
-            style={{
-              color: "black",
-              fontWeight: "800",
-              justifyContent: "center",
-            }}
-          >
+          <h5 style= {{
+            color: "black",
+            fontWeight: "800",
+            padding: "35px"
+          }}>
             {`$` + props.currentUser.balance}
-          </p>
+          </h5>
         )}
       </div>
+
+
+      <div className="d-flex justify-content-center">
+        <img
+          className="mb-4 center"
+          src="logo-no-background.png"
+          alt="company logo"
+          width="250px"
+          height="100%"
+        />
+      </div>
+
+
       <div
         style={{
           margin: "10px auto",
@@ -46,20 +61,22 @@ const Header = (props) => {
           background: "#59C738",
           border: "1px outset black",
           textAlign: "center",
-          paddingTop: "5%",
+          
+      
+          
         }}
       >
         {props.currentUser && (
-          <p
+          <h5
             style={{
               color: "black",
-              fontWeight: "800",
-              justifyContent: "center",
+              fontWeight: "700",
+              padding: "20px",
+              paddingTop: "35px"
             }}
           >
-            {" "}
-            Welcome {props.currentUser.username} !{" "}
-          </p>
+            Welcome {props.currentUser.username}!
+          </h5>
         )}
       </div>
     </header>
