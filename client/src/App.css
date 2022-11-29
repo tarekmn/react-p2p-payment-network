@@ -1,4 +1,3 @@
-
 .App {
   text-align: center;
 }
@@ -36,4 +35,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.credit {
+  background-color: #59c738;
+  color: white;
+}
+
+.debit {
+  background-color: rgb(232, 125, 125);
 }

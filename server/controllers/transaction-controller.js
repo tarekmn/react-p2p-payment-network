@@ -6,10 +6,21 @@ require("dotenv").config()
 
 module.exports = {
 
+
+  async getAllTransactions(req, res) {
+    try {
+      const data = await Transaction.find({})
+      res.status(200).json(data)
+    } catch (error) {
+      console.log(error.message)
+      res.status(500).json(error)
+    }
+  },
+
   async getTransactions(req, res) {
     try {
-      const sent = await Transaction.find({sendingUser: req.params.userId})
-      const recieved = await Transaction.find({recievingUser: req.params.userId})
+      const sent = await Transaction.find({ sendingUser: req.params.userId })
+      const recieved = await Transaction.find({ recievingUser: req.params.userId })
       const data = sent.concat(recieved)
       res.status(200).json(data)
     } catch (error) {
