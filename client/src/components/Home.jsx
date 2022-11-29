@@ -21,6 +21,7 @@ const Home = (props) => {
       id: appState.user._id,
       username: appState.user.username,
       balance: appState.user.balance,
+      contacts: appState.user.contacts
     });
     // console.log(currentUser);
   }, [appState]);
@@ -61,7 +62,7 @@ const Home = (props) => {
             className="d-flex text-muted pt-3"
             style={{ border: "black 1px solid", padding: "4%" }}
           >
-            <Feed trans={trans} currentUser={currentUser} />
+            {trans && currentUser && <Feed trans={trans} currentUser={currentUser} />}
           </div>
         </div>
       </main>

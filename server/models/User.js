@@ -36,7 +36,8 @@ const userSchema = new Schema(
         ref: "Transaction",
       },
     ],
-    balance: { type: Number, required: true, default: 1000 }
+    balance: { type: Number, required: true, default: 1000 },
+    contacts: [{ type: Types.ObjectId, ref: 'User' }]
   },
   {
     toJSON: {

@@ -2,8 +2,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect } from "react";
 
 const Feed = (props) => {
-  console.log(props.trans);
-  console.log(props.currentUser.id);
+  // console.log(props.trans);
+  // console.log(props.currentUser.id);
 
   return (
     <>
@@ -33,6 +33,7 @@ const Feed = (props) => {
                 <img
                   className="postimg"
                   src={`/stock/${item.sendingUser.image}.png`}
+                  alt='stock profile'
                   width="40"
                   height="40"
                   style={{

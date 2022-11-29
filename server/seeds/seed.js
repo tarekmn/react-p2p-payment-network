@@ -21,7 +21,8 @@ connection.once("open", async () => {
     "email": "test@gmail.com",
     "password": "test123",
     "image": "stock4",
-    "balance": 1000
+    "balance": 1000,
+    "contacts": "637e5c38797f0bd7a8674538"
   });
 
   const user2 = await User.create({
@@ -30,7 +31,8 @@ connection.once("open", async () => {
     "email": "test2@gmail.com",
     "password": "test123",
     "image": "stock6",
-    "balance": 1000
+    "balance": 1000,
+    "contacts": "637e5c0785ae7bff97f75fb3"
   })
 
   const user3 = await User.create({

@@ -1,16 +1,11 @@
+import { useEffect } from "react"
 import { useState } from "react"
 
 const Modal = ({ mode, setMode, currentUser }) => {
     const { type, display } = mode
 
-    // get all contacts for contacts modal and pay modal
-    // const contacts = await fetch('...')
-    const contacts = [
-        { _id: 0, username: 'Ted' },
-        { _id: 1, username: 'James' },
-        { _id: 2, username: 'Sherry' },
-        { _id: 3, username: 'Bob Jones' }
-    ]
+    const [contact, setContact] = useState('')
+    const [friend, setFriend] = useState(null)
 
     const [transaction, setTransaction] = useState({
         sendingUser: '',
@@ -21,8 +16,8 @@ const Modal = ({ mode, setMode, currentUser }) => {
 
     const handleSend = async e => {
         e.preventDefault()
-        setTransaction({ 
-            ...transaction, 
+        setTransaction({
+            ...transaction,
             sendingUser: transaction.recievingUser,
             recievingUser: currentUser.id
         })
@@ -52,6 +47,29 @@ const Modal = ({ mode, setMode, currentUser }) => {
         }
     }
 
+    const checkContacts = (id) => {
+        const bools = currentUser.contacts.map(c => c._id === id ? true : false)
+        return bools.indexOf(true) > -1 ? true : false
+    }
+
+    const getFriend = async (username) => {
+        const friend = await fetch(`/api/users/${username}`)
+        const result = await friend.json()
+        if (result?._id === currentUser.id || checkContacts(result?._id)) {
+            return
+        }
+        setFriend(result)
+    }
+
+    const sendFriendRequest = async e => {
+        
+    }
+
+    useEffect(() => {
+        if (contact) {
+            getFriend(contact)
+        }
+    }, [contact])
 
     return (
         <div
@@ -87,7 +105,7 @@ const Modal = ({ mode, setMode, currentUser }) => {
                         }}
                         required
                     >
-                        {contacts.map(c =>
+                        {currentUser.contacts.map(c =>
                             <option
                                 key={c._id}
                                 value={c._id}
@@ -115,8 +133,48 @@ const Modal = ({ mode, setMode, currentUser }) => {
                         }}
                         onClick={() => setMode({ ...mode, display: 'none', type: '' })}
                     >X</button>
-                    Add new contact
-                    View or Delete Existing contacts
+                    <label className="form-label d-block" htmlFor='search'>Add Contact</label>
+                    <input 
+                    type='text' 
+                    id='search' 
+                    value={contact} 
+                    onChange={e => setContact(e.target.value)}
+                    placeholder='Enter Username...'
+                    />
+                    {friend && <div key={friend._id} className='p-2 mt-2 text-center border border-success rounded'>
+                        <img
+                            className="postimg"
+                            src={`/stock/${friend.image}.png`}
+                            alt='stock profile'
+                            width="40"
+                            height="40"
+                            style={{
+                                borderRadius: "50%",
+                            }}
+                        />
+                        <span style={{
+                            padding: '0 2rem 0 2rem'
+                        }}>{friend.username}</span>
+                        <button 
+                        className=""
+                        onClick={sendFriendRequest}>Add Friend</button>
+                    </div>}
+                    {currentUser.contacts && <div className="row text-center mt-4 border-top border-dark">
+                        <p className="display-6 text-dark">Contacts:</p>
+                        {currentUser.contacts.map(c => <div key={c._id} className='p-1 mt-2 border border-success rounded'>
+                            <img
+                                className="postimg"
+                                src={`/stock/${c.image}.png`}
+                                alt='stock profile'
+                                width="40"
+                                height="40"
+                                style={{
+                                    borderRadius: "50%",
+                                }}
+                            />
+                            <p>{c.username}</p>
+                        </div>)}
+                    </div>}
                 </form>}
         </div>
     )

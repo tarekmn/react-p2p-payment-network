@@ -8,6 +8,18 @@ require('dotenv').config()
 
 module.exports = {
 
+  async getUserByUsername(req, res) {
+    try {
+      const friend = await User.findOne({
+        username: req.params.username
+      })
+      res.status(200).json(friend)
+    } catch (error) {
+      console.log(error.message)
+      res.status(500).json(error)
+    }
+  },
+
   async getAllUsers(req, res) {
     try {
       const data = await User.find({})
@@ -86,7 +98,10 @@ module.exports = {
     const isVerified = jwt.verify(token, process.env.JWT_SECRET)
     if (!isVerified) return res.status(401).json({ msg: "un-authorized" })
 
-    const user = await User.findById(isVerified._id)
+    const user = await User.findById(isVerified._id).populate({
+      path: 'contacts',
+      select: 'username image _id'
+    })
     if (!user) return res.status(401).json({ msg: "un-authorized" })
 
     return res.status(200).json({ result: "success", payload: user })
