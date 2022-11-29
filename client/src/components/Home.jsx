@@ -3,6 +3,7 @@ import { useAppContext } from "../utils/AppContext";
 import Feed from "./Feed";
 
 const Home = (props) => {
+  
   const { appState, lookupUser } = useAppContext();
 
   useEffect(() => {

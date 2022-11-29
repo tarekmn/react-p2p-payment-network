@@ -2,7 +2,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect,  } from 'react'
 
 const Feed = () => {
-
+    
     // const [tran, setTran] = useState
 
     // const getTran = async () => {
@@ -44,30 +44,27 @@ const Feed = () => {
           id:'6',
           title:'yo4'
         },
-        {
-          id:'7',
-          title:'yo4'
-        },
+        
     ]
 
     return(
     <>
-        <div id="scrollableDiv" style={{ height: 100, overflow: "auto"}}>
+        <div id="scrollableDiv" style={{ height: 130, overflow: "auto",}}>
             <InfiniteScroll
                 dataLength={dummy.length}
                 next={dummy}
                 scrollableTarget="scrollableDiv"
                 
             >
-        {dummy.map(item => (
-            <div key={item.id}>
-                <div style={{outline:'1px solid black'}}>
-                    {item.title}
+            {dummy.map(item => (
+                <div key={item.id}>
+                    <div style={{outline:'1px solid black'}}>
+                        {item.title}
+                    </div>
                 </div>
-            </div>
-        ))}
-        </InfiniteScroll>
-    </div>
+            ))}
+            </InfiniteScroll>
+        </div>
     </>
     )
 }
