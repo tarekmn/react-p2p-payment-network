@@ -9,6 +9,7 @@ import Profile from './components/Profile';
 import Signup from './components/Signup.jsx';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import AllFeed from './components/AllFeed';
 import './App.css'
 
 
@@ -46,7 +47,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-
+            <Route path='/feed' element={<AllFeed />} />
           </Routes>
         </BrowserRouter>
         <Footer />

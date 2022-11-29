@@ -7,7 +7,7 @@ const Footer = () => {
       justifyContent: 'center',
       display: 'flex',
     }}>
-     
+        <a href='/feed'>
         <button style={{
           borderColor: '#59C738',
           borderRadius: '5px',
@@ -16,7 +16,8 @@ const Footer = () => {
         }}>
           Feed
         </button>
-
+        </a>
+        
         <button style = {{
           
           borderColor: 'green',

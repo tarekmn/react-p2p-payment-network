@@ -2,22 +2,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect,  } from 'react'
 
 const Feed = () => {
-    
-    // const [tran, setTran] = useState
-
-    // const getTran = async () => {
-    //     const query = await fetch(`/api/transaction/`, {
-    //         method: 'GET'
-    //     })
-    //         const response = await query.json()
-    //         setTran(response)
-    //     }
-    
-    
-    // useEffect(() => {
-    //     getTran()
-        
-    // }, [])
 
     const dummy = [
         {
