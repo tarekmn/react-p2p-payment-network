@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../utils/AppContext";
+import Feed from "./Feed";
 import Header from "./Header";
 import Footer from "./Footer";
 
 const Home = (props) => {
   const { appState } = useAppContext();
+
 
   useEffect(() => {
     if (!appState || !appState.user) {
@@ -43,38 +45,13 @@ const Home = (props) => {
 
   return (
     <>
-      <Header currentUser={currentUser} />
-      <main className="container">
-        <div>
-          <div className="d-flex justify-content-center">
-            <img
-              className="m-3"
-              src="./logo-no-background.png"
-              alt=""
-              width="25%"
-              height="25%"
-            />
-          </div>
-        </div>
-        <div className="my-3 p-3 bg-body bg-light rounded shadow-sm">
+
+      <main style={{display:'flex', justifyContent:'center'}}>
+        <div className="my-3 p-3 bg-body bg-light rounded shadow-sm" >
           <h6 className="purple-color border-bottom pb-2 mb-0">Transactions</h6>
-
-
-          {trans &&
-            trans.map((item, i) => (
-              <div className="d-flex text-muted pt-3">
-                <img className="postimg" src="" width="32" height="32" />
-                <p className="pb-3 mb-0 small lh-sm border-bottom">
-                  <strong className="d-block text-gray-dark">
-                    <a className="purple-color" href="/users/{{post.User.id}}">
-                      Amount $ {item.amount}{" "}
-                    </a>
-                  </strong>
-                  {item.transactionText}
-                </p>
-              </div>
-            ))}
-
+            <div className="d-flex text-muted pt-3" >
+              <Feed />
+            </div>
         </div>
       </main>
       <Footer />
