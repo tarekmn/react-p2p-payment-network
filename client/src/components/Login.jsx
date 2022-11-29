@@ -47,17 +47,17 @@ const Login = () => {
 
   return (
     <>
-      <Container style={{ padding: "50px 200px" }}>
+      <Container
+        className='mt-5'
+      >
         <Form onSubmit={handleLogin}>
-          <div className="d-flex justify-content-center">
-            <img
-              className="mb-4 center"
-              src="logo-no-background.png"
-              alt="company logo"
-              width="auto"
-              height="auto"
-            />
-          </div>
+          <img
+            className="mb-4 img-fluid"
+            src="logo-no-background.png"
+            alt="company logo"
+            width="auto"
+            height="auto"
+          />
           <Form.Group className="mb-3" controlId="email">
             <Form.Label>Email address</Form.Label>
             <Form.Control
