@@ -62,8 +62,8 @@ connection.once("open", async () => {
     "transactionText": "Dinner",
     "amount": 97,
     "type": "debit",
-    "sendingUser": "637e5c0785ae7bff97f75fb3",
-    "recievingUser": '637e5c38797f0bd7a8674538',
+    "sendingUser": "637e5c38797f0bd7a8674538",
+    "recievingUser": '637e5c0785ae7bff97f75fb3',
     "pending": false
   });
 
@@ -108,7 +108,7 @@ connection.once("open", async () => {
     { _id: user1._id },
     {
       $push: { transaction: transaction3._id },
-      $inc: { balance: - transaction3.amount }
+      $inc: { balance: + transaction3.amount }
     },
     { new: true }
   )
@@ -117,7 +117,7 @@ connection.once("open", async () => {
     { _id: user2._id },
     {
       $push: { transaction: transaction3._id },
-      $inc: { balance: + transaction3.amount }
+      $inc: { balance: - transaction3.amount }
     },
     { new: true }
   )

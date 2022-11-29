@@ -5,7 +5,7 @@ const Header = (props) => {
     console.log(data);
   };
 
-  // console.log(props.currentUser);
+  console.log(props.currentUser);
 
   // useEffect(()=>{
   //     fetchUser()
