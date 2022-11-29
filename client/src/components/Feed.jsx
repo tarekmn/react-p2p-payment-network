@@ -48,7 +48,15 @@ const Feed = (props) => {
           {props.trans &&
             props.trans.map((item, i) => (
               <div key={i} className={`d-flex text-muted pt-3 ${item.type}`}>
-                <img className="postimg" src="" width="32" height="32" />
+                <img
+                  className="postimg"
+                  src={`/stock/${item.sendingUser.image}.png`}
+                  width="40"
+                  height="40"
+                  style={{
+                    borderRadius: "50%",
+                  }}
+                />
                 <p
                   className="pb-3 mb-0 small lh-sm border-bottom"
                   style={{
