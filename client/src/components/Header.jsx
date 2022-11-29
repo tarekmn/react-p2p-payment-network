@@ -22,15 +22,15 @@ const Header = (props) => {
           background: "#59C738",
           border: "1px outset black",
           textAlign: "center",
-          textAlignmentsVertical: "bottom",
+          paddingTop: "5%",
         }}
       >
         {props.currentUser && (
           <p
             style={{
-              color: "white",
+              color: "black",
               fontWeight: "800",
-              textAlignmentsVertical: "center",
+              justifyContent: "center",
             }}
           >
             {`$` + props.currentUser.balance}
@@ -45,9 +45,22 @@ const Header = (props) => {
           height: "100px",
           background: "#59C738",
           border: "1px outset black",
+          textAlign: "center",
+          paddingTop: "5%",
         }}
       >
-        {props.currentUser && <p>{props.currentUser.username}</p>}
+        {props.currentUser && (
+          <p
+            style={{
+              color: "black",
+              fontWeight: "800",
+              justifyContent: "center",
+            }}
+          >
+            {" "}
+            Welcome {props.currentUser.username} !{" "}
+          </p>
+        )}
       </div>
     </header>
   );

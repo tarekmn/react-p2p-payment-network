@@ -63,7 +63,8 @@ const Feed = (props) => {
                       href="/users/{{post.User.id}}"
                       style={{ flex: 1, color: "black", margin: 20 }}
                     >
-                      Amount $ {item.amount}{" "}
+                      Amount $ {item.type === "credit" ? `+` : `-`}
+                      {item.amount}
                     </a>
                   </strong>
                   {item.transactionText}
