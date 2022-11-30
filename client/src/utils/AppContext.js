@@ -9,31 +9,34 @@ const AppProvider = (props) => {
   const [appState, setAppState] = useState({ user: null });
   const [appReady, setAppReady] = useState(false)
 
-  const lookupUser = async () => {
-    const authCheck = await fetch("/api/users/lookup")
-    const checkResult = await authCheck.json()
-    if (checkResult && checkResult.result === "success") {
-      setAppState({ ...appState, user: checkResult.payload })
-      setAppReady(true)
-    } else {
-      setAppReady(true)
-    }
-  }
+  // const lookupUser = async () => {
+  //   const authCheck = await fetch("/api/users/lookup")
+  //   const checkResult = await authCheck.json()
+  //   if (checkResult && checkResult.result === "success") {
+  //     setAppState({ ...appState, user: checkResult.payload })
+  //     setAppReady(true)
+  //   } else {
+  //     setAppReady(true)
+  //   }
+  // }
+
+  setAppState({ ...appState, user: { _id: "7g7gwd7wg7dtw7dt", email: "email@aajaja.com" } })
+  setAppReady(true)
 
   const logout = () => {
     Cookie.remove("auth-token")
     window.location.href = "/login"
   }
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (!appState.user) lookupUser()
-  }, [appState.user])
+  //   if (!appState.user) lookupUser()
+  // }, [appState.user])
 
   return (
     <>
       {appReady === true && (
-        <AppContext.Provider value={{ appState, setAppState, lookupUser, logout }}>
+        <AppContext.Provider value={{ appState, setAppState, logout }}>
           {props.children}
         </AppContext.Provider>
       )}

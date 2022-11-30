@@ -24,22 +24,22 @@ function App() {
 
 
   return (
-    <div >
+    <div>
 
-      {/* <AppProvider value={{}}> */}
-      <Navigation />
+      <AppProvider value={{}}>
+        {/* <Navigation /> */}
 
-      <BrowserRouter >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path='/feed' element={<AllFeed />} />
-        </Routes>
-      </BrowserRouter>
+        <BrowserRouter >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path='/feed' element={<AllFeed />} />
+          </Routes>
+        </BrowserRouter>
 
-      {/* </AppProvider> */}
+      </AppProvider>
 
     </div>
   );
