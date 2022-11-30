@@ -6,8 +6,8 @@ const AppContext = createContext()
 export const useAppContext = () => useContext(AppContext)
 
 const AppProvider = (props) => {
-  const [appState, setAppState] = useState({ user: null });
-  const [appReady, setAppReady] = useState(false)
+  const [appState, setAppState] = useState({ user: { _id: "6387b91fcd23c70903e1dea3", email: "email@aajaja.com", username: "yfgcfgdycf", balance: 0 } });
+  const [appReady, setAppReady] = useState(true)
 
   // const lookupUser = async () => {
   //   const authCheck = await fetch("/api/users/lookup")
@@ -19,9 +19,6 @@ const AppProvider = (props) => {
   //     setAppReady(true)
   //   }
   // }
-
-  setAppState({ ...appState, user: { _id: "7g7gwd7wg7dtw7dt", email: "email@aajaja.com" } })
-  setAppReady(true)
 
   const logout = () => {
     Cookie.remove("auth-token")
