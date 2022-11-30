@@ -27,7 +27,7 @@ function App() {
     <div>
 
       <AppProvider value={{}}>
-        {/* <Navigation /> */}
+        <Navigation />
 
         <BrowserRouter >
           <Routes>
