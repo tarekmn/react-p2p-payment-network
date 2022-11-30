@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AppProvider } from "./utils/AppContext"
+// import { AppProvider } from "./utils/AppContext"
 import Navigation from './components/Navigation.jsx';
 import Login from './components/Login';
 import Home from './components/Home';
@@ -26,20 +26,20 @@ function App() {
   return (
     <div >
 
-      <AppProvider value={{}}>
-        <Navigation />
+      {/* <AppProvider value={{}}> */}
+      <Navigation />
 
-        <BrowserRouter >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path='/feed' element={<AllFeed />} />
-          </Routes>
-        </BrowserRouter>
+      <BrowserRouter >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path='/feed' element={<AllFeed />} />
+        </Routes>
+      </BrowserRouter>
 
-      </AppProvider>
+      {/* </AppProvider> */}
 
     </div>
   );
