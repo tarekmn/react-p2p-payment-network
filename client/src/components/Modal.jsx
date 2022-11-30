@@ -42,10 +42,11 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
             body: JSON.stringify(transaction)
         })
         console.log(r)
-        if (r.ok) {
-            // reload homepage
-        }
     }
+
+    useEffect(() => {
+        console.log(currentUser.contacts)
+    }, [currentUser])
 
     const checkContacts = (id) => {
         const bools = currentUser.contacts.map(c => c.sendingUser._id === id || c.recievingUser._id === id ? true : false)
@@ -55,7 +56,6 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
     const getFriend = async (username) => {
         const friend = await fetch(`/api/users/${username}`)
         const result = await friend.json()
-        console.log(result)
         if (result?._id === currentUser.id || checkContacts(result?._id)) {
             return
         }
@@ -65,7 +65,18 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
     const sendFriendRequest = async e => {
         e.preventDefault()
         const res = await fetch(`/api/contact/${currentUser.id}/${friend._id}`)
-        console.log(res.sender)
+        const data = await res.json()
+        // console.log(data)
+        setCurrentUser({...currentUser, contacts: data.contacts})
+        setFriend(null)
+    }
+
+    const acceptRequest = async e => {
+        e.preventDefault()
+    }
+
+    const cancelRequest = async e => {
+        e.preventDefault()
     }
 
     useEffect(() => {
@@ -167,7 +178,9 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                     container text-center mt-4 border-top border-dark">
                         <p className="display-6 text-dark">Contacts:</p>
                         {currentUser.contacts.map((c, i) => {
-                            return currentUser.id === c.sendingUser._id ? <div key={i} className='p-1 mt-2 border border-success rounded row'>
+                            return currentUser.id === c.sendingUser._id ? 
+                            // Current User Sent Request
+                            <div key={i} className='p-1 mt-2 border border-success rounded row'>
                                 {c.pending && <span className='col-6'>Sent to: {`[cancel request]`}</span>}
                                 <span className='col-3'>
                                     <img
@@ -184,7 +197,9 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                                 <span className="col-3">{c.recievingUser.username}</span>
                             </div> : 
                             // Current User Recieved Request
-                            <div key={i} className='p-1 mt-2 border border-success rounded'>
+                            <div key={i} className='p-1 mt-2 border border-success rounded row'>
+                                {c.pending && <span className='col'>Request from:</span>}
+                                <span className='col'>
                                 <img
                                     className="postimg"
                                     src={`/stock/${c.sendingUser.image}.png`}
@@ -195,9 +210,9 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                                         borderRadius: "50%",
                                     }}
                                 />
-                                <span style={{
-                                    padding: '0 2rem 0 2rem'
-                                }}>{c.sendingUser.username}</span>
+                                </span>
+                                
+                                <span className='col'>{c.sendingUser.username}</span>
                                 {c.pending && <>Accept / Decline</>}
                             </div>
                         })}

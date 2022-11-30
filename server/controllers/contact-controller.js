@@ -2,6 +2,7 @@ const { User, Contact } = require("../models")
 
 module.exports = {
 
+    // /api/contact/userId/friendId
     async requestContact(req, res) {
         console.log('\nhit\n')
         try {
@@ -13,23 +14,42 @@ module.exports = {
                 recievingUser: friendId,
                 pending: true
             })
-            const sender = await User.findOneAndUpdate({ _id: userId }, { $push: { contacts: contact._id } }, { new: true })
-            const reciever = await User.findOneAndUpdate({ _id: friendId }, { $push: { contacts: contact._id } }, { new: true })
+            const currUser = await User.findOneAndUpdate({ _id: userId }, { $push: { contacts: contact._id } }, { new: true })
+            await User.findOneAndUpdate({ _id: friendId }, { $push: { contacts: contact._id } }, { new: true })
 
-            const data = {sender, reciever}
-            console.log(data)
-            res.status(200).json(data)
+            const sender = await User.findById(currUser._id).populate({
+                path: 'contacts',
+                populate: {
+                    path: 'sendingUser',
+                    select: 'username image'
+                }
+            }).populate({
+                path: 'contacts',
+                populate: {
+                    path: 'recievingUser',
+                    select: 'username image'
+                }
+            })
+            console.log(sender)
+
+            res.status(200).json({ contacts: sender.contacts })
         } catch (error) {
             console.log(error.message)
             res.status(500).json(error)
         }
     },
 
-    async addContact(req, res) {
+    // /api/contact/contactId
+    async acceptRequest(req, res) {
         try {
             // When I accept a pending contact request
-            // set existing contact to pending false
-            // update users contats arrays
+            const contact = Contact.findOneAndUpdate({
+                _id: req.params.contactId
+            }, {
+                pending: false
+            })
+
+            // update users contacts arrays
             res.status(200).json(data)
         } catch (error) {
             console.log(error.message)
@@ -37,6 +57,7 @@ module.exports = {
         }
     },
 
+    // /api/contact/contactId
     async cancelRequest(req, res) {
         try {
             // When I cancel a sent request or decline a pending request
