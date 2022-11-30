@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import { AppProvider } from "./utils/AppContext"
+import { AppProvider } from "./utils/AppContext"
 import Navigation from './components/Navigation.jsx';
 import Login from './components/Login';
 import Home from './components/Home';
