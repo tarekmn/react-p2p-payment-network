@@ -7,7 +7,7 @@ export const useAppContext = () => useContext(AppContext)
 
 const AppProvider = (props) => {
   const [appState, setAppState] = useState({ user: null });
-  const [appReady, setAppReady] = useState(true)
+  const [appReady, setAppReady] = useState(false)
 
   const lookupUser = async () => {
     const authCheck = await fetch("/api/users/lookup")
@@ -26,13 +26,14 @@ const AppProvider = (props) => {
   }
 
   useEffect(() => {
+
     if (!appState.user) lookupUser()
-  }, [appState])
+  }, [appState.user])
 
   return (
     <>
       {appReady === true && (
-        <AppContext.Provider value={{ appState, setAppState, logout }}>
+        <AppContext.Provider value={{ appState, setAppState, lookupUser, logout }}>
           {props.children}
         </AppContext.Provider>
       )}
