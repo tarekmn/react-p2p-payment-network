@@ -6,10 +6,10 @@ require("dotenv").config()
 
 module.exports = {
 
-
+  // get all transactions
   async getAllTransactions(req, res) {
     try {
-      const data = await Transaction.find({}).populate("sendingUser").populate("recievingUser")
+      const data = await Transaction.find({}).populate("creditUser").populate("debitUser")
 
       res.status(200).json(data)
     } catch (error) {
@@ -18,11 +18,12 @@ module.exports = {
     }
   },
 
+  // get current user transactions
   async getTransactions(req, res) {
     try {
-      const sent = await Transaction.find({ sendingUser: req.params.userId }).populate("sendingUser").populate("recievingUser")
-      const recieved = await Transaction.find({ recievingUser: req.params.userId }).populate("sendingUser").populate("recievingUser")
-      const data = sent.concat(recieved)
+      const debit = await Transaction.find({ debitUser: req.params.userId }).populate("creditUser").populate("debitUser")
+      const credit = await Transaction.find({ creditUser: req.params.userId }).populate("creditUser").populate("debitUser")
+      const data = debit.concat(credit)
       res.status(200).json(data)
     } catch (error) {
       console.log(error.message)

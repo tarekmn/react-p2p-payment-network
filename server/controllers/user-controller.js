@@ -8,6 +8,7 @@ require('dotenv').config()
 
 module.exports = {
 
+  // search box on contact form
   async getUserByUsername(req, res) {
     try {
       const friend = await User.findOne({
@@ -85,7 +86,7 @@ module.exports = {
     res
       .status(200)
       .set({ "auth-token": token })
-      .json({ result: "success", user: modifiedUser, token: token })
+      .json({ result: "success", user: modifiedUser._doc, token: token })
   },
 
   async lookupUserByToken(req, res) {
@@ -100,7 +101,16 @@ module.exports = {
 
     const user = await User.findById(isVerified._id).populate({
       path: 'contacts',
-      select: 'username image _id'
+      populate: {
+        path: 'sendingUser',
+        select: 'username image'
+      }
+    }).populate({
+      path: 'contacts',
+      populate: {
+        path: 'recievingUser',
+        select: 'username image'
+      }
     })
     if (!user) return res.status(401).json({ msg: "un-authorized" })
 

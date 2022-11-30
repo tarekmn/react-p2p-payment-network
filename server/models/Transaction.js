@@ -8,15 +8,14 @@ const transactionSchema = new Schema(
       max_length: 280,
     },
     amount: { type: Number, required: true },
-    sendingUser: {
+    creditUser: {
       type: Types.ObjectId,
       ref: "User",
     },
-    recievingUser: {
+    debitUser: {
       type: Types.ObjectId,
       ref: "User",
     }
-
   },
   {
     toJSON: {

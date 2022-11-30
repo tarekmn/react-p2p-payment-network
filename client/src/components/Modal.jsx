@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 
-const Modal = ({ mode, setMode, currentUser }) => {
+const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
     const { type, display } = mode
 
     const [contact, setContact] = useState('')
@@ -48,13 +48,14 @@ const Modal = ({ mode, setMode, currentUser }) => {
     }
 
     const checkContacts = (id) => {
-        const bools = currentUser.contacts.map(c => c._id === id ? true : false)
+        const bools = currentUser.contacts.map(c => c.sendingUser._id === id || c.recievingUser._id === id ? true : false)
         return bools.indexOf(true) > -1 ? true : false
     }
 
     const getFriend = async (username) => {
         const friend = await fetch(`/api/users/${username}`)
         const result = await friend.json()
+        console.log(result)
         if (result?._id === currentUser.id || checkContacts(result?._id)) {
             return
         }
@@ -62,7 +63,9 @@ const Modal = ({ mode, setMode, currentUser }) => {
     }
 
     const sendFriendRequest = async e => {
-        
+        e.preventDefault()
+        const res = await fetch(`/api/contact/${currentUser.id}/${friend._id}`)
+        console.log(res.sender)
     }
 
     useEffect(() => {
@@ -134,12 +137,12 @@ const Modal = ({ mode, setMode, currentUser }) => {
                         onClick={() => setMode({ ...mode, display: 'none', type: '' })}
                     >X</button>
                     <label className="form-label d-block" htmlFor='search'>Add Contact</label>
-                    <input 
-                    type='text' 
-                    id='search' 
-                    value={contact} 
-                    onChange={e => setContact(e.target.value)}
-                    placeholder='Enter Username...'
+                    <input
+                        type='text'
+                        id='search'
+                        value={contact}
+                        onChange={e => setContact(e.target.value)}
+                        placeholder='Enter Username...'
                     />
                     {friend && <div key={friend._id} className='p-2 mt-2 text-center border border-success rounded'>
                         <img
@@ -155,25 +158,49 @@ const Modal = ({ mode, setMode, currentUser }) => {
                         <span style={{
                             padding: '0 2rem 0 2rem'
                         }}>{friend.username}</span>
-                        <button 
-                        className=""
-                        onClick={sendFriendRequest}>Add Friend</button>
+                        <button
+                            className=" bg-success text-light rounded"
+                            onClick={sendFriendRequest}>Add</button>
                     </div>}
-                    {currentUser.contacts && <div className="row text-center mt-4 border-top border-dark">
+
+                    {currentUser.contacts && <div className="
+                    container text-center mt-4 border-top border-dark">
                         <p className="display-6 text-dark">Contacts:</p>
-                        {currentUser.contacts.map(c => <div key={c._id} className='p-1 mt-2 border border-success rounded'>
-                            <img
-                                className="postimg"
-                                src={`/stock/${c.image}.png`}
-                                alt='stock profile'
-                                width="40"
-                                height="40"
-                                style={{
-                                    borderRadius: "50%",
-                                }}
-                            />
-                            <p>{c.username}</p>
-                        </div>)}
+                        {currentUser.contacts.map((c, i) => {
+                            return currentUser.id === c.sendingUser._id ? <div key={i} className='p-1 mt-2 border border-success rounded row'>
+                                {c.pending && <span className='col-6'>Sent to: {`[cancel request]`}</span>}
+                                <span className='col-3'>
+                                    <img
+                                        className="postimg"
+                                        src={`/stock/${c.recievingUser.image}.png`}
+                                        alt='stock profile'
+                                        width="40"
+                                        height="40"
+                                        style={{
+                                            borderRadius: "50%",
+                                        }}
+                                    />
+                                </span>
+                                <span className="col-3">{c.recievingUser.username}</span>
+                            </div> : 
+                            // Current User Recieved Request
+                            <div key={i} className='p-1 mt-2 border border-success rounded'>
+                                <img
+                                    className="postimg"
+                                    src={`/stock/${c.sendingUser.image}.png`}
+                                    alt='stock profile'
+                                    width="40"
+                                    height="40"
+                                    style={{
+                                        borderRadius: "50%",
+                                    }}
+                                />
+                                <span style={{
+                                    padding: '0 2rem 0 2rem'
+                                }}>{c.sendingUser.username}</span>
+                                {c.pending && <>Accept / Decline</>}
+                            </div>
+                        })}
                     </div>}
                 </form>}
         </div>

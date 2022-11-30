@@ -22,7 +22,7 @@ const Home = (props) => {
       username: appState.user.username,
       balance: appState.user.balance,
       contacts: appState.user.contacts
-    });
+    })
     // console.log(currentUser);
   }, [appState]);
 
@@ -38,10 +38,11 @@ const Home = (props) => {
     });
     const response = await query.json();
     setTrans(response);
-  };
+  }
 
   useEffect(() => {
     if (currentUser) {
+      console.log(currentUser)
       getUserTrans()
     }
   }, [currentUser])
@@ -54,7 +55,9 @@ const Home = (props) => {
       {currentUser && <Modal
         mode={mode}
         setMode={setMode}
-        currentUser={currentUser} />}
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+        />}
       <main style={{ display: "flex", justifyContent: "center" }}>
         <div className="my-3 p-3 bg-body bg-light rounded shadow-sm">
           <h6 className="purple-color border-bottom pb-2 mb-0">Transactions</h6>
