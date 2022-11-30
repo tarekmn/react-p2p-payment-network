@@ -60,9 +60,16 @@ module.exports = {
     // /api/contact/contactId
     async cancelRequest(req, res) {
         try {
-            // When I cancel a sent request or decline a pending request
-            // create contact with pending true
-            res.status(200).json(data)
+            const contact = await Contact.findByIdAndDelete(req.params.contactId)
+            console.log(contact)
+            const sender = await User.findByIdAndUpdate(contact.sendingUser, {
+                $pull: { contacts: { _id: contact._id } }
+            }, { new: true })
+            const reciever = await User.findByIdAndUpdate(contact.recievingUser, {
+                $pull: { contacts: { _id: contact._id } }
+            }, { new: true })
+
+            res.status(200).json({ sender: { _id: sender._id, username: sender.username, contacts: sender.contacts }, reciever: { _id: reciever._id, username: reciever.username, contacts: reciever.contacts } })
         } catch (error) {
             console.log(error.message)
             res.status(500).json(error)

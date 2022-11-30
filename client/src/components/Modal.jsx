@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useState } from "react"
+import Button from 'react-bootstrap/Button'
 
 const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
     const { type, display } = mode
@@ -75,8 +76,14 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
         e.preventDefault()
     }
 
-    const cancelRequest = async e => {
+    const cancelRequest = async (e) => {
         e.preventDefault()
+        console.log(e.target.id)
+        const data = await fetch(`/api/contact/${e.target.id}`, {
+            method: 'DELETE'
+        })
+        console.log(await data.json())
+        // setCurrentUser({...currentUser, contacts: data.contacts})
     }
 
     useEffect(() => {
@@ -92,7 +99,7 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                 position: "absolute",
                 zIndex: '1000',
                 backgroundColor: 'blanchedalmond',
-                width: '80%',
+                width: '95%',
                 height: 'auto',
                 margin: '0 auto 0 auto',
                 right: '0',
@@ -101,14 +108,15 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
             }}>
             {type === 'pay' &&
                 <form className="container" >
-                    <button
+                    <Button
                         style={{
                             position: "absolute",
                             top: '.5rem',
                             right: '.5rem'
                         }}
+                        className='bg-danger text-dark'
                         onClick={() => setMode({ ...mode, display: 'none', type: '' })}
-                    >X</button>
+                    >X</Button>
 
                     <label className="form-label" htmlFor='who'>Choose Contact</label>
                     <select id='who'
@@ -133,20 +141,21 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                     <label className="form-label" htmlFor='amount'>How Much? {`(Balance: ${currentUser.balance})`}</label>
                     <input className='form-control' id='amount' value={transaction.amount} max={currentUser.balance} min='0' onChange={e => setTransaction({ ...transaction, amount: e.target.value })} />
 
-                    <button className="form-control mt-2 bg-success" onClick={handleSend} >Send $</button>
-                    <button className="form-control mt-2 bg-danger" onClick={handleRequest} >Request $</button>
+                    <Button className="form-control mt-2 bg-success" onClick={handleSend} >Send $</Button>
+                    <Button className="form-control mt-2 bg-danger" onClick={handleRequest} >Request $</Button>
 
                 </form>}
             {type === 'contact' &&
                 <form>
-                    <button
+                    <Button
                         style={{
                             position: "absolute",
                             top: '.5rem',
                             right: '.5rem'
                         }}
+                        className='bg-danger text-dark'
                         onClick={() => setMode({ ...mode, display: 'none', type: '' })}
-                    >X</button>
+                    >X</Button>
                     <label className="form-label d-block" htmlFor='search'>Add Contact</label>
                     <input
                         type='text'
@@ -169,20 +178,20 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                         <span style={{
                             padding: '0 2rem 0 2rem'
                         }}>{friend.username}</span>
-                        <button
+                        <Button
                             className=" bg-success text-light rounded"
-                            onClick={sendFriendRequest}>Add</button>
+                            onClick={sendFriendRequest}>Add</Button>
                     </div>}
 
                     {currentUser.contacts && <div className="
-                    container text-center mt-4 border-top border-dark">
+                    container mt-4 border-top border-dark">
                         <p className="display-6 text-dark">Contacts:</p>
                         {currentUser.contacts.map((c, i) => {
                             return currentUser.id === c.sendingUser._id ? 
                             // Current User Sent Request
-                            <div key={i} className='p-1 mt-2 border border-success rounded row'>
-                                {c.pending && <span className='col-6'>Sent to: {`[cancel request]`}</span>}
-                                <span className='col-3'>
+                            <div key={i} className='p-1 mt-2 border border-success rounded row justify-around'>
+                                {c.pending && <span className='col'>Sent to:</span>}
+                                <span className='col'>
                                     <img
                                         className="postimg"
                                         src={`/stock/${c.recievingUser.image}.png`}
@@ -193,8 +202,13 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                                             borderRadius: "50%",
                                         }}
                                     />
+                                    <span>{c.recievingUser.username}</span>
                                 </span>
-                                <span className="col-3">{c.recievingUser.username}</span>
+                                {c.pending && <Button
+                                id={c._id} 
+                                onClick={cancelRequest}
+                                className='bg-danger col'
+                                >Cancel</Button>}
                             </div> : 
                             // Current User Recieved Request
                             <div key={i} className='p-1 mt-2 border border-success rounded row'>
