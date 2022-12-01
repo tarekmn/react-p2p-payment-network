@@ -34,10 +34,10 @@ const AllFeed = () => {
     return(
 
     <div className="card text-white bg-dark mb-3" style={{maxWidth: "18rem", margin:'0 auto'}}>
-        <div className="card-header">All Transcations</div>
-        <div className="card-body">
-            <div className="card-text" style={{border: "black 1px solid"}}>
-                <div  id="scrollableDiv" style={{ height: 130, overflow: "auto",}}>
+        <div className="card-header" style={{margin: 20, textAlign: 'center'}}>All Transcations</div>
+        <div className="card-body" style ={{padding:10}}>
+            <div className="card-text" style={{padding:10, border: "black 1px solid"}}>
+                <div  id="scrollableDiv" style={{ padding:10, height: 130, overflow: "auto",}}>
                     <InfiniteScroll
                         dataLength={dummy.length}
                         next={dummy}

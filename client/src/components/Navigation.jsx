@@ -20,7 +20,7 @@ const Navigation = (props) => {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark" className="justify-content-center">
+      <Navbar bg="dark" variant="dark" className="justify-content-center" style= {{marginBottom: 20}}>
         <Nav id="navBar">
           <Nav.Item>
             <Nav.Link
