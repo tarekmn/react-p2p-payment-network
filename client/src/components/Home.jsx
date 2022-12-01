@@ -24,8 +24,9 @@ const Home = (props) => {
       balance: appState.user.balance,
       contacts: appState.user.contacts,
       transactions: appState.user.transactions,
-      image: appState.user.image,
-    });
+      image: appState.user.image
+    })
+
     // console.log(currentUser);
   }, [appState]);
 

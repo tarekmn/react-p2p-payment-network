@@ -22,10 +22,12 @@ const Feed = ({ currentUser, setCurrentUser }) => {
         >
           {currentUser.transactions &&
             currentUser.transactions.map((t, i) => {
+
+              
               const tstyle =
                 t.creditUser._id === currentUser.id
                   ? { backgroundColor: "#00E661" }
-                  : { backgroundColor: "#CA2B29" };
+                  : { backgroundColor: "#CA2B29" }
 
               return (
                 <div
@@ -38,6 +40,7 @@ const Feed = ({ currentUser, setCurrentUser }) => {
                     src={`/stock/${currentUser.image}.png`}
                     width="35"
                     height="35"
+                    alt='stock profile'
                     style={{
                       borderRadius: "50%",
                       margin: 4,
@@ -56,8 +59,11 @@ const Feed = ({ currentUser, setCurrentUser }) => {
                     </>
                   )}
                 </div>
-              );
-            })}
+
+              )
+            } 
+            )}
+
         </InfiniteScroll>
       </div>
     </>
