@@ -23,10 +23,12 @@ const Home = (props) => {
       id: appState.user._id,
       username: appState.user.username,
       balance: appState.user.balance,
-      contacts: appState.user.contacts
+      contacts: appState.user.contacts,
+      image: appState.user.image
     })
-    // console.log(currentUser);
+    
   }, [appState]);
+  console.log(appState);
 
   const [trans, setTrans] = useState([]);
   const [mode, setMode] = useState({
