@@ -2,10 +2,9 @@ import { useAppContext } from "../utils/AppContext";
 import { useState, useEffect } from "react";
 import Footer from "./Footer";
 
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import { motion } from "framer-motion";
-
 
 const Profile = () => {
   const { appState, lookupUser } = useAppContext();
@@ -18,15 +17,12 @@ const Profile = () => {
       email: appState.user.email,
       transcations: [appState.user.transcation],
       balance: appState.user.balance,
-      img: appState.user.image
+      img: appState.user.image,
     });
     console.log(currentUser);
   }, [appState]);
 
-
-  
-  console.log(currentUser)
-
+  console.log(currentUser);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -48,27 +44,26 @@ const Profile = () => {
 
   return (
     <>
-
-    {currentUser && (
-
-    
-      <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
-        <div className="container py-5 h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className=" ">
-              <div className="card" style={{borderRadius: "15px",backgroundColor: "#eee"}}>
-                <div className="card-body text-center">
-                  <div className="mt-3 mb-4">
-                    <img src={`/stock/${currentUser.img}.png`}
-                      className="rounded-circle img-fluid" style={{width: "100px"}} />
-                  </div>
-                  <h4 className="mb-2">{currentUser.username}</h4>
-                  <p className="text-muted mb-4">{currentUser.email}</p>
-                  <div className="d-flex justify-content-between text-center mt-5 mb-2">
-                    <div>
-                      <p className="mb-2 h5">{currentUser.balance}</p>
-                      <p className="text-muted mb-0">Wallet Balance</p>
-
+      {currentUser && (
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: "100%" }}
+          exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
+        >
+          <div className="container py-5 h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className=" ">
+                <div
+                  className="card"
+                  style={{ borderRadius: "15px", backgroundColor: "#eee" }}
+                >
+                  <div className="card-body text-center">
+                    <div className="mt-3 mb-4">
+                      <img
+                        src={`/stock/${currentUser.img}.png`}
+                        className="rounded-circle img-fluid"
+                        style={{ width: "100px" }}
+                      />
                     </div>
                     <h4 className="mb-2">{currentUser.username}</h4>
                     <p className="text-muted mb-4">{currentUser.email}</p>
@@ -77,62 +72,68 @@ const Profile = () => {
                         <p className="mb-2 h5">{currentUser.balance}</p>
                         <p className="text-muted mb-0">Wallet Balance</p>
                       </div>
+                      <h4 className="mb-2">{currentUser.username}</h4>
+                      <p className="text-muted mb-4">{currentUser.email}</p>
+                      <div className="d-flex justify-content-between text-center mt-5 mb-2">
+                        <div>
+                          <p className="mb-2 h5">{currentUser.balance}</p>
+                          <p className="text-muted mb-0">Wallet Balance</p>
+                        </div>
 
-                      <div>
-                        <p className="mb-2 h5">
-                          {currentUser.transcations.length}
-                        </p>
-                        <p className="text-muted mb-0">Total Transactions</p>
+                        <div>
+                          <p className="mb-2 h5">
+                            {currentUser.transcations.length}
+                          </p>
+                          <p className="text-muted mb-0">Total Transactions</p>
+                        </div>
                       </div>
+                      <button
+                        onClick={() => setIsShown((current) => !current)}
+                        type="button"
+                        className="btn btn-primary btn-rounded btn-lg"
+                      >
+                        Update Info
+                      </button>
                     </div>
-                    <button
-                      onClick={() => setIsShown((current) => !current)}
-                      type="button"
-                      className="btn btn-primary btn-rounded btn-lg"
-                    >
-                      Update Info
-                    </button>
                   </div>
                 </div>
               </div>
             </div>
+            {isShown && (
+              <Form style={{}} onSubmit={handleFormSubmit}>
+                <Form.Group style={{ width: "50%", margin: "0 auto" }}>
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="username"
+                    placeholder="John"
+                    value={currentUser.username}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group style={{ width: "50%", margin: "0 auto" }}>
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="email"
+                    placeholder="jdoe@gmail.com"
+                    value={currentUser.email}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-6"
+                  style={{ width: "50%", margin: "0 auto", padding: "5px" }}
+                >
+                  <Button type="submit" variant="primary" size="md">
+                    Submit
+                  </Button>
+                </Form.Group>
+              </Form>
+            )}
           </div>
-          {isShown && (
-            <Form style={{}} onSubmit={handleFormSubmit}>
-              <Form.Group style={{ width: "50%", margin: "0 auto" }}>
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="username"
-                  placeholder="John"
-                  value={currentUser.username}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group style={{ width: "50%", margin: "0 auto" }}>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="email"
-                  placeholder="jdoe@gmail.com"
-                  value={currentUser.email}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-6"
-                style={{ width: "50%", margin: "0 auto", padding: "5px" }}
-              >
-                <Button type="submit" variant="primary" size="md">
-                  Submit
-                </Button>
-              </Form.Group>
-          </Form>
-        )}
-        
-      </motion.div>
-    )}
-
+        </motion.div>
+      )}
     </>
   );
 };
