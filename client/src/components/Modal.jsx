@@ -38,22 +38,23 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                 amount: transaction.amount
             })
         })
-        console.log(await r.json())
+
         if (r.ok) {
-            // update balances
-            // reload homepage
+            const t = currentUser.transactions.map(t => t)
+            t.push(await r.json())
+            setCurrentUser({...currentUser, transactions: t, balance: t[t.length - 1].debitUser.balance})
         }
     }
 
-    const handleRequest = async e => {
-        e.preventDefault()
-        setTransaction({ ...transaction, sendingUser: '' })
-        await fetch('/ap/transaction/', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(transaction)
-        })
-    }
+    // const handleRequest = async e => {
+    //     e.preventDefault()
+    //     setTransaction({ ...transaction, sendingUser: '' })
+    //     await fetch('/ap/transaction/', {
+    //         method: 'POST',
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(transaction)
+    //     })
+    // }
 
     const checkContacts = (id) => {
         const bools = currentUser.contacts.map(c => c.sendingUser._id === id || c.recievingUser._id === id ? true : false)
@@ -169,7 +170,7 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                     <input className='form-control' id='amount' type='number' value={transaction.amount} max={`${currentUser.balance}`} min='0' onChange={e => setTransaction({ ...transaction, amount: e.target.value })} />
 
                     <Button className="form-control mt-2 bg-success" onClick={handleSend} >Send $</Button>
-                    <Button className="form-control mt-2 bg-danger" onClick={handleRequest} >Request $</Button>
+                    {/* <Button className="form-control mt-2 bg-danger" onClick={handleRequest} >Request $</Button> */}
 
                 </form>}
             {type === 'contact' &&
