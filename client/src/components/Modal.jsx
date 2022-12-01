@@ -9,25 +9,36 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
     const [friend, setFriend] = useState(null)
 
     const [transaction, setTransaction] = useState({
-        sendingUser: '',
         recievingUser: '',
-        amount: '',
-        transactionText: ''
+        text: '',
+        amount: ''
     })
 
     const handleSend = async e => {
         e.preventDefault()
-        setTransaction({
-            ...transaction,
-            sendingUser: transaction.recievingUser,
-            recievingUser: currentUser.id
-        })
-        const r = await fetch('/ap/transaction/', {
+        if (transaction.recievingUser === 'x' || !transaction.recievingUser) {
+            alert('Please Choose a Contact')
+            return
+        }
+        if (!transaction.amount || transaction.amount === 0 || transaction.amount > currentUser.balance) {
+            alert('Please enter number between 0 and your balance.')
+            return
+        }
+        if (!transaction.text) {
+            alert('Please fill out text field.')
+            return
+        }
+        const r = await fetch('/api/transaction/', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(transaction)
+            body: JSON.stringify({
+                transactionText: transaction.text,
+                creditUser: transaction.recievingUser,
+                debitUser: currentUser.id,
+                amount: transaction.amount
+            })
         })
-        console.log(r)
+        console.log(await r.json())
         if (r.ok) {
             // update balances
             // reload homepage
@@ -63,22 +74,22 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
         const res = await fetch(`/api/contact/${currentUser.id}/${friend._id}`)
         const data = await res.json()
         // console.log(data)
-        setCurrentUser({...currentUser, contacts: data.contacts})
+        setCurrentUser({ ...currentUser, contacts: data.contacts })
         setFriend(null)
     }
 
     const acceptRequest = async e => {
         e.preventDefault()
-        const res = await fetch(`/api/contact/`,{
+        const res = await fetch(`/api/contact/`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contactId: e.target.id
             })
         })
         const data = await res.json()
-        const contacts = currentUser.contacts.map(c => c._id === data._id ? {...c, pending: false } : c)
-        setCurrentUser({...currentUser, contacts: contacts})
+        const contacts = currentUser.contacts.map(c => c._id === data._id ? { ...c, pending: false } : c)
+        setCurrentUser({ ...currentUser, contacts: contacts })
     }
 
     const cancelRequest = async (e) => {
@@ -91,7 +102,7 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
         console.log(currentUser.contacts)
         const contacts = currentUser.contacts.filter(c => c._id !== e.target.id)
         console.log(contacts)
-        setCurrentUser({...currentUser, contacts: contacts})
+        setCurrentUser({ ...currentUser, contacts: contacts })
     }
 
     useEffect(() => {
@@ -135,19 +146,27 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                         }}
                         required
                     >
-                        {currentUser.contacts.map(c =>
-                            <option
-                                key={c._id}
-                                value={c._id}
-                            >{c.username}</option>
-                        )}
+                        <option value={'x'}>Choose Contact</option>
+                        {currentUser.contacts.map((c, i) => {
+                            if (!c.pending) {
+                                const x = c.sendingUser.id === currentUser.id ? <option key={i} value={c.recievingUser.id}>{c.recievingUser.username}</option> : <option key={i} value={c.sendingUser.id}>{c.sendingUser.username}</option>
+                                return x
+                            }
+                        })}
+
                     </select>
 
                     <label className="form-label" htmlFor='for'>What's it for?</label>
-                    <textarea className="form-control" id='for' value={transaction.transactionText} onChange={e => setTransaction({ ...transaction, transactionText: e.target.value })} />
+                    <input 
+                    className="form-control" 
+                    id='for' 
+                    value={transaction.text} 
+                    onChange={e => setTransaction({ ...transaction, text: e.target.value })} 
+                    maxLength={20}
+                    />
 
                     <label className="form-label" htmlFor='amount'>How Much? {`(Balance: ${currentUser.balance})`}</label>
-                    <input className='form-control' id='amount' value={transaction.amount} max={currentUser.balance} min='0' onChange={e => setTransaction({ ...transaction, amount: e.target.value })} />
+                    <input className='form-control' id='amount' type='number' value={transaction.amount} max={`${currentUser.balance}`} min='0' onChange={e => setTransaction({ ...transaction, amount: e.target.value })} />
 
                     <Button className="form-control mt-2 bg-success" onClick={handleSend} >Send $</Button>
                     <Button className="form-control mt-2 bg-danger" onClick={handleRequest} >Request $</Button>
@@ -195,48 +214,48 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                     container mt-4 border-top border-dark">
                         <p className="display-6 text-dark">Contacts:</p>
                         {currentUser.contacts.map((c, i) => {
-                            return currentUser.id === c.sendingUser._id ? 
-                            // Current User Sent Request
-                            <div key={i} className='p-1 mt-2 border border-success rounded row justify-around'>
-                                {c.pending && <span className='col'>Sent to:</span>}
-                                <span className='col'>
-                                    <img
-                                        className="postimg"
-                                        src={`/stock/${c.recievingUser.image}.png`}
-                                        alt='stock profile'
-                                        width="40"
-                                        height="40"
-                                        style={{
-                                            borderRadius: "50%",
-                                        }}
-                                    />
-                                    <span>{c.recievingUser.username}</span>
-                                </span>
-                                {c.pending && <Button
-                                id={c._id} 
-                                onClick={cancelRequest}
-                                className='bg-danger col'
-                                >Cancel</Button>}
-                            </div> : 
-                            // Current User Recieved Request
-                            <div key={i} className='p-1 mt-2 border border-success rounded row'>
-                                {c.pending && <span className='col'>Request from:</span>}
-                                <span className='col'>
-                                <img
-                                    className="postimg"
-                                    src={`/stock/${c.sendingUser.image}.png`}
-                                    alt='stock profile'
-                                    width="40"
-                                    height="40"
-                                    style={{
-                                        borderRadius: "50%",
-                                    }}
-                                />
-                                </span>
-                                
-                                <span className='col'>{c.sendingUser.username}</span>
-                                {c.pending && <><Button id={c._id} onClick={acceptRequest}>Accept</Button> / <Button id={c._id} onClick={cancelRequest}>Decline</Button></>}
-                            </div>
+                            return currentUser.id === c.sendingUser._id ?
+                                // Current User Sent Request
+                                <div key={i} className='p-1 mt-2 border border-success rounded row justify-around'>
+                                    {c.pending && <span className='col'>Sent to:</span>}
+                                    <span className='col'>
+                                        <img
+                                            className="postimg"
+                                            src={`/stock/${c.recievingUser.image}.png`}
+                                            alt='stock profile'
+                                            width="40"
+                                            height="40"
+                                            style={{
+                                                borderRadius: "50%",
+                                            }}
+                                        />
+                                        <span>{c.recievingUser.username}</span>
+                                    </span>
+                                    {c.pending && <Button
+                                        id={c._id}
+                                        onClick={cancelRequest}
+                                        className='bg-danger col'
+                                    >Cancel</Button>}
+                                </div> :
+                                // Current User Recieved Request
+                                <div key={i} className='p-1 mt-2 border border-success rounded row'>
+                                    {c.pending && <span className='col'>Request from:</span>}
+                                    <span className='col'>
+                                        <img
+                                            className="postimg"
+                                            src={`/stock/${c.sendingUser.image}.png`}
+                                            alt='stock profile'
+                                            width="40"
+                                            height="40"
+                                            style={{
+                                                borderRadius: "50%",
+                                            }}
+                                        />
+                                    </span>
+
+                                    <span className='col'>{c.sendingUser.username}</span>
+                                    {c.pending && <><Button id={c._id} onClick={acceptRequest}>Accept</Button> / <Button id={c._id} onClick={cancelRequest}>Decline</Button></>}
+                                </div>
                         })}
                     </div>}
                 </form>}

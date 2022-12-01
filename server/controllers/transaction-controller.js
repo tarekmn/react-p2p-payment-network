@@ -32,9 +32,21 @@ module.exports = {
   },
 
   async createTransaction(req, res) {
+    console.log('hit')
     try {
-      const data = await Transaction.create(req.body)
-      res.status(200).json(data)
+      const transaction = await Transaction.create(req.body)
+
+      // add transaction id to users
+      const creditor = await User.findByIdAndUpdate(req.body.creditUser, {
+        $push: { transactions: transaction._id },
+        $inc: { balance: + transaction.amount }
+      })
+      const debitor = await User.findByIdAndUpdate(req.body.debitUser, {
+        $push: { transactions: transaction._id },
+        $inc: { balance: (-1 * transaction.amount) }
+      })
+
+      res.status(200).json({ creditor, debitor })
     } catch (error) {
       console.log(error.message)
       res.status(500).json(error)

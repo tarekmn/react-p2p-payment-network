@@ -21,7 +21,7 @@ const Feed = ({ trans, currentUser }) => {
           {trans &&
             trans.map((t, i) => {
 
-              const tstyle = t.creditUser._id === currentUser.id ?
+              const tstyle = t.creditUser === currentUser.id ?
                 {
                   backgroundColor: '#ca2b29',
                 } :

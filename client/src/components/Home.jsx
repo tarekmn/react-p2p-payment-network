@@ -23,12 +23,12 @@ const Home = (props) => {
       id: appState.user._id,
       username: appState.user.username,
       balance: appState.user.balance,
-      contacts: appState.user.contacts
+      contacts: appState.user.contacts,
+      transactions: appState.user.transactions
     })
     // console.log(currentUser);
   }, [appState]);
 
-  const [trans, setTrans] = useState([]);
   const [mode, setMode] = useState({
     display: 'none',
     type: ''
@@ -39,12 +39,11 @@ const Home = (props) => {
       method: "GET",
     });
     const response = await query.json();
-    setTrans(response);
+    setCurrentUser({...currentUser, transactions: response})
   }
 
   useEffect(() => {
     if (currentUser) {
-      console.log(currentUser)
       getUserTrans()
     }
   }, [currentUser])
@@ -70,7 +69,7 @@ const Home = (props) => {
             className="d-flex text-muted pt-3"
             style={{ border: "black 1px solid", padding: "4%" }}
           >
-            {trans && currentUser && <Feed trans={trans} currentUser={currentUser} />}
+            {/* {trans && currentUser && <Feed trans={trans} currentUser={currentUser} />} */}
           </div>
         </div>
       </main>
