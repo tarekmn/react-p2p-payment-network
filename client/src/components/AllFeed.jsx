@@ -55,6 +55,7 @@ const AllFeed = () => {
     >
       <div
         className="card text-white bg-dark mb-3"
+
         style={{
           maxWidth: "18rem",
           margin: "0 auto",
@@ -64,6 +65,7 @@ const AllFeed = () => {
         <div className="card-header" style={{ textAlign: "center" }}>
           All Transcations
         </div>
+
         <div className="card-body">
           <div className="card-text" style={{ border: "black 1px solid" }}>
             <div id="scrollableDiv" style={{ height: 130, overflow: "auto" }}>
@@ -72,6 +74,7 @@ const AllFeed = () => {
                 next={dummy}
                 scrollableTarget="scrollableDiv"
               >
+
                 {allTrans &&
                   allTrans.map((t, i) => {
                     const tstyle = { backgroundColor: "white" };
@@ -100,6 +103,7 @@ const AllFeed = () => {
                       </div>
                     );
                   })}
+
               </InfiniteScroll>
             </div>
           </div>
