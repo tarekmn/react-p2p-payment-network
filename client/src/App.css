@@ -37,6 +37,11 @@
   }
 }
 
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 .credit {
   background-color: #59c738;
   color: white;

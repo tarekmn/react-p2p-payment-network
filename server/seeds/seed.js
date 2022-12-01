@@ -1,137 +1,85 @@
-const connection = require("../config/connection");
-const { User, Transaction } = require("../models");
+const connection = require("../config/connection")
+const { User, Transaction, Contact } = require("../models")
 
-
-connection.on("error", (err) => err);
+connection.on("error", (err) => err)
 
 connection.once("open", async () => {
-  console.log("connected");
+  console.log("connected")
 
-  // Drop existing users
-  await User.deleteMany({});
+  await User.deleteMany({})
+  await Transaction.deleteMany({})
+  await Contact.deleteMany({})
 
-  // Drop existing transaction
-  await Transaction.deleteMany({});
+  // Sign up two new users
 
-  // Insert users
-
-  const user1 = await User.create({
+  const gary = await User.create({
     "_id": "637e5c0785ae7bff97f75fb3",
-    "username": "Tarek",
-    "email": "test@gmail.com",
-    "password": "test123",
+    "username": "Gary",
+    "email": "galmighty@gmail.com",
+    "password": "password",
     "image": "stock4",
-    "balance": 1000
-  });
-
-  const user2 = await User.create({
-    "_id": "637e5c38797f0bd7a8674538",
-    "username": "Jon",
-    "email": "test2@gmail.com",
-    "password": "test123",
-    "image": "stock6",
-    "balance": 1000
+    "balance": 1000,
+    "contacts": ["63878c6870635eb00e49e284"],
+    "transactions": [
+      "63878c53c9a645f3681a76a7",
+      "63878ccc226baf2983426be5"
+    ]
   })
 
-  const user3 = await User.create({
+  const katy = await User.create({
     "_id": "6385142f3941552c03082aef",
-    "username": "Emma",
-    "email": "test3@gmail.com",
-    "password": "test123",
+    "username": "Katy",
+    "email": "kvince@gmail.com",
+    "password": "password",
     "image": "stock5",
-    "balance": 1000
+    "balance": 1000,
+    "contacts": ["63878c6870635eb00e49e284"],
+    "transactions": [
+      "63878c53c9a645f3681a76a7",
+      "63878ccc226baf2983426be5"
+    ]
   })
 
-  // Insert transaction
+  // Gary added Katy as a contact
+  const contact = await Contact.create({
+    "_id": "63878c6870635eb00e49e284",
+    "sendingUser": "637e5c0785ae7bff97f75fb3",
+    "recievingUser": "6385142f3941552c03082aef",
+    "pending": false
+  })
+
+  // Gary sent Katy money, and she accepted
   const transaction1 = await Transaction.create({
-    "transactionText": "Beer",
+    "_id": "63878c53c9a645f3681a76a7",
+    "transactionText": "Happy Thanksgiving",
     "amount": 50,
-    "type": "credit",
-    "sendingUser": "637e5c38797f0bd7a8674538",
-    "recievingUser": '637e5c0785ae7bff97f75fb3',
-    "pending": false
-  });
-
-  const transaction2 = await Transaction.create({
-    "transactionText": "Rent",
-    "amount": 600,
-    "type": "credit",
-    "sendingUser": "6385142f3941552c03082aef",
-    "recievingUser": '637e5c38797f0bd7a8674538',
-    "pending": false
-  });
-
-  const transaction3 = await Transaction.create({
-    "transactionText": "Dinner",
-    "amount": 97,
     "type": "debit",
-    "sendingUser": "637e5c38797f0bd7a8674538",
-    "recievingUser": '637e5c0785ae7bff97f75fb3',
-    "pending": false
+    "creditUser": katy._id,
+    "debitUser": gary._id
   });
 
-  await User.findOneAndUpdate(
-    { _id: user1._id },
-    {
-      $push: { transaction: transaction1._id },
-      $inc: { balance: + transaction1.amount }
-    },
-    { new: true }
-  )
+  // Katy sent Gary money, and he accepted
+  const transaction2 = await Transaction.create({
+    "_id": "63878ccc226baf2983426be5",
+    "transactionText": "Merry Christmas",
+    "amount": 50,
+    "type": "debit",
+    "creditUser": gary._id,
+    "debitUser": katy._id
+  })
 
-  await User.findOneAndUpdate(
-    { _id: user2._id },
-    {
-      $push: { transaction: transaction1._id },
-      $inc: { balance: - transaction1.amount }
-    },
-    { new: true }
-
-  )
-
-  await User.findOneAndUpdate(
-    { _id: user2._id },
-    {
-      $push: { transaction: transaction2._id },
-      $inc: { balance: + transaction2.amount }
-    },
-    { new: true }
-  )
-
-  await User.findOneAndUpdate(
-    { _id: user3._id },
-    {
-      $push: { transaction: transaction2._id },
-      $inc: { balance: - transaction2.amount }
-    },
-    { new: true }
-  )
-
-  await User.findOneAndUpdate(
-    { _id: user1._id },
-    {
-      $push: { transaction: transaction3._id },
-      $inc: { balance: + transaction3.amount }
-    },
-    { new: true }
-  )
-
-  await User.findOneAndUpdate(
-    { _id: user2._id },
-    {
-      $push: { transaction: transaction3._id },
-      $inc: { balance: - transaction3.amount }
-    },
-    { new: true }
-  )
-
-
-
-
-
+  // For testing contact function
+  const bob = await User.create({
+    "_id": "6387a52df286afba049c8212",
+    "username": "Bob",
+    "email": "bob@gmail.com",
+    "password": "password",
+    "image": "stock2",
+    "balance": 1000
+  })
 
   // Log out the seed data to indicate what should appear in the database
-  console.table(User)
+  console.table({katy, gary, bob})
   console.info("Seeding complete!")
   process.exit()
 })

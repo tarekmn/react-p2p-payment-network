@@ -1,10 +1,7 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useState, useEffect } from "react";
-
-const Feed = (props) => {
-  // console.log(props.trans);
-  // // console.log(props.currentUser.id);
-
+const Feed = ({ currentUser, setCurrentUser }) => {
+  console.log(currentUser.transactions);
+  console.log(currentUser);
   return (
     <>
       <div
@@ -12,67 +9,56 @@ const Feed = (props) => {
         style={{ height: 250, width: 300, overflow: "auto" }}
       >
         <InfiniteScroll
-          dataLength={props.trans.length}
-          next={props.trans}
+          dataLength={currentUser.transactions.length}
+          next={currentUser.transactions}
           scrollableTarget="scrollableDiv"
           style={{
             margin: 5,
             border: "black solid 2px",
+            padding: ".5rem 0 0 0",
+            backgroundColor: "black",
           }}
         >
-          {props.trans &&
-            props.trans.map((item, i) => (
-              <div
-                key={i}
-                className={`d-flex text-muted pt-3 ${
-                  props.currentUser.id === item.sendingUser._id
-                    ? `debit`
-                    : `credit`
-                }`}
-              >
-                <img
-                  className="postimg"
-                  src={`/stock/${item.sendingUser.image}.png`}
-                  width="40"
-                  height="40"
-                  style={{
-                    borderRadius: "50%",
-                  }}
-                />
-                <p
-                  className="pb-3 mb-0 small lh-sm border-bottom"
-                  style={{
-                    border: "black 1px solid",
-                    flex: 1,
-                    color: "black",
-                    margin: 10,
-                  }}
+          {currentUser.transactions &&
+            currentUser.transactions.map((t, i) => {
+              const tstyle =
+                t.creditUser._id === currentUser.id
+                  ? { backgroundColor: "#00E661" }
+                  : { backgroundColor: "#CA2B29" };
+              return (
+                <div
+                  key={i}
+                  className="border border-dark rounded mb-2 text-dark p-1"
+                  style={tstyle}
                 >
-                  <strong className="d-block text-gray-dark">
-                    <a
-                      className="purple-color"
-                      href="/users/{{post.User.id}}"
-                      style={{ flex: 1, color: "black", margin: 20 }}
-                    >
-                      Amount ${" "}
-                      {props.currentUser.id === item.sendingUser._id
-                        ? `-`
-                        : `+`}
-                      {item.amount}
-                    </a>
-                  </strong>
-                  {item.sendingUser.username +
-                    `  sent $${item.amount} to ` +
-                    item.recievingUser.username +
-                    ` for ` +
-                    item.transactionText}
-                </p>
-              </div>
-            ))}
+                  <img
+                    className="postimg"
+                    src={`/stock/${currentUser.image}.png`}
+                    width="35"
+                    height="35"
+                    alt="stock profile"
+                    style={{
+                      borderRadius: "50%",
+                      margin: 4,
+                    }}
+                  />
+                  {t.creditUser._id === currentUser.id ? (
+                    <>
+                      {t.debitUser.username} sent you ${t.amount} for{" "}
+                      {t.transactionText}
+                    </>
+                  ) : (
+                    <>
+                      You sent {t.creditUser.username} ${t.amount} for{" "}
+                      {t.transactionText}
+                    </>
+                  )}
+                </div>
+              );
+            })}
         </InfiniteScroll>
       </div>
     </>
   );
 };
-
 export default Feed;
