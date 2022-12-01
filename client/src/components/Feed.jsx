@@ -4,19 +4,14 @@ const Feed = ({ currentUser, setCurrentUser }) => {
   console.log(currentUser);
   return (
     <>
-      <div
-        id="scrollableDiv"
-        style={{ height: 250, width: 300, overflow: "auto" }}
-      >
+      <div id="scrollableDiv" style={{ overflow: "auto", margin: "0 auto" }}>
         <InfiniteScroll
           dataLength={currentUser.transactions.length}
           next={currentUser.transactions}
           scrollableTarget="scrollableDiv"
           style={{
             margin: 5,
-            border: "black solid 2px",
             padding: ".5rem 0 0 0",
-            backgroundColor: "black",
           }}
         >
           {currentUser.transactions &&
