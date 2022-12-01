@@ -1,6 +1,6 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect,  } from 'react'
-
+import { motion } from "framer-motion";
 const AllFeed = () => {
 
     const dummy = [
@@ -32,31 +32,31 @@ const AllFeed = () => {
     ]
 
     return(
-
-    <div className="card text-white bg-dark mb-3" style={{maxWidth: "18rem", margin:'0 auto'}}>
-        <div className="card-header">All Transcations</div>
-        <div className="card-body">
-            <div className="card-text" style={{border: "black 1px solid"}}>
-                <div  id="scrollableDiv" style={{ height: 130, overflow: "auto",}}>
-                    <InfiniteScroll
-                        dataLength={dummy.length}
-                        next={dummy}
-                        scrollableTarget="scrollableDiv"
-                    
-                    >
-                    {dummy.map(item => (
-                    <div key={item.id}>
-                        <div style={{outline:'1px solid black'}}>
-                            {item.title}
-                        </div>
-                    </div>
-                    ))}
-                    </InfiniteScroll>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
+      <div className="card text-white bg-dark mb-3" style={{maxWidth: "18rem", margin:'0 auto'}}>
+          <div className="card-header">All Transcations</div>
+          <div className="card-body">
+              <div className="card-text" style={{border: "black 1px solid"}}>
+                  <div  id="scrollableDiv" style={{ height: 130, overflow: "auto",}}>
+                      <InfiniteScroll
+                          dataLength={dummy.length}
+                          next={dummy}
+                          scrollableTarget="scrollableDiv"
+                      
+                      >
+                      {dummy.map(item => (
+                      <div key={item.id}>
+                          <div style={{outline:'1px solid black'}}>
+                              {item.title}
+                          </div>
+                      </div>
+                      ))}
+                      </InfiniteScroll>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </motion.div>
     )
 }
 

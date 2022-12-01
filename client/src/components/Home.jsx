@@ -3,7 +3,7 @@ import { useAppContext } from "../utils/AppContext";
 import Feed from "./Feed";
 import Header from "./Header";
 import Footer from "./Footer";
-
+import { motion } from 'framer-motion';
 const Home = (props) => {
   const { appState } = useAppContext();
 
@@ -43,7 +43,7 @@ const Home = (props) => {
   }, [trans]);
 
   return (
-    <>
+    <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}} >
       <Header currentUser={currentUser} />
       <main style={{ display: "flex", justifyContent: "center" }}>
         <div className="my-3 p-3 bg-body bg-light rounded shadow-sm">
@@ -57,7 +57,7 @@ const Home = (props) => {
         </div>
       </main>
       <Footer />
-    </>
+    </motion.div>
   );
 };
 

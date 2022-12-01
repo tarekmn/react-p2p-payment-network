@@ -3,6 +3,7 @@ import Cookie from "js-cookie";
 import { Button, Container, Form } from "react-bootstrap";
 import { useAppContext } from "../utils/AppContext";
 import { redirect, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Signup = () => {
   const { appState, setAppState } = useAppContext();
@@ -36,73 +37,75 @@ const Signup = () => {
   };
 
   return (
-    <Container style={{ padding: "50px 200px" }}>
-      <Form onSubmit={handleFormSubmit}>
-        <div className="d-flex justify-content-center">
-          <img
-            className="mb-4 center"
-            src="logo-no-background.png"
-            alt="company logo"
-            width="auto"
-            height="auto"
-          />
-        </div>
-        <h1>Create a new account!</h1>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            name="username"
-            placeholder="username"
-            value={newUser.username}
-            onChange={(e) =>
-              setNewUser({
-                ...newUser,
-                [e.target.name]: e.target.value,
-              })
-            }
-          />
-        </Form.Group>
+    <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
+      <Container style={{ padding: "50px 200px" }}>
+        <Form onSubmit={handleFormSubmit}>
+          <div className="d-flex justify-content-center">
+            <img
+              className="mb-4 center"
+              src="logo-no-background.png"
+              alt="company logo"
+              width="auto"
+              height="auto"
+            />
+          </div>
+          <h1>Create a new account!</h1>
+          <Form.Group className="mb-3">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              name="username"
+              placeholder="username"
+              value={newUser.username}
+              onChange={(e) =>
+                setNewUser({
+                  ...newUser,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="text"
-            name="email"
-            placeholder="jdoe@gmail.com"
-            value={newUser.email}
-            onChange={(e) =>
-              setNewUser({
-                ...newUser,
-                [e.target.name]: e.target.value,
-              })
-            }
-          />
-        </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="text"
+              name="email"
+              placeholder="jdoe@gmail.com"
+              value={newUser.email}
+              onChange={(e) =>
+                setNewUser({
+                  ...newUser,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="text"
-            name="password"
-            placeholder="password"
-            value={newUser.password}
-            onChange={(e) =>
-              setNewUser({
-                ...newUser,
-                [e.target.name]: e.target.value,
-              })
-            }
-          />
-        </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="text"
+              name="password"
+              placeholder="password"
+              value={newUser.password}
+              onChange={(e) =>
+                setNewUser({
+                  ...newUser,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Button type="submit" variant="primary" size="md">
-            Submit
-          </Button>
-        </Form.Group>
-      </Form>
-    </Container>
+          <Form.Group className="mb-3">
+            <Button type="submit" variant="primary" size="md">
+              Submit
+            </Button>
+          </Form.Group>
+        </Form>
+      </Container>
+    </motion.div>
   );
 };
 

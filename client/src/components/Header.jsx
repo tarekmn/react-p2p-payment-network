@@ -13,70 +13,36 @@ const Header = (props) => {
   // },[])
 
   return (
-    <header style={{ display: "flex", justifyContent: "space-between" }}>
+    <header>
       <div
         style={{
-          margin: "10px auto",
-          borderRadius: "50%",
-          width: "200px",
-          height: "100px",
-          background: "#59C738",
+          margin: "18px auto",
+          borderRadius: '20px',
+          boxShadow:'0 0 0px',
+          width: "300px",
+          height: "160px",
+          background: "white",
           border: "1px outset black",
           textAlign: "center",
-          alignItems: "center"
-          
-          
-         
+          display:'flex',
+          justifyContent:'center',
+          alignItems:'center',
+          flexWrap:'wrap'
         }}
       >
         {props.currentUser && (
-          <h5 style= {{
-            color: "black",
-            fontWeight: "800",
-            padding: "35px"
-          }}>
-            {`$` + props.currentUser.balance}
-          </h5>
-        )}
-      </div>
-
-
-      <div className="d-flex justify-content-center">
-        <img
-          className="mb-4 center"
-          src="logo-no-background.png"
-          alt="company logo"
-          width="250px"
-          height="100%"
-        />
-      </div>
-
-
-      <div
-        style={{
-          margin: "10px auto",
-          borderRadius: "5%",
-          width: "200px",
-          height: "100px",
-          background: "#59C738",
-          border: "1px outset black",
-          textAlign: "center",
-          
-      
-          
-        }}
-      >
-        {props.currentUser && (
-          <h5
+          <div
             style={{
               color: "black",
               fontWeight: "700",
-              padding: "20px",
-              paddingTop: "35px"
+              
             }}
           >
-            Welcome {props.currentUser.username}!
-          </h5>
+            <h4 className="nopadding" style={{magin:'0px'}}>Welcome {props.currentUser.username}!</h4>
+            <div style={{display:'inline-block', width:'65px', height:'6px', background:'#59C738'}}></div>
+            <h6>Your current balance is: </h6>
+            <h6>{`$` + props.currentUser.balance}</h6>
+          </div>
         )}
       </div>
     </header>
