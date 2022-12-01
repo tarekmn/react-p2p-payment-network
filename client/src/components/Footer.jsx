@@ -1,46 +1,49 @@
-
-
-
 const Footer = () => {
   return (
-    <footer style={{
-      justifyContent: 'center',
-      display: 'flex',
-    }}>
-        <a href='/feed'>
-        <button style={{
-          borderColor: '#59C738',
-          borderRadius: '5px',
-          padding: '10px',
-          margin: '25px',
-        }}>
+    <footer
+      style={{
+        justifyContent: "center",
+        display: "flex",
+      }}
+    >
+      <a href="/feed">
+        <button
+          style={{
+            borderColor: "#59C738",
+            borderRadius: "5px",
+            padding: "10px",
+            margin: "25px",
+          }}
+        >
           Feed
         </button>
-        </a>
-        
-        <button style = {{
-          
-          borderColor: 'green',
+      </a>
+
+      <button
+        style={{
+          borderColor: "green",
           borderRadius: 100,
-          alignItems: 'center',
+          alignItems: "center",
           width: 100,
           height: 100,
-          backgroundColor: '#59C738',
-        }}>
-          Pay
-        </button>
+          backgroundColor: "#59C738",
+        }}
+      >
+        Pay
+      </button>
 
-        <button style = {{
-          borderColor: '#59C738',
-          borderRadius: '5px',
-          padding: '10px',
-          margin: '25px',
-        }}>
-          Contacts
-        </button>
-       
+      <button
+        style={{
+          borderColor: "#59C738",
+          borderRadius: "5px",
+          padding: "10px",
+          margin: "25px",
+        }}
+      >
+        Contacts
+      </button>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
