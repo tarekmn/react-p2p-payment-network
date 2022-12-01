@@ -7,12 +7,14 @@ import { motion } from "framer-motion";
 const Profile = () => {
   const { appState, lookupUser } = useAppContext();
   const [currentUser, setCurrentUser] = useState();
+
+  console.log(appState.user);
   useEffect(() => {
     setCurrentUser({
       id: appState.user._id,
       username: appState.user.username,
       email: appState.user.email,
-      transcations: [appState.user.transcation],
+      transcations: [appState.user.transactions],
       balance: appState.user.balance,
       img: appState.user.image,
     });
@@ -69,7 +71,7 @@ const Profile = () => {
                       </div>
                       <div>
                         <p className="mb-2 h5">
-                          {currentUser.transcations.length}
+                          {appState.user.transactions.length}
                         </p>
                         <p className="text-muted mb-0">Total Transactions</p>
                       </div>
