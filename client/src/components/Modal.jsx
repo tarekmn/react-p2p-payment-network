@@ -331,15 +331,14 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
 
                     <span className="col">{c.sendingUser.username}</span>
                     {c.pending && (
-                      <>
+                      <div className="accept-decline">
                         <Button id={c._id} onClick={acceptRequest}>
                           Accept
                         </Button>{" "}
-                        /{" "}
                         <Button id={c._id} onClick={cancelRequest}>
                           Decline
                         </Button>
-                      </>
+                      </div>
                     )}
                   </div>
                 );
