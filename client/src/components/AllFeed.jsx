@@ -4,30 +4,46 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const AllFeed = () => {
+  const [allTrans, setAllTrans] = useState();
+
+  const getAllTrans = async () => {
+    const queryTrans = await fetch("/api/transaction");
+
+    const TransResponse = await queryTrans.json();
+    console.log(TransResponse);
+    setAllTrans(TransResponse);
+  };
+
+  useEffect(() => {
+    getAllTrans();
+  }, []);
+
+  console.log(allTrans);
+
   const dummy = [
     {
       id: "1",
-      title: "Terek paid joe 30$",
+      title: "Terek paid Joe $30",
     },
     {
       id: "2",
-      title: "terek paid ivan 50$",
+      title: "Terek paid Ivan $50",
     },
     {
       id: "3",
-      title: "yooooooooooooooooooooooo",
+      title: "Ivan paid Joe $150",
     },
     {
       id: "4",
-      title: "yo4",
+      title: "Dong paid Alex $2",
     },
     {
       id: "5",
-      title: "yo4",
+      title: "Jon paid Max $203",
     },
     {
       id: "6",
-      title: "yo4",
+      title: "Alex paid Terek $83",
     },
   ];
 
@@ -39,9 +55,15 @@ const AllFeed = () => {
     >
       <div
         className="card text-white bg-dark mb-3"
-        style={{ maxWidth: "18rem", margin: "0 auto" }}
+        style={{
+          maxWidth: "18rem",
+          margin: "0 auto",
+          marginTop: 15,
+        }}
       >
-        <div className="card-header">All Transcations</div>
+        <div className="card-header" style={{ textAlign: "center" }}>
+          All Transcations
+        </div>
         <div className="card-body">
           <div className="card-text" style={{ border: "black 1px solid" }}>
             <div id="scrollableDiv" style={{ height: 130, overflow: "auto" }}>
@@ -50,13 +72,34 @@ const AllFeed = () => {
                 next={dummy}
                 scrollableTarget="scrollableDiv"
               >
-                {dummy.map((item) => (
-                  <div key={item.id}>
-                    <div style={{ outline: "1px solid black" }}>
-                      {item.title}
-                    </div>
-                  </div>
-                ))}
+                {allTrans &&
+                  allTrans.map((t, i) => {
+                    const tstyle = { backgroundColor: "white" };
+
+                    return (
+                      <div
+                        key={i}
+                        className="border border-dark rounded mb-2 text-dark p-1"
+                        style={tstyle}
+                      >
+                        <img
+                          className="postimg"
+                          src={`/stock/${t.debitUser.image}.png`}
+                          width="35"
+                          height="35"
+                          style={{
+                            borderRadius: "50%",
+                            margin: 4,
+                          }}
+                        />
+
+                        <>
+                          {t.debitUser.username} sent ${t.amount} for{" "}
+                          {t.transactionText}
+                        </>
+                      </div>
+                    );
+                  })}
               </InfiniteScroll>
             </div>
           </div>

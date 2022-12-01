@@ -1,7 +1,8 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const Feed = ({ currentUser, setCurrentUser }) => {
-
+  console.log(currentUser.transactions);
+  console.log(currentUser);
   return (
     <>
       <div
@@ -15,11 +16,13 @@ const Feed = ({ currentUser, setCurrentUser }) => {
           style={{
             margin: 5,
             border: "black solid 2px",
-            padding: '.5rem 0 0 0'
+            padding: ".5rem 0 0 0",
+            backgroundColor: "black",
           }}
         >
           {currentUser.transactions &&
             currentUser.transactions.map((t, i) => {
+
               
               const tstyle =
                 t.creditUser._id === currentUser.id
@@ -43,6 +46,7 @@ const Feed = ({ currentUser, setCurrentUser }) => {
                       margin: 4,
                     }}
                   />
+
                   {t.creditUser._id === currentUser.id ? (
                     <>
                       {t.debitUser.username} sent you ${t.amount} for{" "}
@@ -55,9 +59,11 @@ const Feed = ({ currentUser, setCurrentUser }) => {
                     </>
                   )}
                 </div>
+
               )
             } 
             )}
+
         </InfiniteScroll>
       </div>
     </>
