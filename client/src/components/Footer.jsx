@@ -1,3 +1,4 @@
+
 const Footer = ({ mode, setMode }) => {
   return (
     <footer style={{
@@ -14,6 +15,7 @@ const Footer = ({ mode, setMode }) => {
           Feed
         </button>
       </a>
+
 
       <button style={{
 
@@ -40,8 +42,9 @@ const Footer = ({ mode, setMode }) => {
         Contacts
       </button>
 
-    </footer>
-  )
-}
 
-export default Footer
+    </footer>
+  );
+};
+
+export default Footer;
