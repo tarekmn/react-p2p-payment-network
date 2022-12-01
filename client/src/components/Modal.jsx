@@ -37,12 +37,11 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
     const handleRequest = async e => {
         e.preventDefault()
         setTransaction({ ...transaction, sendingUser: '' })
-        const r = await fetch('/ap/transaction/', {
+        await fetch('/ap/transaction/', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(transaction)
         })
-        console.log(r)
     }
 
     useEffect(() => {
