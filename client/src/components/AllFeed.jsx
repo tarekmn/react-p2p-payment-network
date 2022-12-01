@@ -108,8 +108,8 @@ const AllFeed = () => {
                         />
 
                         <>
-                          {t.debitUser.username} sent ${t.amount} for{" "}
-                          {t.transactionText}
+                          {t.debitUser.username} sent ${t.amount} to{" "}
+                          {t.creditUser.username} for "{t.transactionText}"
                         </>
                       </div>
                     );
