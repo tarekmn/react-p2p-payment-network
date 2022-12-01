@@ -9,20 +9,27 @@ const Feed = (props) => {
     <>
       <div
         id="scrollableDiv"
-        style={{ height: 250, width: 300, overflow: "auto" }}
+        style={{ backgroundColor: 'black', height: 250, width: 500 , overflow: "auto" }}
       >
         <InfiniteScroll
           dataLength={props.trans.length}
           next={props.trans}
           scrollableTarget="scrollableDiv"
           style={{
-            margin: 5,
+            marginBottom: 10,
             border: "black solid 2px",
+            padding: 5,
+            backgroundColor: "white"
+
           }}
         >
           {props.trans &&
             props.trans.map((item, i) => (
-              <div
+              <div 
+                style ={{
+                  marginBottom: 5,
+                  border: "black solid 1px"
+                }}
                 key={i}
                 className={`d-flex text-muted pt-3 ${
                   props.currentUser.id === item.sendingUser._id
@@ -33,8 +40,8 @@ const Feed = (props) => {
                 <img
                   className="postimg"
                   src={`/stock/${item.sendingUser.image}.png`}
-                  width="40"
-                  height="40"
+                  width="35"
+                  height="35"
                   style={{
                     borderRadius: "50%",
                   }}
@@ -42,10 +49,10 @@ const Feed = (props) => {
                 <p
                   className="pb-3 mb-0 small lh-sm border-bottom"
                   style={{
-                    border: "black 1px solid",
+                    border: "white 1px solid",
                     flex: 1,
                     color: "black",
-                    margin: 10,
+                    margin: 5,
                   }}
                 >
                   <strong className="d-block text-gray-dark">
@@ -67,7 +74,10 @@ const Feed = (props) => {
                     ` for ` +
                     item.transactionText}
                 </p>
+              
               </div>
+
+              
             ))}
         </InfiniteScroll>
       </div>
