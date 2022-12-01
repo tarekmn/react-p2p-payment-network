@@ -2,13 +2,15 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, useEffect } from "react";
 
 const Feed = ({ trans, currentUser }) => {
+  console.log(trans)
+  console.log(currentUser)
   // console.log(trans);  // console.log(currentUser.id);
   return (
     <>
       {" "}
       <div
         id="scrollableDiv"
-        style={{ height: 250, width: 300, overflow: "auto" }}
+        style={{ height: 250, width: 400, overflow: "auto", backgroundColor: "black" }}
       >
         {" "}
         <InfiniteScroll
@@ -19,6 +21,7 @@ const Feed = ({ trans, currentUser }) => {
             margin: 5,
             border: "black solid 2px",
             padding: ".5rem 0 0 0",
+            backgroundColor: "black",
           }}
         >
           {" "}
@@ -28,32 +31,48 @@ const Feed = ({ trans, currentUser }) => {
                 t.creditUser._id === currentUser.id
                   ? { backgroundColor: "#CA2B29" }
                   : { backgroundColor: "#00E661" };
+
+               
+              
+                  
               return (
                 <div
                   key={i}
                   className="border border-dark rounded mb-2 text-dark p-1"
                   style={tstyle}
                 >
-                  {" "}
-                  {/* is this transaction a credit ? */}{" "}
+                   <img
+                  className="postimg"
+                  src={`/stock/${currentUser.image}.png`}
+                  width="35"
+                  height="35"
+                  style={{
+                    borderRadius: "50%",
+                    margin: 4,
+                  }}
+                />
+
+               
+                  
+                  {/* is this transaction a credit ? */}
                   {t.creditUser._id === currentUser.id ? (
                     <>
-                      {" "}
-                      {t.debitUser.username} sent you ${t.amount} for{" "}
-                      {t.transactionText}{" "}
+                      
+                      {t.debitUser.username} sent you ${t.amount} for {" "}
+                      {t.transactionText}
                     </>
                   ) : (
                     <>
-                      {" "}
-                      You sent {t.creditUser.username} ${t.amount} for{" "}
-                      {t.transactionText}{" "}
+                      
+                      You sent {t.creditUser.username} ${t.amount} for {" "}
+                      {t.transactionText}
                     </>
-                  )}{" "}
+                  )}
                 </div>
               );
-            })}{" "}
-        </InfiniteScroll>{" "}
-      </div>{" "}
+            })}
+        </InfiniteScroll>
+      </div>
     </>
   );
 };
