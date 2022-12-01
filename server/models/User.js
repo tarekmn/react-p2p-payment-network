@@ -1,8 +1,6 @@
 const { Schema, model, Types } = require("mongoose");
 const bcrypt = require("bcrypt");
 
-
-
 let randNum = Math.floor(Math.random() * 14)
 console.log(randNum)
 
@@ -30,13 +28,14 @@ const userSchema = new Schema(
       type: String,
       default: `stock${randNum}`
     },
-    transaction: [
+    transactions: [
       {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Transaction",
       },
     ],
-    balance: { type: Number, required: true, default: 1000 }
+    balance: { type: Number, required: true, default: 1000 },
+    contacts: [{ type: Schema.Types.ObjectId, ref: 'Contact' }]
   },
   {
     toJSON: {

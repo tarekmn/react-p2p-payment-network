@@ -2,10 +2,7 @@ const Header = (props) => {
   const fetchUser = async () => {
     const query = await fetch("");
     const data = await query.json();
-    console.log(data);
-  };
-
-  console.log(props.currentUser);
+  }
 
   // useEffect(()=>{
   //     fetchUser()

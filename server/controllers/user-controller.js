@@ -8,6 +8,19 @@ require('dotenv').config()
 
 module.exports = {
 
+  // search box on contact form
+  async getUserByUsername(req, res) {
+    try {
+      const friend = await User.findOne({
+        username: req.params.username
+      })
+      res.status(200).json(friend)
+    } catch (error) {
+      console.log(error.message)
+      res.status(500).json(error)
+    }
+  },
+
   async getAllUsers(req, res) {
     try {
       const data = await User.find({})
@@ -73,7 +86,7 @@ module.exports = {
     res
       .status(200)
       .set({ "auth-token": token })
-      .json({ result: "success", user: modifiedUser, token: token })
+      .json({ result: "success", user: modifiedUser._doc, token: token })
   },
 
   async lookupUserByToken(req, res) {
@@ -86,7 +99,19 @@ module.exports = {
     const isVerified = jwt.verify(token, process.env.JWT_SECRET)
     if (!isVerified) return res.status(401).json({ msg: "un-authorized" })
 
-    const user = await User.findById(isVerified._id)
+    const user = await User.findById(isVerified._id).populate({
+      path: 'contacts',
+      populate: {
+        path: 'sendingUser',
+        select: 'username image'
+      }
+    }).populate({
+      path: 'contacts',
+      populate: {
+        path: 'recievingUser',
+        select: 'username image'
+      }
+    })
     if (!user) return res.status(401).json({ msg: "un-authorized" })
 
     return res.status(200).json({ result: "success", payload: user })
