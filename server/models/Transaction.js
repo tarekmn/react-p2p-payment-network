@@ -8,17 +8,14 @@ const transactionSchema = new Schema(
       max_length: 280,
     },
     amount: { type: Number, required: true },
-    type: { type: String, required: true },
-    sendingUser: {
-      type: Types.ObjectId,
+    creditUser: {
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
-    recievingUser: {
-      type: Types.ObjectId,
+    debitUser: {
+      type: Schema.Types.ObjectId,
       ref: "User",
-    },
-    pending: { type: Boolean, required: true },
-
+    }
   },
   {
     toJSON: {

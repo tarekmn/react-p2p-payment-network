@@ -6,7 +6,10 @@ const {
   updateTransaction,
 } = require("../../controllers/transaction-controller");
 
-router.get('/', getAllTransactions)
+router.route('/')
+.get(getAllTransactions)
+.post(createTransaction)
+
 router.get('/:userId', getTransactions)
 
 

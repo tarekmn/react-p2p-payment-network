@@ -6,10 +6,10 @@ require("dotenv").config()
 
 module.exports = {
 
-
+  // get all transactions
   async getAllTransactions(req, res) {
     try {
-      const data = await Transaction.find({}).populate("sendingUser").populate("recievingUser")
+      const data = await Transaction.find({}).populate("creditUser").populate("debitUser")
 
       res.status(200).json(data)
     } catch (error) {
@@ -18,11 +18,12 @@ module.exports = {
     }
   },
 
+  // get current user transactions
   async getTransactions(req, res) {
     try {
-      const sent = await Transaction.find({ sendingUser: req.params.userId }).populate("sendingUser").populate("recievingUser")
-      const recieved = await Transaction.find({ recievingUser: req.params.userId }).populate("sendingUser").populate("recievingUser")
-      const data = sent.concat(recieved)
+      const debit = await Transaction.find({ debitUser: req.params.userId }).populate("creditUser").populate("debitUser")
+      const credit = await Transaction.find({ creditUser: req.params.userId }).populate("creditUser").populate("debitUser")
+      const data = debit.concat(credit)
       res.status(200).json(data)
     } catch (error) {
       console.log(error.message)
@@ -31,9 +32,21 @@ module.exports = {
   },
 
   async createTransaction(req, res) {
+    console.log('hit')
     try {
-      const data = await Transaction.create(req.body)
-      res.status(200).json(data)
+      const transaction = await Transaction.create(req.body)
+
+      // add transaction id to users
+      const creditor = await User.findByIdAndUpdate(req.body.creditUser, {
+        $push: { transactions: transaction._id },
+        $inc: { balance: + transaction.amount }
+      }, { new: true })
+      const debitor = await User.findByIdAndUpdate(req.body.debitUser, {
+        $push: { transactions: transaction._id },
+        $inc: { balance: - transaction.amount }
+      }, { new: true })
+
+      res.status(200).json({ ...transaction._doc, creditUser: creditor, debitUser: debitor })
     } catch (error) {
       console.log(error.message)
       res.status(500).json(error)
@@ -41,28 +54,9 @@ module.exports = {
 
   },
 
-  async updateTransaction(req, res) {
+  async acceptTransaction(req, res) {
     try {
-      const data = await Transaction.findOneAndUpdate(
-        { _id: req.params.transactionID },
-        { $set: req.body })
-      res.status(200).json(data)
-    } catch (error) {
-      console.log(error.message)
-      res.status(500).json(error)
-    }
-  },
 
-  async deleteTransaction(req, res) {
-    try {
-      const data = await Transaction.findOneAndRemove(
-        { _id: req.params.transactionID })
-
-      if (!data) {
-        return res.status(404).json({ message: 'No such transaction exists' })
-      }
-
-      res.status(200).json(data)
     } catch (error) {
       console.log(error.message)
       res.status(500).json(error)

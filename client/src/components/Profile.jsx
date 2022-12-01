@@ -3,11 +3,10 @@ import { useState, useEffect } from "react";
 import Footer from "./Footer";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
+import { motion } from "framer-motion";
 const Profile = () => {
   const { appState, lookupUser } = useAppContext();
   const [currentUser, setCurrentUser] = useState();
-
   useEffect(() => {
     setCurrentUser({
       id: appState.user._id,
@@ -15,12 +14,11 @@ const Profile = () => {
       email: appState.user.email,
       transcations: [appState.user.transcation],
       balance: appState.user.balance,
+      img: appState.user.image,
     });
     console.log(currentUser);
   }, [appState]);
-
   console.log(currentUser);
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const query = await fetch(`/api/users/${currentUser.id}`, {
@@ -32,37 +30,43 @@ const Profile = () => {
     });
     const response = await query.json();
   };
-
   const handleInputChange = (e) => {
     setCurrentUser({ ...currentUser, [e.target.name]: e.target.value });
   };
-
   const [isShown, setIsShown] = useState(false);
-
   return (
     <>
       {currentUser && (
-        <section className="" style={{ backgroundColor: "" }}>
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: "100%" }}
+          exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
+        >
           <div className="container py-5 h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">
-              <div className=" col-md-10 col-xl-4">
-                <div className="card" style={{ borderRadius: "15px" }}>
+              <div>
+                <div
+                  className="card"
+                  style={{ borderRadius: "15px", backgroundColor: "#eee" }}
+                >
                   <div className="card-body text-center">
                     <div className="mt-3 mb-4">
                       <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
+                        src={`/stock/${currentUser.img}.png`}
                         className="rounded-circle img-fluid"
                         style={{ width: "100px" }}
                       />
                     </div>
                     <h4 className="mb-2">{currentUser.username}</h4>
                     <p className="text-muted mb-4">{currentUser.email}</p>
-                    <div className="d-flex justify-content-between text-center mt-5 mb-2">
+                    <div
+                      className="d-flex justify-content-between text-center mt-5 mb-2"
+                      style={{ padding: "0 50px" }}
+                    >
                       <div>
                         <p className="mb-2 h5">{currentUser.balance}</p>
                         <p className="text-muted mb-0">Wallet Balance</p>
                       </div>
-
                       <div>
                         <p className="mb-2 h5">
                           {currentUser.transcations.length}
@@ -114,10 +118,9 @@ const Profile = () => {
               </Form.Group>
             </Form>
           )}
-        </section>
+        </motion.div>
       )}
     </>
   );
 };
-
 export default Profile;

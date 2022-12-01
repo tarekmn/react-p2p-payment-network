@@ -3,6 +3,7 @@ import Cookie from "js-cookie";
 import { Alert, Button, Container, Form } from "react-bootstrap";
 import { useAppContext } from "../utils/AppContext";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const { appState, setAppState } = useAppContext();
@@ -45,18 +46,16 @@ const Login = () => {
   }, [appState]);
 
   return (
-    <>
+    <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
       <Container style={{ padding: "50px 200px" }}>
         <Form onSubmit={handleLogin}>
-          <div className="d-flex justify-content-center">
-            <img
-              className="mb-4 center"
-              src="logo-no-background.png"
-              alt="company logo"
-              width="auto"
-              height="auto"
-            />
-          </div>
+          <img
+            className="mb-4 img-fluid"
+            src="logo-no-background.png"
+            alt="company logo"
+            width="auto"
+            height="auto"
+          />
           <Form.Group className="mb-3" controlId="email">
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -104,7 +103,7 @@ const Login = () => {
           </Alert>
         )}
       </Container>
-    </>
+    </motion.div>
   );
 };
 

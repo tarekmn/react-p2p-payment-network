@@ -19,6 +19,7 @@
     "@chakra-ui/react": "^2.4.1",
     "bcrypt": "^5.1.0",
     "bootstrap": "^5.2.2",
+    "framer-motion": "^7.6.17",
     "heroku": "^7.67.0",
     "mongoose": "^6.7.3",
     "react-bootstrap": "^2.6.0",
