@@ -3,6 +3,7 @@ import Cookie from "js-cookie";
 import { Alert, Button, Container, Form } from "react-bootstrap";
 import { useAppContext } from "../utils/AppContext";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const { appState, setAppState } = useAppContext();
@@ -45,7 +46,7 @@ const Login = () => {
   }, [appState]);
 
   return (
-    <>
+    <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
       <Container style={{ padding: "50px 200px" }}>
         <Form onSubmit={handleLogin}>
           <div className="d-flex justify-content-center">
@@ -104,7 +105,7 @@ const Login = () => {
           </Alert>
         )}
       </Container>
-    </>
+    </motion.div>
   );
 };
 

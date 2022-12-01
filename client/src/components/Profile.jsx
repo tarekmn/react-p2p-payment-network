@@ -1,8 +1,11 @@
 import { useAppContext } from "../utils/AppContext";
 import { useState, useEffect } from "react";
 import Footer from "./Footer";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import { motion } from "framer-motion";
+
 
 const Profile = () => {
   const { appState, lookupUser } = useAppContext();
@@ -15,11 +18,15 @@ const Profile = () => {
       email: appState.user.email,
       transcations: [appState.user.transcation],
       balance: appState.user.balance,
+      img: appState.user.image
     });
     console.log(currentUser);
   }, [appState]);
 
-  console.log(currentUser);
+
+  
+  console.log(currentUser)
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -41,19 +48,27 @@ const Profile = () => {
 
   return (
     <>
-      {currentUser && (
-        <section className="" style={{ backgroundColor: "" }}>
-          <div className="container py-5 h-100">
-            <div className="row d-flex justify-content-center align-items-center h-100">
-              <div className=" col-md-10 col-xl-4">
-                <div className="card" style={{ borderRadius: "15px" }}>
-                  <div className="card-body text-center">
-                    <div className="mt-3 mb-4">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                        className="rounded-circle img-fluid"
-                        style={{ width: "100px" }}
-                      />
+
+    {currentUser && (
+
+    
+      <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
+        <div className="container py-5 h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className=" ">
+              <div className="card" style={{borderRadius: "15px",backgroundColor: "#eee"}}>
+                <div className="card-body text-center">
+                  <div className="mt-3 mb-4">
+                    <img src={`/stock/${currentUser.img}.png`}
+                      className="rounded-circle img-fluid" style={{width: "100px"}} />
+                  </div>
+                  <h4 className="mb-2">{currentUser.username}</h4>
+                  <p className="text-muted mb-4">{currentUser.email}</p>
+                  <div className="d-flex justify-content-between text-center mt-5 mb-2">
+                    <div>
+                      <p className="mb-2 h5">{currentUser.balance}</p>
+                      <p className="text-muted mb-0">Wallet Balance</p>
+
                     </div>
                     <h4 className="mb-2">{currentUser.username}</h4>
                     <p className="text-muted mb-4">{currentUser.email}</p>
@@ -112,10 +127,12 @@ const Profile = () => {
                   Submit
                 </Button>
               </Form.Group>
-            </Form>
-          )}
-        </section>
-      )}
+          </Form>
+        )}
+        
+      </motion.div>
+    )}
+
     </>
   );
 };
