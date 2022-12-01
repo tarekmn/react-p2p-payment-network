@@ -38,10 +38,6 @@ const Home = (props) => {
     getUserTrans();
   }, []);
 
-  useEffect(() => {
-    console.log(trans);
-  }, [trans]);
-
   return (
     <>
       <Header currentUser={currentUser} />
