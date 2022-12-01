@@ -111,6 +111,18 @@ module.exports = {
         path: 'recievingUser',
         select: 'username image'
       }
+    }).populate({
+      path: 'transactions',
+      populate: {
+        path: 'creditUser',
+        select: 'username image'
+      }
+    }).populate({
+      path: 'transactions',
+      populate: {
+        path: 'debitUser',
+        select: 'username image'
+      }
     })
     if (!user) return res.status(401).json({ msg: "un-authorized" })
 

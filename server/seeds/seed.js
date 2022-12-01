@@ -55,8 +55,7 @@ connection.once("open", async () => {
     "amount": 50,
     "type": "debit",
     "creditUser": katy._id,
-    "debitUser": gary._id,
-    "pending": false
+    "debitUser": gary._id
   });
 
   // Katy sent Gary money, and he accepted
@@ -66,8 +65,7 @@ connection.once("open", async () => {
     "amount": 50,
     "type": "debit",
     "creditUser": gary._id,
-    "debitUser": katy._id,
-    "pending": false
+    "debitUser": katy._id
   })
 
   // For testing contact function
