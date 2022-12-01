@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 require('dotenv').config()
 
-mongoose.connect('mongodb+srv://glitch0320:JNUdRPNtIpYuysix@p2pdb.p6gztcz.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/p2pDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

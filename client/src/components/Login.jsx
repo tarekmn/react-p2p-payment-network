@@ -3,7 +3,7 @@ import Cookie from "js-cookie";
 import { Alert, Button, Container, Form } from "react-bootstrap";
 import { useAppContext } from "../utils/AppContext";
 import { useEffect } from "react";
-
+import { motion } from "framer-motion";
 
 const Login = () => {
   const { appState, setAppState } = useAppContext();
@@ -46,10 +46,8 @@ const Login = () => {
   }, [appState]);
 
   return (
-    <>
-      <Container
-        className='mt-5'
-      >
+    <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
+      <Container style={{ padding: "50px 200px" }}>
         <Form onSubmit={handleLogin}>
           <img
             className="mb-4 img-fluid"
@@ -94,7 +92,7 @@ const Login = () => {
             Submit
           </Button>
 
-          <Button variant="outline-success" type="submit" a href="/signup">
+          <Button variant="outline-success" type="submit" href="/signup">
             Sign up
           </Button>
         </Form>
@@ -105,7 +103,7 @@ const Login = () => {
           </Alert>
         )}
       </Container>
-    </>
+    </motion.div>
   );
 };
 

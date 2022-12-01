@@ -1,4 +1,3 @@
-
 const Footer = ({ mode, setMode }) => {
   return (
     <footer style={{

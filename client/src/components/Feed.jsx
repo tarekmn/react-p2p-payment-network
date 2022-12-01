@@ -9,14 +9,14 @@ const Feed = ({ trans, currentUser }) => {
     <>
       <div
         id="scrollableDiv"
-        style={{ height: 250, width: 300, overflow: "auto" }}
+        style={{ backgroundColor: 'black', height: 250, width: 500 , overflow: "auto" }}
       >
         <InfiniteScroll
           dataLength={trans.length}
           next={trans}
           scrollableTarget="scrollableDiv"
           style={{
-            margin: 5,
+            marginBottom: 10,
             border: "black solid 2px",
             padding: '.5rem 0 0 0'
           }}
