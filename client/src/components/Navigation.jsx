@@ -21,10 +21,12 @@ const Navigation = (props) => {
 
   return (
     <>
+
       <Navbar  bg="dark" variant="dark" className="justify-content-center" style={{alignText:'center', boxShadow:'0 0 20px'}}>
         <Nav id="navBar" >
           
           <Nav.Item style={{padding:'5px', margin:'5px', }}>
+
             <Nav.Link
               href="/profile"
               onClick={() => props.setCurrSection("profile")}

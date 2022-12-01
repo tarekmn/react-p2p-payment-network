@@ -1,35 +1,36 @@
 import InfiniteScroll from "react-infinite-scroll-component";
+
 import { useState, useEffect,  } from 'react'
 import { motion } from "framer-motion";
-const AllFeed = () => {
 
-    const dummy = [
-        {
-          id:'1',
-          title:'Terek paid joe 30$',
-        },
-        {
-          id:'2',
-          title:'terek paid ivan 50$'
-        },
-        {
-          id:'3',
-          title:'yooooooooooooooooooooooo'
-        },
-        {
-          id:'4',
-          title:'yo4'
-        },
-        {
-          id:'5',
-          title:'yo4'
-        },
-        {
-          id:'6',
-          title:'yo4'
-        },
-        
-    ]
+const AllFeed = () => {
+  const dummy = [
+    {
+      id: "1",
+      title: "Terek paid joe 30$",
+    },
+    {
+      id: "2",
+      title: "terek paid ivan 50$",
+    },
+    {
+      id: "3",
+      title: "yooooooooooooooooooooooo",
+    },
+    {
+      id: "4",
+      title: "yo4",
+    },
+    {
+      id: "5",
+      title: "yo4",
+    },
+    {
+      id: "6",
+      title: "yo4",
+    },
+  ];
+
 
     return(
     <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
@@ -61,3 +62,5 @@ const AllFeed = () => {
 }
 
 export default AllFeed  
+
+

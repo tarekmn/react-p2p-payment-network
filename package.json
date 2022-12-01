@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server/server.js --ignore client",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "node server/seeds/seed.js",
@@ -19,7 +19,11 @@
     "@chakra-ui/react": "^2.4.1",
     "bcrypt": "^5.1.0",
     "bootstrap": "^5.2.2",
+
     "framer-motion": "^7.6.15",
+
+    "heroku": "^7.67.0",
+
     "mongoose": "^6.7.3",
     "react-bootstrap": "^2.6.0",
     "react-infinite-scroll-component": "^6.1.0",

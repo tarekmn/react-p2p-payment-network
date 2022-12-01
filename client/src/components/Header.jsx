@@ -1,4 +1,3 @@
-
 const Header = (props) => {
   const fetchUser = async () => {
     const query = await fetch("");
@@ -24,6 +23,7 @@ const Header = (props) => {
           background: "white",
           border: "1px outset black",
           textAlign: "center",
+
           display:'flex',
           justifyContent:'center',
           alignItems:'center',
@@ -35,7 +35,7 @@ const Header = (props) => {
             style={{
               color: "black",
               fontWeight: "700",
-              
+             
             }}
           >
             <h4 className="nopadding" style={{magin:'0px'}}>Welcome {props.currentUser.username}!</h4>
@@ -45,6 +45,7 @@ const Header = (props) => {
           </div>
         )}
       </div>
+      
     </header>
   );
 };
