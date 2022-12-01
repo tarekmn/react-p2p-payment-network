@@ -4,7 +4,6 @@ import { Alert, Button, Container, Form } from "react-bootstrap";
 import { useAppContext } from "../utils/AppContext";
 import { useEffect } from "react";
 
-
 const Login = () => {
   const { appState, setAppState } = useAppContext();
 
@@ -94,7 +93,7 @@ const Login = () => {
             Submit
           </Button>
 
-          <Button variant="outline-success" type="submit" a href="/signup">
+          <Button variant="outline-success" type="submit" href="/signup">
             Sign up
           </Button>
         </Form>

@@ -1,4 +1,3 @@
-
 const Header = (props) => {
   const fetchUser = async () => {
     const query = await fetch("");
@@ -23,23 +22,21 @@ const Header = (props) => {
           background: "#59C738",
           border: "1px outset black",
           textAlign: "center",
-          alignItems: "center"
-          
-          
-         
+          alignItems: "center",
         }}
       >
         {props.currentUser && (
-          <h5 style= {{
-            color: "black",
-            fontWeight: "800",
-            padding: "35px"
-          }}>
+          <h5
+            style={{
+              color: "black",
+              fontWeight: "800",
+              padding: "35px",
+            }}
+          >
             {`$` + props.currentUser.balance}
           </h5>
         )}
       </div>
-
 
       <div className="d-flex justify-content-center">
         <img
@@ -51,7 +48,6 @@ const Header = (props) => {
         />
       </div>
 
-
       <div
         style={{
           margin: "10px auto",
@@ -61,9 +57,6 @@ const Header = (props) => {
           background: "#59C738",
           border: "1px outset black",
           textAlign: "center",
-          
-      
-          
         }}
       >
         {props.currentUser && (
@@ -72,7 +65,7 @@ const Header = (props) => {
               color: "black",
               fontWeight: "700",
               padding: "20px",
-              paddingTop: "35px"
+              paddingTop: "35px",
             }}
           >
             Welcome {props.currentUser.username}!
