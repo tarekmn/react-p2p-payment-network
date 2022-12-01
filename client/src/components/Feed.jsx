@@ -1,6 +1,6 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const Feed = ({ trans, currentUser }) => {
+const Feed = ({ currentUser, setCurrentUser }) => {
 
   return (
     <>
@@ -9,8 +9,8 @@ const Feed = ({ trans, currentUser }) => {
         style={{ height: 250, width: 300, overflow: "auto" }}
       >
         <InfiniteScroll
-          dataLength={trans.length}
-          next={trans}
+          dataLength={currentUser.transactions.length}
+          next={currentUser.transactions}
           scrollableTarget="scrollableDiv"
           style={{
             margin: 5,
@@ -18,29 +18,10 @@ const Feed = ({ trans, currentUser }) => {
             padding: '.5rem 0 0 0'
           }}
         >
-          {trans &&
-            trans.map((t, i) => {
+          {currentUser.transactions &&
+            currentUser.transactions.map((t, i) => {
 
-              const tstyle = t.creditUser === currentUser.id ?
-                {
-                  backgroundColor: '#ca2b29',
-                } :
-                {
-                  backgroundColor: '#00e661'
-                }
-
-              return <div
-                key={i}
-                className="border border-dark rounded mb-2 text-dark p-1"
-                style={tstyle}
-              >
-                {/* is this transaction a credit ? */}
-                {t.creditUser._id === currentUser.id ? (<>
-                  {t.debitUser.username} sent you ${t.amount} for {t.transactionText}
-                </>) : (<>
-                  You sent {t.creditUser.username} ${t.amount} for {t.transactionText}
-                </>)}
-              </div>
+              return <div key={i}>{t.creditUser.username}</div> 
             })}
         </InfiniteScroll>
       </div>

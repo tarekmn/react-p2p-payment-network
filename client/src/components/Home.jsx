@@ -34,22 +34,6 @@ const Home = (props) => {
     type: ''
   })
 
-  const getUserTrans = async () => {
-    const query = await fetch(`/api/transaction/${appState.user._id}`, {
-      method: "GET",
-    });
-    const response = await query.json();
-    setCurrentUser({...currentUser, transactions: response})
-  }
-
-  useEffect(() => {
-    if (currentUser) {
-      getUserTrans()
-    }
-  }, [currentUser])
-
-
-
   return (
 
     <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.1 } }} >
@@ -69,7 +53,7 @@ const Home = (props) => {
             className="d-flex text-muted pt-3"
             style={{ border: "black 1px solid", padding: "4%" }}
           >
-            {/* {trans && currentUser && <Feed trans={trans} currentUser={currentUser} />} */}
+            {currentUser && <Feed currentUser={currentUser} setCurrentUser={setCurrentUser} />}
           </div>
         </div>
       </main>
