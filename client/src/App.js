@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from "react"
-import { BrowserRouter  } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { AppProvider } from "./utils/AppContext"
 import Navigation from './components/Navigation.jsx';
 
@@ -11,9 +11,11 @@ import './App.css'
 
 function App() {
 
-  const [trans, setTrans] = useState()
 
-  
+
+
+
+
 
 
 
