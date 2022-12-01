@@ -44,10 +44,6 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
         })
     }
 
-    useEffect(() => {
-        console.log(currentUser.contacts)
-    }, [currentUser])
-
     const checkContacts = (id) => {
         const bools = currentUser.contacts.map(c => c.sendingUser._id === id || c.recievingUser._id === id ? true : false)
         return bools.indexOf(true) > -1 ? true : false
@@ -73,16 +69,29 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
 
     const acceptRequest = async e => {
         e.preventDefault()
+        const res = await fetch(`/api/contact/`,{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                contactId: e.target.id
+            })
+        })
+        const data = await res.json()
+        const contacts = currentUser.contacts.map(c => c._id === data._id ? {...c, pending: false } : c)
+        setCurrentUser({...currentUser, contacts: contacts})
     }
 
     const cancelRequest = async (e) => {
         e.preventDefault()
         console.log(e.target.id)
-        const data = await fetch(`/api/contact/${e.target.id}`, {
+        const res = await fetch(`/api/contact/${e.target.id}`, {
             method: 'DELETE'
         })
-        console.log(await data.json())
-        // setCurrentUser({...currentUser, contacts: data.contacts})
+        const data = await res.json()
+        console.log(currentUser.contacts)
+        const contacts = currentUser.contacts.filter(c => c._id !== e.target.id)
+        console.log(contacts)
+        setCurrentUser({...currentUser, contacts: contacts})
     }
 
     useEffect(() => {
@@ -226,7 +235,7 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                                 </span>
                                 
                                 <span className='col'>{c.sendingUser.username}</span>
-                                {c.pending && <>Accept / Decline</>}
+                                {c.pending && <><Button id={c._id} onClick={acceptRequest}>Accept</Button> / <Button id={c._id} onClick={cancelRequest}>Decline</Button></>}
                             </div>
                         })}
                     </div>}

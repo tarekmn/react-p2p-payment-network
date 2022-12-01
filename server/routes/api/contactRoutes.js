@@ -6,8 +6,7 @@ const {
 } = require("../../controllers/contact-controller");
 
 router.get('/:userId/:friendId', requestContact)
-router.route('/:contactId')
-.get(acceptRequest)
-.delete(cancelRequest)
+router.post('/', acceptRequest)
+router.delete('/:contactId', cancelRequest)
 
 module.exports = router

@@ -1,14 +1,14 @@
-const { Schema, model, Types } = require("mongoose")
+const { Schema, model } = require("mongoose")
 
 
 const contactSchema = new Schema(
     {
         sendingUser: {
-            type: Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User',
         },
         recievingUser: {
-            type: Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User',
         },
         pending: {

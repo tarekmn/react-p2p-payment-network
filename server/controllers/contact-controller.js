@@ -1,10 +1,10 @@
 const { User, Contact } = require("../models")
+const { ObjectId } = require('mongoose')
 
 module.exports = {
 
     // /api/contact/userId/friendId
     async requestContact(req, res) {
-        console.log('\nhit\n')
         try {
             const { friendId, userId } = req.params
             // When I click add on contacts search result
@@ -30,7 +30,6 @@ module.exports = {
                     select: 'username image'
                 }
             })
-            console.log(sender)
 
             res.status(200).json({ contacts: sender.contacts })
         } catch (error) {
@@ -41,16 +40,15 @@ module.exports = {
 
     // /api/contact/contactId
     async acceptRequest(req, res) {
+        console.log('hit')
         try {
             // When I accept a pending contact request
-            const contact = Contact.findOneAndUpdate({
-                _id: req.params.contactId
-            }, {
+            const contact = await Contact.findByIdAndUpdate(req.body.contactId, {
                 pending: false
-            })
+            }, { new: true })
 
-            // update users contacts arrays
-            res.status(200).json(data)
+            console.log(contact)
+            res.status(200).json(contact)
         } catch (error) {
             console.log(error.message)
             res.status(500).json(error)
@@ -59,15 +57,18 @@ module.exports = {
 
     // /api/contact/contactId
     async cancelRequest(req, res) {
+        console.log('\nhit\n')
         try {
             const contact = await Contact.findByIdAndDelete(req.params.contactId)
-            console.log(contact)
+
             const sender = await User.findByIdAndUpdate(contact.sendingUser, {
-                $pull: { contacts: { _id: contact._id } }
+                $pull: { contacts: contact._id }
             }, { new: true })
+            console.log(sender)
             const reciever = await User.findByIdAndUpdate(contact.recievingUser, {
-                $pull: { contacts: { _id: contact._id } }
+                $pull: { contacts: contact._id }
             }, { new: true })
+
 
             res.status(200).json({ sender: { _id: sender._id, username: sender.username, contacts: sender.contacts }, reciever: { _id: reciever._id, username: reciever.username, contacts: reciever.contacts } })
         } catch (error) {

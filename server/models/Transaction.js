@@ -9,11 +9,11 @@ const transactionSchema = new Schema(
     },
     amount: { type: Number, required: true },
     creditUser: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
     debitUser: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
     }
   },
