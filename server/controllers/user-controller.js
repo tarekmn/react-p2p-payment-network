@@ -68,7 +68,7 @@ module.exports = {
     if (!isValid) return res.status(401).json({ message: "Login failed." })
 
     const { password, ...modifiedUser } = foundUser
-    const token = jwt.sign({ _id: foundUser._id, email: foundUser.email }, "nui^&uedgc78eie9bDFudcy37gc8e")
+    const token = jwt.sign({ _id: foundUser._id, email: foundUser.email }, process.env.JWT_SECRET)
 
     res
       .status(200)
@@ -83,7 +83,7 @@ module.exports = {
     const token = cookies["auth-token"]  //cookies.authToken
     if (!token) return res.status(401).json({ msg: "un-authorized" })
 
-    const isVerified = jwt.verify(token, "nui^&uedgc78eie9bDFudcy37gc8e")
+    const isVerified = jwt.verify(token, process.env.JWT_SECRET)
     if (!isVerified) return res.status(401).json({ msg: "un-authorized" })
 
     const user = await User.findById(isVerified._id)
