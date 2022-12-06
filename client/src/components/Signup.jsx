@@ -37,18 +37,22 @@ const Signup = () => {
   };
 
   return (
-    <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
-      <Container style={{ padding: "50px 200px" }}>
+    <motion.div
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
+    >
+      <Container>
+        <img
+          className="mb-4 img-fluid"
+          src="logo-no-background.png"
+          alt="company logo"
+          width="75%"
+          height="75%"
+          style={{ paddingTop: "5%" }}
+        />
         <Form onSubmit={handleFormSubmit}>
-          <div className="d-flex justify-content-center">
-            <img
-              className="mb-4 center"
-              src="logo-no-background.png"
-              alt="company logo"
-              width="auto"
-              height="auto"
-            />
-          </div>
+          <div className="d-flex justify-content-center"></div>
           <h1>Create a new account!</h1>
           <Form.Group className="mb-3">
             <Form.Label>Username</Form.Label>
@@ -99,7 +103,7 @@ const Signup = () => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Button type="submit" variant="primary" size="md">
+            <Button type="submit" variant="outline-success" size="md">
               Submit
             </Button>
           </Form.Group>
