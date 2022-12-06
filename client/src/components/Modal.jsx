@@ -44,25 +44,57 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
     });
 
     if (r.ok) {
-      const t = currentUser.transactions.map((t) => t);
-      t.push(await r.json());
+      const t = currentUser.transactions.map((t) => t)
+      const data = await r.json()
+      t.push(data)
       setCurrentUser({
         ...currentUser,
         transactions: t,
-        balance: t[t.length - 1].debitUser.balance,
+        balance: currentUser.balance - data.amount,
       });
     }
   };
 
-  // const handleRequest = async e => {
-  //     e.preventDefault()
-  //     setTransaction({ ...transaction, sendingUser: '' })
-  //     await fetch('/ap/transaction/', {
-  //         method: 'POST',
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify(transaction)
-  //     })
-  // }
+  const handleRequest = async e => {
+    e.preventDefault()
+    if (transaction.recievingUser === "x" || !transaction.recievingUser) {
+      alert("Please Choose a Contact")
+      return
+    }
+    if (!transaction.text) {
+      alert("Please fill out text field.");
+      return
+    }
+    if (
+      !transaction.amount ||
+      transaction.amount === 0
+    ) {
+      alert("Please enter a positive number.");
+      return;
+    }
+    const r = await fetch("/api/transaction/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        transactionText: transaction.text,
+        debitUser: transaction.recievingUser,
+        creditUser: currentUser.id,
+        amount: transaction.amount,
+        pending: true
+      })
+    })
+
+    if (r.ok) {
+      const t = currentUser.transactions.map((t) => t)
+      const data = await r.json()
+      t.push(data)
+      setCurrentUser({
+        ...currentUser,
+        transactions: t
+      })
+      window.location.reload()
+    }
+  }
 
   const checkContacts = (id) => {
     const bools = currentUser.contacts.map((c) =>
@@ -110,12 +142,13 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
     console.log(e.target.id);
     const res = await fetch(`/api/contact/${e.target.id}`, {
       method: "DELETE",
-    });
-    const data = await res.json();
-    console.log(currentUser.contacts);
-    const contacts = currentUser.contacts.filter((c) => c._id !== e.target.id);
-    console.log(contacts);
-    setCurrentUser({ ...currentUser, contacts: contacts });
+    })
+    if (res.ok) {
+      console.log(currentUser.contacts)
+      const contacts = currentUser.contacts.filter((c) => c._id !== e.target.id);
+      console.log(contacts);
+      setCurrentUser({ ...currentUser, contacts: contacts })
+    }
   };
 
   useEffect(() => {
@@ -215,7 +248,7 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
           <Button className="form-control mt-2 bg-success" onClick={handleSend}>
             Send $
           </Button>
-          {/* <Button className="form-control mt-2 bg-danger" onClick={handleRequest} >Request $</Button> */}
+          <Button className="form-control mt-2 bg-danger" onClick={handleRequest} >Request $</Button>
         </form>
       )}
       {type === "contact" && (

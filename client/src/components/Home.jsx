@@ -23,8 +23,8 @@ const Home = (props) => {
       image: appState.user.image,
     });
     // console.log(currentUser);
-  }, [appState]);
-  console.log(appState);
+  }, [appState])
+  
   const [mode, setMode] = useState({
     display: "none",
     type: "",

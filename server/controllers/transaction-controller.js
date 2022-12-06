@@ -1,6 +1,7 @@
 // ObjectId() method for converting transactionID string into an ObjectId for querying database
 const { ObjectId } = require("mongoose").Types;
 const { User, Transaction } = require("../models");
+const { findByIdAndDelete } = require("../models/User");
 
 require("dotenv").config()
 
@@ -32,21 +33,30 @@ module.exports = {
   },
 
   async createTransaction(req, res) {
-    console.log('hit')
     try {
+      let creditor
+      let debitor
       const transaction = await Transaction.create(req.body)
-
-      // add transaction id to users
-      const creditor = await User.findByIdAndUpdate(req.body.creditUser, {
-        $push: { transactions: transaction._id },
-        $inc: { balance: + transaction.amount }
-      }, { new: true })
-      const debitor = await User.findByIdAndUpdate(req.body.debitUser, {
-        $push: { transactions: transaction._id },
-        $inc: { balance: - transaction.amount }
-      }, { new: true })
-
-      res.status(200).json({ ...transaction._doc, creditUser: creditor, debitUser: debitor })
+      if (transaction.pending) {
+        // user requested money
+        creditor = await User.findByIdAndUpdate(req.body.creditUser, {
+          $push: { transactions: transaction._id }
+        }, { new: true })
+        debitor = await User.findByIdAndUpdate(req.body.debitUser, {
+          $push: { transactions: transaction._id }
+        }, { new: true })
+      } else {
+        // user sent money
+        creditor = await User.findByIdAndUpdate(req.body.creditUser, {
+          $push: { transactions: transaction._id },
+          $inc: { balance: + transaction.amount }
+        }, { new: true })
+        debitor = await User.findByIdAndUpdate(req.body.debitUser, {
+          $push: { transactions: transaction._id },
+          $inc: { balance: - transaction.amount }
+        }, { new: true })
+      }
+      res.status(200).json(transaction._doc)
     } catch (error) {
       console.log(error.message)
       res.status(500).json(error)
@@ -56,9 +66,36 @@ module.exports = {
 
   async acceptTransaction(req, res) {
     try {
+      const transaction = await Transaction.findByIdAndUpdate(req.params.transactionId, {
+        pending: false
+      }, { new: true })
 
+      const creditor = await User.findByIdAndUpdate(transaction.creditUser._id, {
+        $inc: { balance: + transaction.amount }
+      }, { new: true })
+      const debitor = await User.findByIdAndUpdate(transaction.debitUser._id, {
+        $inc: { balance: - transaction.amount }
+      }, { new: true })
+
+      res.status(200).json({ transaction, debitor: debitor.balance })
     } catch (error) {
       console.log(error.message)
+      res.status(500).json(error)
+    }
+  },
+
+  async declineTransaction(req, res) {
+    try {
+      const transaction = await Transaction.findByIdAndDelete(req.params.transactionId)
+      const creditor = await User.findByIdAndUpdate(transaction.creditUser, {
+        $pull: { transactions: { _id: transaction._id } }
+      })
+      const debitor = await User.findByIdAndUpdate(transaction.debitUser, {
+        $pull: { transactions: { _id: transaction._id } }
+      })
+      res.status(200).json({ msg: 'success' })
+    } catch (error) {
+      console.trace(error)
       res.status(500).json(error)
     }
   }

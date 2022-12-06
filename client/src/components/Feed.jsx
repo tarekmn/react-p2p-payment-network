@@ -1,7 +1,32 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 const Feed = ({ currentUser, setCurrentUser }) => {
-  console.log(currentUser.transactions);
-  console.log(currentUser);
+
+  const handleAccept = async (e, id, amount) => {
+    if (currentUser.balance < amount) {
+      return
+    }
+    const r = await fetch(`api/transaction/${id}`)
+    const {transaction, debitor} = await r.json()
+    const t = [...currentUser.transactions.filter(t => t._id !== id)]
+    t.push(transaction)
+    setCurrentUser({
+      ...currentUser,
+      transactions: t,
+      balance: debitor
+    })
+    window.location.reload()
+  }
+
+  const handleDecline = async (e, id) => {
+    console.log(e.target)
+    const r = await fetch(`api/transaction/${id}`, {
+      method: 'DELETE'
+    })
+    if (r.ok) {
+      window.location.reload(true)
+    }
+  }
+
   return (
     <>
       <div id="scrollableDiv" style={{ overflow: "auto", margin: "0 auto" }}>
@@ -37,17 +62,26 @@ const Feed = ({ currentUser, setCurrentUser }) => {
                       margin: 4,
                     }}
                   />
-                  {t.creditUser._id === currentUser.id ? (
-                    <>
-                      {t.debitUser.username} sent you ${t.amount} for{" "}
-                      {t.transactionText}
-                    </>
-                  ) : (
-                    <>
-                      You sent {t.creditUser.username} ${t.amount} for{" "}
-                      {t.transactionText}
-                    </>
-                  )}
+                  {t.pending ?
+                    (<>
+                      {t.debitUser._id === currentUser.id ?
+                        (<>
+                          {t.creditUser.username} requested ${t.amount} for {t.transactionText}.
+                          <button onClick={e => handleAccept(e, t._id, t.amount)}>Accept</button>
+                          <button onClick={e => handleDecline(e, t._id)}>Decline</button>
+                        </>) : (<>
+                          You requested ${t.amount} from {t.debitUser.username} for {t.transactionText}.
+                        </>)}
+                    </>) :
+                    (<>
+                      {t.creditUser._id === currentUser.id ?
+                        (<>
+                        {t.debitUser.username} sent you ${t.amount} for {t.transactionText}.
+                        </>) :
+                        (<>
+                        You sent {t.creditUser.username} ${t.amount} for {t.transactionText}.
+                        </>)}
+                    </>)}
                 </div>
               );
             })}
