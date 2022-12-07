@@ -15,7 +15,7 @@ connection.once("open", async () => {
   const gary = await User.create({
     "_id": "637e5c0785ae7bff97f75fb3",
     "username": "Gary",
-    "email": "galmighty@gmail.com",
+    "email": "test@gmail.com",
     "password": "password",
     "image": "stock4",
     "balance": 1000,
@@ -29,7 +29,7 @@ connection.once("open", async () => {
   const katy = await User.create({
     "_id": "6385142f3941552c03082aef",
     "username": "Katy",
-    "email": "kvince@gmail.com",
+    "email": "test2@gmail.com",
     "password": "password",
     "image": "stock5",
     "balance": 1000,
@@ -74,14 +74,14 @@ connection.once("open", async () => {
   const bob = await User.create({
     "_id": "6387a52df286afba049c8212",
     "username": "Bob",
-    "email": "bob@gmail.com",
+    "email": "test3@gmail.com",
     "password": "password",
     "image": "stock2",
     "balance": 1000
   })
 
   // Log out the seed data to indicate what should appear in the database
-  console.table({katy, gary, bob})
+  console.table({ katy, gary, bob })
   console.info("Seeding complete!")
   process.exit()
 })

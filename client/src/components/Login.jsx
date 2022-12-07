@@ -46,16 +46,21 @@ const Login = () => {
   }, [appState]);
 
   return (
-    <motion.div initial={{width:0}} animate={{width:'100%'}} exit={{x: window.innerWidth, transition:{ duration:0.1 }}}>
-      <Container style={{ padding: "50px 200px" }}>
+    <motion.div
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
+    >
+      <Container>
+        <img
+          className="mb-4 img-fluid"
+          src="logo-no-background.png"
+          alt="company logo"
+          width="75%"
+          height="75%"
+          style={{ paddingTop: "5%" }}
+        />
         <Form onSubmit={handleLogin}>
-          <img
-            className="mb-4 img-fluid"
-            src="logo-no-background.png"
-            alt="company logo"
-            width="auto"
-            height="auto"
-          />
           <Form.Group className="mb-3" controlId="email">
             <Form.Label>Email address</Form.Label>
             <Form.Control

@@ -1,4 +1,4 @@
-# Monzo P2P
+# Monzo
 
 ## Description
 
@@ -19,14 +19,30 @@ The collaborators behind Monzo include:
 
 Monzo is easy to use, making its usage both convenient and accessible to a wide range of users. First, the user is presented with a signin page where they are prompted to sign in or create an account requiring their username, email, and a password. Once signed in, the user is brought to the homepage where they are able to view their transactions. User's can then press the $ button at the bottom to send or receive payments. Also at the bottom is a feed button featuring a dynamically formatted list of all user's transactions between each other. At the top of the page, there is a navigation bar with links to other pages including the homepage, the user's profile page, and a "logout" button which brings the user back to the "signin" page. Lastly, user's can view their profile by clicking the "profile" button in the navigation bar. Once directed to the profile page, user's can view their profile image, name and can make updates if they choose to do so.
 
-## Signin/Signup Pages:
+## Demo
 
-![Monzo]()
-![Monzo]()
+Here is a demo video for your convience:
+https://drive.google.com/file/d/1T9dDDfXwMTQpGeR_elmc7CK7V_nlVsM5/view
 
-## Profile Page:
+## Seed sample logins:
 
-![Monzo]()
+Username: test@gmail.com
+Password: password
+
+Username: test2@gmail.com
+Password: password
+
+## Signin Pages:
+
+![Monzo](./client/public/monzologin.png)
+
+## Home Page:
+
+![Monzo](./client/public/monzofeed.png)
+
+## Pay Page:
+
+![Monzo](./client/public/monzopay.png)
 
 ## Links
 
