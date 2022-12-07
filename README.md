@@ -6,6 +6,11 @@ Monzo is a peer to peer payment web application meant for simple payments betwee
 
 The web application features a dynamically updated UI using React. It also uses Express.js on the backend and MongoDB to store user data. Our motivation to build Monzo was to create a simple and easy way to make payments between friends.
 
+## Demo
+
+Here is a demo video for your convenience:
+https://drive.google.com/file/d/1T9dDDfXwMTQpGeR_elmc7CK7V_nlVsM5/view
+
 ## Team Members
 
 The collaborators behind Monzo include:
@@ -18,11 +23,6 @@ The collaborators behind Monzo include:
 ## Usage
 
 Monzo is easy to use, making its usage both convenient and accessible to a wide range of users. First, the user is presented with a signin page where they are prompted to sign in or create an account requiring their username, email, and a password. Once signed in, the user is brought to the homepage where they are able to view their transactions. User's can then press the $ button at the bottom to send or receive payments. Also at the bottom is a feed button featuring a dynamically formatted list of all user's transactions between each other. At the top of the page, there is a navigation bar with links to other pages including the homepage, the user's profile page, and a "logout" button which brings the user back to the "signin" page. Lastly, user's can view their profile by clicking the "profile" button in the navigation bar. Once directed to the profile page, user's can view their profile image, name and can make updates if they choose to do so.
-
-## Demo
-
-Here is a demo video for your convience:
-https://drive.google.com/file/d/1T9dDDfXwMTQpGeR_elmc7CK7V_nlVsM5/view
 
 ## Seed sample logins:
 
