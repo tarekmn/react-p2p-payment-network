@@ -11,10 +11,16 @@ const transactionSchema = new Schema(
     creditUser: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true
     },
     debitUser: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true
+    },
+    pending: {
+      type: Boolean,
+      default: false,
     }
   },
   {
