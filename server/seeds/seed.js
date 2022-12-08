@@ -12,10 +12,10 @@ connection.once("open", async () => {
 
   // Sign up two new users
 
-  const gary = await User.create({
+  const testOne = await User.create({
     "_id": "637e5c0785ae7bff97f75fb3",
-    "username": "Gary",
-    "email": "test@gmail.com",
+    "username": "Test One",
+    "email": "test1@gmail.com",
     "password": "password",
     "image": "stock4",
     "balance": 1000,
@@ -26,9 +26,9 @@ connection.once("open", async () => {
     ]
   })
 
-  const katy = await User.create({
+  const testTwo = await User.create({
     "_id": "6385142f3941552c03082aef",
-    "username": "Katy",
+    "username": "Test Two",
     "email": "test2@gmail.com",
     "password": "password",
     "image": "stock5",
@@ -54,8 +54,8 @@ connection.once("open", async () => {
     "transactionText": "Happy Thanksgiving",
     "amount": 50,
     "type": "debit",
-    "creditUser": katy._id,
-    "debitUser": gary._id
+    "creditUser": testTwo._id,
+    "debitUser": testOne._id
   });
 
   // Katy sent Gary money, and he accepted
@@ -64,22 +64,13 @@ connection.once("open", async () => {
     "transactionText": "Merry Christmas",
     "amount": 50,
     "type": "debit",
-    "creditUser": gary._id,
-    "debitUser": katy._id
-  })
-
-  // For testing contact function
-  const bob = await User.create({
-    "_id": "6387a52df286afba049c8212",
-    "username": "Bob",
-    "email": "test3@gmail.com",
-    "password": "password",
-    "image": "stock2",
-    "balance": 1000
+    "creditUser": testOne._id,
+    "debitUser": testTwo._id
   })
 
   // Log out the seed data to indicate what should appear in the database
-  console.table({ katy, gary, bob })
+  console.table({ testOne })
+  console.table({ testTwo })
   console.info("Seeding complete!")
   process.exit()
 })

@@ -1,36 +1,36 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
+import { useEffect } from "react"
+import { useState } from "react"
+import Button from "react-bootstrap/Button"
 
 const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
-  const { type, display } = mode;
+  const { type, display } = mode
 
-  const [contact, setContact] = useState("");
-  const [friend, setFriend] = useState(null);
+  const [contact, setContact] = useState("")
+  const [friend, setFriend] = useState(null)
 
   const [transaction, setTransaction] = useState({
     recievingUser: "",
     text: "",
-    amount: "",
-  });
+    amount: ""
+  })
 
   const handleSend = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (transaction.recievingUser === "x" || !transaction.recievingUser) {
-      alert("Please Choose a Contact");
-      return;
+      alert("Please Choose a Contact")
+      return
     }
     if (
       !transaction.amount ||
       transaction.amount === 0 ||
       transaction.amount > currentUser.balance
     ) {
-      alert("Please enter number between 0 and your balance.");
-      return;
+      alert("Please enter number between 0 and your balance.")
+      return
     }
     if (!transaction.text) {
-      alert("Please fill out text field.");
-      return;
+      alert("Please fill out text field.")
+      return
     }
     const r = await fetch("/api/transaction/", {
       method: "POST",
@@ -41,7 +41,7 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
         debitUser: currentUser.id,
         amount: transaction.amount,
       }),
-    });
+    })
 
     if (r.ok) {
       const t = currentUser.transactions.map((t) => t)
@@ -51,9 +51,9 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
         ...currentUser,
         transactions: t,
         balance: currentUser.balance - data.amount,
-      });
+      })
     }
-  };
+  }
 
   const handleRequest = async e => {
     e.preventDefault()
@@ -62,15 +62,15 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
       return
     }
     if (!transaction.text) {
-      alert("Please fill out text field.");
+      alert("Please fill out text field.")
       return
     }
     if (
       !transaction.amount ||
       transaction.amount === 0
     ) {
-      alert("Please enter a positive number.");
-      return;
+      alert("Please enter a positive number.")
+      return
     }
     const r = await fetch("/api/transaction/", {
       method: "POST",
@@ -92,70 +92,69 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
         ...currentUser,
         transactions: t
       })
-      window.location.reload()
     }
   }
 
   const checkContacts = (id) => {
     const bools = currentUser.contacts.map((c) =>
       c.sendingUser._id === id || c.recievingUser._id === id ? true : false
-    );
-    return bools.indexOf(true) > -1 ? true : false;
-  };
+    )
+    return bools.indexOf(true) > -1 ? true : false
+  }
 
   const getFriend = async (username) => {
-    const friend = await fetch(`/api/users/${username}`);
-    const result = await friend.json();
+    const friend = await fetch(`/api/users/${username}`)
+    const result = await friend.json()
     if (result?._id === currentUser.id || checkContacts(result?._id)) {
-      return;
+      return
     }
-    setFriend(result);
-  };
+    setFriend(result)
+  }
 
   const sendFriendRequest = async (e) => {
-    e.preventDefault();
-    const res = await fetch(`/api/contact/${currentUser.id}/${friend._id}`);
-    const data = await res.json();
+    e.preventDefault()
+    const res = await fetch(`/api/contact/${currentUser.id}/${friend._id}`)
+    const data = await res.json()
     // console.log(data)
-    setCurrentUser({ ...currentUser, contacts: data.contacts });
-    setFriend(null);
-  };
+    setCurrentUser({ ...currentUser, contacts: data.contacts })
+    setFriend(null)
+  }
 
   const acceptRequest = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const res = await fetch(`/api/contact/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contactId: e.target.id,
       }),
-    });
-    const data = await res.json();
+    })
+    const data = await res.json()
     const contacts = currentUser.contacts.map((c) =>
       c._id === data._id ? { ...c, pending: false } : c
-    );
-    setCurrentUser({ ...currentUser, contacts: contacts });
-  };
+    )
+    setCurrentUser({ ...currentUser, contacts: contacts })
+  }
 
   const cancelRequest = async (e) => {
-    e.preventDefault();
-    console.log(e.target.id);
+    e.preventDefault()
+    console.log(e.target.id)
     const res = await fetch(`/api/contact/${e.target.id}`, {
       method: "DELETE",
     })
     if (res.ok) {
       console.log(currentUser.contacts)
-      const contacts = currentUser.contacts.filter((c) => c._id !== e.target.id);
-      console.log(contacts);
+      const contacts = currentUser.contacts.filter((c) => c._id !== e.target.id)
+      console.log(contacts)
       setCurrentUser({ ...currentUser, contacts: contacts })
     }
-  };
+  }
 
   useEffect(() => {
     if (contact) {
-      getFriend(contact);
+      getFriend(contact)
     }
-  }, [contact]);
+  }, [contact])
 
   return (
     <div
@@ -195,7 +194,7 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
             className="form-control"
             value={transaction.recievingUser}
             onChange={(e) => {
-              setTransaction({ ...transaction, recievingUser: e.target.value });
+              setTransaction({ ...transaction, recievingUser: e.target.value })
             }}
             required
           >
@@ -211,8 +210,8 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                     <option key={i} value={c.sendingUser.id}>
                       {c.sendingUser.username}
                     </option>
-                  );
-                return x;
+                  )
+                return x
               }
             })}
           </select>
@@ -374,14 +373,14 @@ const Modal = ({ mode, setMode, currentUser, setCurrentUser }) => {
                       </div>
                     )}
                   </div>
-                );
+                )
               })}
             </div>
           )}
         </form>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal
