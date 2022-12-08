@@ -1,13 +1,9 @@
 import { useState } from "react";
-import Cookie from "js-cookie";
 import { Button, Container, Form } from "react-bootstrap";
-import { useAppContext } from "../utils/AppContext";
-import { redirect, useNavigate } from "react-router-dom";
+
 import { motion } from "framer-motion";
 
 const Signup = () => {
-  const { appState, setAppState } = useAppContext();
-
   const [newUser, setNewUser] = useState({
     username: "",
     email: "",
@@ -42,7 +38,7 @@ const Signup = () => {
       animate={{ width: "100%" }}
       exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
       style={{
-        backgroundColor: 'white'
+        backgroundColor: "white",
       }}
     >
       <Container>

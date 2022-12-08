@@ -1,11 +1,10 @@
 import { useAppContext } from "../utils/AppContext";
 import { useState, useEffect } from "react";
-import Footer from "./Footer";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { motion } from "framer-motion";
 const Profile = () => {
-  const { appState, lookupUser } = useAppContext();
+  const { appState } = useAppContext();
   const [currentUser, setCurrentUser] = useState();
 
   console.log(appState.user);
@@ -20,7 +19,7 @@ const Profile = () => {
     });
     console.log(currentUser);
   }, [appState]);
-  console.log(currentUser);
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const query = await fetch(`/api/users/${currentUser.id}`, {
@@ -57,7 +56,7 @@ const Profile = () => {
                         src={`/stock/${currentUser.img}.png`}
                         className="rounded-circle img-fluid"
                         style={{ width: "100px" }}
-                        alt='stock profile'
+                        alt="stock profile"
                       />
                     </div>
                     <h4 className="mb-2">{currentUser.username}</h4>
