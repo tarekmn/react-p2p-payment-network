@@ -57,6 +57,7 @@ const Profile = () => {
                         src={`/stock/${currentUser.img}.png`}
                         className="rounded-circle img-fluid"
                         style={{ width: "100px" }}
+                        alt='stock profile'
                       />
                     </div>
                     <h4 className="mb-2">{currentUser.username}</h4>

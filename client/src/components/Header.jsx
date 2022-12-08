@@ -12,15 +12,14 @@ const Header = (props) => {
     <header>
       <div
         style={{
-          margin: "18px auto",
+          margin: "2rem auto",
           borderRadius: '20px',
           boxShadow:'0 0 0px',
           width: "300px",
           height: "160px",
-          background: "white",
+          background: "black",
           border: "1px outset black",
           textAlign: "center",
-
           display:'flex',
           justifyContent:'center',
           alignItems:'center',
@@ -30,9 +29,8 @@ const Header = (props) => {
         {props.currentUser && (
           <div
             style={{
-              color: "black",
-              fontWeight: "700",
-             
+              color: "#59c738",
+              fontWeight: "700"
             }}
           >
             <h4 className="nopadding" style={{magin:'0px'}}>Welcome {props.currentUser.username}!</h4>

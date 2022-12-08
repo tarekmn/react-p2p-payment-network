@@ -36,7 +36,8 @@ module.exports = {
     try {
       let creditor
       let debitor
-      const transaction = await Transaction.create(req.body)
+      const t = await Transaction.create(req.body)
+      const transaction = await Transaction.findById(t._id).populate('creditUser').populate('debitUser')
       if (transaction.pending) {
         // user requested money
         creditor = await User.findByIdAndUpdate(req.body.creditUser, {
@@ -66,18 +67,19 @@ module.exports = {
 
   async acceptTransaction(req, res) {
     try {
-      const transaction = await Transaction.findByIdAndUpdate(req.params.transactionId, {
+      const t = await Transaction.findByIdAndUpdate(req.params.transactionId, {
         pending: false
       }, { new: true })
+      const transaction = await Transaction.findById(t._id).populate('creditUser').populate('debitUser')
 
-      const creditor = await User.findByIdAndUpdate(transaction.creditUser._id, {
-        $inc: { balance: + transaction.amount }
+      await User.findByIdAndUpdate(t.creditUser, {
+        $inc: { balance: + t.amount }
       }, { new: true })
-      const debitor = await User.findByIdAndUpdate(transaction.debitUser._id, {
-        $inc: { balance: - transaction.amount }
+      const debitor = await User.findByIdAndUpdate(t.debitUser, {
+        $inc: { balance: - t.amount }
       }, { new: true })
 
-      res.status(200).json({ transaction, debitor: debitor.balance })
+      res.status(200).json({ transaction, balance: debitor.balance })
     } catch (error) {
       console.log(error.message)
       res.status(500).json(error)

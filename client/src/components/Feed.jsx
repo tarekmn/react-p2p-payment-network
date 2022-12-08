@@ -1,29 +1,46 @@
-import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from "react-infinite-scroll-component"
 const Feed = ({ currentUser, setCurrentUser }) => {
+
+  const handleCancelRequest = async (e, id) => {
+    e.preventDefault()
+    const r = await fetch(`/api/transaction/${id}`, {method:'DELETE'})
+    if (r.ok) {
+      const t = currentUser.transactions.filter(t => t._id !== id)
+      setCurrentUser({
+        ...currentUser,
+        transactions: t
+      })
+    }
+  }
 
   const handleAccept = async (e, id, amount) => {
     if (currentUser.balance < amount) {
       return
     }
     const r = await fetch(`api/transaction/${id}`)
-    const {transaction, debitor} = await r.json()
-    const t = [...currentUser.transactions.filter(t => t._id !== id)]
-    t.push(transaction)
+    const {transaction, balance} = await r.json()
+    console.log(transaction, balance)
+    const t = currentUser.transactions.map(t => {
+      if (t._id === transaction._id) { t.pending = false }
+      return t
+    })
     setCurrentUser({
       ...currentUser,
       transactions: t,
-      balance: debitor
+      balance: balance
     })
-    window.location.reload()
   }
 
   const handleDecline = async (e, id) => {
-    console.log(e.target)
     const r = await fetch(`api/transaction/${id}`, {
       method: 'DELETE'
     })
     if (r.ok) {
-      window.location.reload(true)
+      const t = currentUser.transactions.filter(t => t._id !== id)
+      setCurrentUser({
+        ...currentUser,
+        transactions: t
+      })
     }
   }
 
@@ -43,8 +60,8 @@ const Feed = ({ currentUser, setCurrentUser }) => {
             currentUser.transactions.map((t, i) => {
               const tstyle =
                 t.creditUser._id === currentUser.id
-                  ? { backgroundColor: "#00E661" }
-                  : { backgroundColor: "#CA2B29" };
+                  ? { backgroundColor: "#65E03F" }
+                  : { backgroundColor: "#F13931" }
               return (
                 <div
                   key={i}
@@ -53,7 +70,7 @@ const Feed = ({ currentUser, setCurrentUser }) => {
                 >
                   <img
                     className="postimg"
-                    src={`/stock/${currentUser.image}.png`}
+                    src={`/stock/${t.creditUser._id === currentUser.id ? t.debitUser.image : t.creditUser.image}.png`}
                     width="35"
                     height="35"
                     alt="stock profile"
@@ -71,6 +88,7 @@ const Feed = ({ currentUser, setCurrentUser }) => {
                           <button onClick={e => handleDecline(e, t._id)}>Decline</button>
                         </>) : (<>
                           You requested ${t.amount} from {t.debitUser.username} for {t.transactionText}.
+                          <button onClick={e => handleCancelRequest(e, t._id)}>Cancel</button>
                         </>)}
                     </>) :
                     (<>
@@ -83,11 +101,11 @@ const Feed = ({ currentUser, setCurrentUser }) => {
                         </>)}
                     </>)}
                 </div>
-              );
+              )
             })}
         </InfiniteScroll>
       </div>
     </>
-  );
-};
-export default Feed;
+  )
+}
+export default Feed
