@@ -8,7 +8,9 @@ import './App.css'
 
 function App() {
   return (
-    <div >
+    <div style={{
+      backgroundColor: '#20610D'
+    }}>
       <AppProvider value={{}}>
         <Navigation />
         <BrowserRouter>

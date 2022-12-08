@@ -1,3 +1,4 @@
+import { MdAttachMoney } from 'react-icons/md'
 
 const Footer = ({ mode, setMode }) => {
   return (
@@ -7,8 +8,8 @@ const Footer = ({ mode, setMode }) => {
     }}>
       <a href='/feed'>
         <button style={{
-          borderColor: '#59C738',
-          borderRadius: '5px',
+          borderColor: 'black',
+          borderRadius: '.5rem',
           padding: '10px',
           margin: '25px',
         }}>
@@ -19,21 +20,27 @@ const Footer = ({ mode, setMode }) => {
 
       <button style={{
 
-        borderColor: 'green',
+        borderColor: 'black',
         borderRadius: 100,
         alignItems: 'center',
         width: 100,
         height: 100,
-        backgroundColor: '#59C738',
+        backgroundColor: 'black',
       }}
         onClick={e => setMode({ ...mode, display: 'block', type: 'pay' })}
       >
-        Pay
+        <MdAttachMoney 
+        style={{
+          width: '3.5rem',
+          height: 'auto',
+          color: '#2cff0f'
+        }}
+        />
       </button>
 
       <button style={{
-        borderColor: '#59C738',
-        borderRadius: '5px',
+        borderColor: 'black',
+        borderRadius: '.5rem',
         padding: '10px',
         margin: '25px',
       }}

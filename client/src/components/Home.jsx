@@ -44,23 +44,17 @@ const Home = (props) => {
           setCurrentUser={setCurrentUser}
         />
       )}
-      <main style={{}}>
+      <main>
         <div
-          className=" bg-light rounded  bg-dark card"
+          className=" bg-dark rounded overflow-auto"
           style={{
-            padding: "5px",
-            margin: "10px auto",
+            padding: "1rem",
+            margin: "1rem 2rem",
             maxWidth: "50rem",
-            height: "auto",
+            height: "25rem",
           }}
         >
-          <div
-            className="card-header"
-            style={{ textAlign: "center", color: "white" }}
-          >
-            My Transactions
-          </div>
-          <div className="" style={{ padding: "4%" }}>
+          <div>
             {currentUser && (
               <Feed currentUser={currentUser} setCurrentUser={setCurrentUser} />
             )}

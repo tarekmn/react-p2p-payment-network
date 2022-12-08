@@ -60,8 +60,8 @@ const Feed = ({ currentUser, setCurrentUser }) => {
             currentUser.transactions.map((t, i) => {
               const tstyle =
                 t.creditUser._id === currentUser.id
-                  ? { backgroundColor: "#00E661" }
-                  : { backgroundColor: "#CA2B29" }
+                  ? { backgroundColor: "#65E03F" }
+                  : { backgroundColor: "#F13931" }
               return (
                 <div
                   key={i}
